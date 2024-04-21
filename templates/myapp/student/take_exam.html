@@ -1,0 +1,21 @@
+{% extends "myapp/student/student-base.html" %}
+
+{% block content %}
+<h1>Active Exams</h1>
+<form method="get" action="{% url 'take_exam' %}">
+    <input type="text" name="search" placeholder="Search by exam name...">
+    <button type="submit">Search</button>
+</form>
+
+<div class="exam-list">
+    {% for exam in exams %}
+    <div class="exam-item">
+        <div class="exam-title">{{ exam.name }}</div>
+        {% comment %} <a href="{% url 'take_exam_detail' exam.id %}">Enter this exam</a> {% endcomment %}
+        <a href=" {% url 'enter_exam' exam.id %}">Enter this exam</a>
+    </div>
+    {% empty %}
+    <p>No active exams available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

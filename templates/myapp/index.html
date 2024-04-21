@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-مپسر (measurer)">
+<title>Scanscore: Automated Exam Correction</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f9;
+    display: flex;
+    flex-direction: row; /* Change to row for side-by-side elements */
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ensures full viewport height */
+  }
+  .container {
+    text-align: center;
+    padding: 40px;
+    border-radius: 10px; /* Adds a subtle roundness to container */
+    background-color: #fff; /* White background for content area */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a light shadow effect */
+    flex: 1; /* Makes container take up remaining space */
+  }
+  .description {
+    margin-bottom: 30px;
+  }
+  .description h1 {
+    font-size: 3em; /* Larger heading for impact */
+    margin-bottom: 10px;
+    color: #333; /* Darker heading color */
+  }
+  .description p {
+    font-size: 1.2em; /* Slightly larger paragraph text */
+    color: #777;
+    line-height: 1.5; /* Improves readability */
+  }
+  .buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  button {
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em; /* Slightly larger button text */
+    background-color: #7D7BDD;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #6c6ba8;
+  }
+  .home-image {
+    width: 400px; /* Increased image width */
+    height: auto;
+    border-radius: 10px;
+    margin: 0 20px 20px 0; /* Adjust margins for positioning */
+    animation: tilt 5s ease-in-out infinite; /* Adds a subtle tilting animation */
+  }
+
+  @keyframes tilt {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(3deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img src='{% static "image/home.jpg" %}' alt="home Image" class="home-image">
+  <div class="description">
+    <h1>Welcome to<strong> Scanscore</strong></h1>
+    <p>Say Goodbye to Grading Papers!</p>
+  </div>
+  <h2>Register as:</h2>
+  <div class="buttons">
+    <button onclick="location.href='{% url 'register_student' %}'">Student</button>
+    <button onclick="location.href='{% url 'register_teacher' %}'">Teacher</button>
+  </div>
+  <h2>Or</h2>
+  <button onclick="location.href='{% url 'login' %}'">Login</button>
+</div>
+
+</body>
+</html>

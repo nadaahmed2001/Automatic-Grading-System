@@ -1,0 +1,13 @@
+{% extends "myapp/student/student-base.html" %}
+
+{% block content %}
+<h1>Enter Exam</h1>
+<form method="POST" action="{% url 'submit_exam' exam.id %}">
+    {% csrf_token %}
+    <p>Teacher: {{ exam.teacher.first_name }} {{ exam.teacher.last_name }}</p>
+    <p>Exam Name: {{ exam.name }}</p>
+    <p>Question: {{ exam.question }}</p>
+    <textarea name="student_answer" rows="5" required></textarea>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

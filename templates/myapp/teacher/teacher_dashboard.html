@@ -1,0 +1,29 @@
+{% extends "myapp/teacher/teacher-base.html" %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="exam-list">
+    {% for exam in exams %}
+    <div class="exam-item">
+        <div class="exam-name">{{ exam.name }}</div>
+        <div class="exam-date">{{ exam.time_created }}</div>
+        <div class="is_active">
+            {% if exam.is_active %}
+                <span class="active">Active</span>
+            {% else %}
+                <span class="inactive">Inactive</span>
+            {% endif %}
+        </div>
+        <a href="{% url 'view_exam' exam.id %}" class="arrow"> > </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
