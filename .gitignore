@@ -1,0 +1,40 @@
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+
+# Django-specific
+db.sqlite3
+/media
+
+
+# IDE specific
+.idea/
+*.swp
+*~
+.DS_Store
+
+
+
+# Compiled source files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
