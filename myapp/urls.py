@@ -13,19 +13,19 @@ urlpatterns = [
     path('student_dashboard/', views.student_dashboard, name='student_dashboard'),
 
 
-    path('create_exam/', views.create_exam, name='create_exam'),
+    path('teacher/create_exam/', views.create_exam, name='create_exam'),
     path('exam/<int:exam_id>/', views.view_exam, name='view_exam'),
-    path('take_exam/', views.take_exam, name='take_exam'),
-    path('enter_exam/<int:exam_id>/', views.enter_exam, name='enter_exam'),
-    path('submit_exam/<int:exam_id>/', views.submit_exam, name='submit_exam'),
-    path('edit_exam/<int:exam_id>/', views.edit_exam, name='edit_exam'),
-    path('exam/<int:exam_id>/publish/', views.publish_exam, name='publish_exam'),
-    path('exam/<int:exam_id>/unpublish/', views.unpublish_exam, name='unpublish_exam'),
-    path('exam/<int:exam_id>/delete/', views.delete_exam, name='delete_exam'),
+    path('student/take_exam/', views.take_exam, name='take_exam'),
+    path('student/enter_exam/<int:exam_id>/', views.enter_exam, name='enter_exam'),
+    path('student/submit_exam/<int:exam_id>/', views.submit_exam, name='submit_exam'),
+    path('teacher/edit_exam/<int:exam_id>/', views.edit_exam, name='edit_exam'),
+    path('teacher/exam/<int:exam_id>/publish/', views.publish_exam, name='publish_exam'),
+    path('teacher/exam/<int:exam_id>/unpublish/', views.unpublish_exam, name='unpublish_exam'),
+    path('teacher/exam/<int:exam_id>/delete/', views.delete_exam, name='delete_exam'),
     # View submissions are submissions that are not graded yet
-    path('exam/<int:exam_id>/view_submissions/', views.view_submissions, name='view_submissions'),
-    path('exam/<int:exam_id>/view_grades/', views.view_grades, name='view_grades'),
-    path('modify_grade/<int:submission_id>/', views.modify_grade, name='modify_grade'),
+    path('teacher/exam/<int:exam_id>/view_submissions/', views.view_submissions, name='view_submissions'),
+    path('teacher/exam/<int:exam_id>/view_grades/', views.view_grades, name='view_grades'),
+    path('teacher/modify_grade/<int:submission_id>/', views.modify_grade, name='modify_grade'),
 
     
     path('view_profile/student/', views.view_profile_student, name='view_profile_student'),

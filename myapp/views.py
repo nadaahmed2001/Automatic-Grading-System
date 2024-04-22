@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from AIGradingModel.grading import StartGrading
 
 
 
@@ -278,18 +279,15 @@ def delete_exam(request, exam_id):
         return HttpResponseForbidden("Invalid request")
 
 
-# @login_required
-# def view_submissions(request, exam_id):
-#     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
-#     submissions = ExamSubmission.objects.filter(exam=exam)
-#     return render(request, 'myapp/teacher/view_submissions.html', {'submissions': submissions, 'exam': exam})
 
 @login_required
 def view_submissions(request, exam_id):
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
     submissions = ExamSubmission.objects.filter(exam=exam)
     is_graded = all(submission.is_graded for submission in submissions)
-    
+    if not submissions.exists():
+        messages.info(request, "No submissions found.")
+        return render (request, 'myapp/teacher/view_submissions.html', {'submissions': submissions, 'exam': exam})
     if is_graded:
         print("All submissions are graded , so redirecting to view_grades")
         return render(request, 'myapp/teacher/view_grades.html', {'submissions': submissions, 'exam': exam})
@@ -297,11 +295,15 @@ def view_submissions(request, exam_id):
         print("Submissions are not graded , so redirecting to view_submissions")
         return render(request, 'myapp/teacher/view_submissions.html', {'submissions': submissions, 'exam': exam})
 
+
+
+
 @login_required
 def view_grades(request, exam_id):
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
-    submissions = ExamSubmission.objects.filter(exam=exam)
-    return render(request, 'myapp/teacher/view_grades.html', {'submissions': submissions, 'exam': exam})
+    graded_submissions = StartGrading(exam_id)  # This will update and return graded submissions
+    return render(request, 'myapp/teacher/view_grades.html', {'submissions': graded_submissions, 'exam': exam})
+
 
 
 @login_required

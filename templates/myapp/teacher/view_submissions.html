@@ -145,11 +145,14 @@
         </table>
     </div>
 
-    <!-- Approve Button -->
-    <form action="" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success">Start Grading</button>
-    </form>
+    <!-- Grade Button -->
+    {% if submissions %} <!-- Only show the button if there are submissions -->
+        <form action="{% url 'view_grades' exam.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Start Grading</button>
+        </form>
+    {% endif %}
+    
 </div>
 
 <script>

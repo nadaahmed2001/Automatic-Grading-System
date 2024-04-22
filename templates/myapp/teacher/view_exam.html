@@ -41,6 +41,7 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to make the exam available for students?');">Publish</button>
         </form>
+        <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary">View Students' Submissions</a>
         {% endif %}
 
         <!-- Unpublish Exam -->

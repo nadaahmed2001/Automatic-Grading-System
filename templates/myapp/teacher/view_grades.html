@@ -139,7 +139,7 @@
                         <button class="btn btn-primary" onclick="openModal('{{ submission.student_answer|escapejs }}')">View Answer</button>
                     </td>
 
-                    <td>
+                    <td>       
                         <form action="{% url 'modify_grade' submission.id %}" method="post">
                             {% csrf_token %}
                             <input type="number" name="new_grade" value="{{ submission.score }}" min="0" max="10" required>
