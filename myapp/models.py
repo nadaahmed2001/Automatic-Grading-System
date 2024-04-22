@@ -32,3 +32,4 @@ class ExamSubmission(models.Model):
     student_answer = models.TextField(max_length=10000)
     score = models.IntegerField()
     time_submitted = models.DateTimeField(auto_now_add=True)
+    is_graded = models.BooleanField(default=False)

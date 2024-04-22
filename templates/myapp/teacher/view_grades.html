@@ -120,27 +120,36 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Student Answer</th>
+                    <th>Grade (10)</th>
                     <th>Time Submitted</th>
                 </tr>
             </thead>
             <tbody>
-            {% for submission in submissions %}
-            <tr>
+                {% for submission in submissions %}
                 <tr>
                     <!-- When you reference submission.student, you are actually accessing a User object
                         because student is a ForeignKey to the User model in the ExamSubmission model,
                         and this User object has a student attribute which is a ForeignKey to the Student model.
                         Therefore, you can access the student_id and get_full_name attributes of the Student model
-                    -->
+                     -->
                     <td>{{ submission.student.student.student_id }}</td>
                     <td>{{ submission.student.student.get_full_name }}</td>
-                <td>
-                    <button class="btn btn-primary" onclick="openModal('{{ submission.student_answer|escapejs }}')">View Answer</button>
-                </td>
-                <td>{{ submission.time_submitted }}</td>
-            </tr>
-            {% endfor %}
+                    <td>
+                        <!-- Button triggers modal -->
+                        <button class="btn btn-primary" onclick="openModal('{{ submission.student_answer|escapejs }}')">View Answer</button>
+                    </td>
 
+                    <td>
+                        <form action="{% url 'modify_grade' submission.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="number" name="new_grade" value="{{ submission.score }}" min="0" max="10" required>
+                            <button type="submit" class="btn btn-info">Modify Grade</button>
+                        </form>
+                    </td>
+
+                    <td>{{ submission.time_submitted }}</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -148,7 +157,7 @@
     <!-- Approve Button -->
     <form action="" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-success">Start Grading</button>
+        <button type="submit" class="btn btn-success">Approve</button>
     </form>
 </div>
 

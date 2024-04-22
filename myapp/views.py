@@ -278,8 +278,41 @@ def delete_exam(request, exam_id):
         return HttpResponseForbidden("Invalid request")
 
 
+# @login_required
+# def view_submissions(request, exam_id):
+#     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
+#     submissions = ExamSubmission.objects.filter(exam=exam)
+#     return render(request, 'myapp/teacher/view_submissions.html', {'submissions': submissions, 'exam': exam})
+
 @login_required
 def view_submissions(request, exam_id):
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
     submissions = ExamSubmission.objects.filter(exam=exam)
-    return render(request, 'myapp/teacher/view_submissions.html', {'submissions': submissions, 'exam': exam})
+    is_graded = all(submission.is_graded for submission in submissions)
+    
+    if is_graded:
+        print("All submissions are graded , so redirecting to view_grades")
+        return render(request, 'myapp/teacher/view_grades.html', {'submissions': submissions, 'exam': exam})
+    else:
+        print("Submissions are not graded , so redirecting to view_submissions")
+        return render(request, 'myapp/teacher/view_submissions.html', {'submissions': submissions, 'exam': exam})
+
+@login_required
+def view_grades(request, exam_id):
+    exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
+    submissions = ExamSubmission.objects.filter(exam=exam)
+    return render(request, 'myapp/teacher/view_grades.html', {'submissions': submissions, 'exam': exam})
+
+
+@login_required
+def modify_grade(request, submission_id):
+    if request.method == 'POST':
+        new_grade = request.POST.get('new_grade')
+        submission = get_object_or_404(ExamSubmission, id=submission_id, exam__teacher=request.user)
+        submission.score = int(new_grade)
+        submission.save()
+        messages.success(request, "Grade updated successfully.")
+        return redirect('view_grades', exam_id=submission.exam.id)  # Redirect back to the submissions list
+    return HttpResponseForbidden("Invalid request")
+
+
