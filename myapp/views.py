@@ -227,7 +227,7 @@ def edit_profile_teacher(request):
         return redirect('edit_profile_teacher')
     
 
-@login_required
+
 @login_required
 def edit_exam(request, exam_id):
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)  # Ensure that only the teacher who created the exam can edit it
@@ -312,9 +312,26 @@ def modify_grade(request, submission_id):
         new_grade = request.POST.get('new_grade')
         submission = get_object_or_404(ExamSubmission, id=submission_id, exam__teacher=request.user)
         submission.score = int(new_grade)
+        print(f"Before saving: {submission.score}")  # Log before saving
         submission.save()
+        print(f"After saving: {submission.score}")
         messages.success(request, "Grade updated successfully.")
-        return redirect('view_grades', exam_id=submission.exam.id)  # Redirect back to the submissions list
+        return render(request, 'myapp/teacher/view_grades.html', {'submissions': [submission], 'exam': submission.exam})
     return HttpResponseForbidden("Invalid request")
 
 
+@login_required
+def approve_grades(request, exam_id):
+    if request.method == 'POST':
+        exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user) # Ensure that only the teacher who created the exam can approve its grades
+        submissions = ExamSubmission.objects.filter(exam=exam) # Retrieve all submissions for the exam
+        print("Approving grades for exam:", exam.name)
+        
+        for submission in submissions:
+            print(f"Now approving Submission with ID {submission.id} - Student {submission.student.username} - Score {submission.score}")
+            submission.is_approved = True
+            submission.save()
+        messages.success(request, "Grades approved successfully and sent to students!.")
+        return render(request, 'myapp/teacher/view_grades.html', {'submissions': [submission], 'exam': submission.exam})
+    else:
+        return HttpResponseForbidden("Invalid request")

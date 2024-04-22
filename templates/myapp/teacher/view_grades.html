@@ -69,6 +69,13 @@
             border-color: #28a745;
         }
 
+        .disabled-button {
+            background-color: #6c757d; /* Gray color */
+            border-color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.65; /* reduce the opacity to make it visually distinct as disabled
+        }        
+
         /* Modal Styling */
         .modal {
             display: none; /* Hidden by default */
@@ -135,7 +142,6 @@
                     <td>{{ submission.student.student.student_id }}</td>
                     <td>{{ submission.student.student.get_full_name }}</td>
                     <td>
-                        <!-- Button triggers modal -->
                         <button class="btn btn-primary" onclick="openModal('{{ submission.student_answer|escapejs }}')">View Answer</button>
                     </td>
 
@@ -155,10 +161,12 @@
     </div>
 
     <!-- Approve Button -->
-    <form action="" method="post">
+    <form action="{% url 'approve_grades' exam.id %}" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-success">Approve</button>
+        <button type="submit" class="btn btn-success">Send Grades to Students</button>
     </form>
+
+
 </div>
 
 <script>

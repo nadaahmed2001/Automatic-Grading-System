@@ -7,11 +7,12 @@
     <div class="exam-item">
         <div class="exam-date" style="background-color: #9575CD;">{{ submission.time_submitted|date:"M d" }}</div>
         <div class="exam-title">{{ submission.exam.name }}</div>
-        {% if submission.score %}
-            <div class="exam-grade">Grade: {{ submission.score }}/10</div>
+        {% if submission.is_approved %}
+        <div class="exam-grade">Grade: {{ submission.score }}/10</div>
         {% else %}
             <div class="exam-grade">Not graded yet</div>
         {% endif %}
+    
         <div class="arrow" onclick="location.href='{% url 'view_exam' submission.exam.id %}'">→</div>
     </div>
     {% empty %}

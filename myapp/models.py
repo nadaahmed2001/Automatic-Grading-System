@@ -33,3 +33,4 @@ class ExamSubmission(models.Model):
     score = models.IntegerField()
     time_submitted = models.DateTimeField(auto_now_add=True)
     is_graded = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False) #If the teacher approves the grade , this will be set to true and then the student can see the grade
