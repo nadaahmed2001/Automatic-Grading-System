@@ -1,4 +1,4 @@
-#SBERT_Grading_Module.py
+#SBERT_Grading_Model.py
 
 import pandas as pd
 from sentence_transformers import SentenceTransformer
