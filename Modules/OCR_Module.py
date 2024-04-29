@@ -1,4 +1,4 @@
-# ocr_module.py
+# OCR_Module.py
 
 import requests
 import json
