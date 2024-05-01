@@ -1,0 +1,12 @@
+{% extends "myapp/teacher/teacher-base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Upload Images for Exam ID: {{ exam_id }}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="images" multiple required>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

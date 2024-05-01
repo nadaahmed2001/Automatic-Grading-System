@@ -10,6 +10,9 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from AIGradingModel.grading import StartGrading
+from .models import ExamSubmissionOCR
+from AIGradingModel.OCR_Model.OCR import extract_text_and_split
+from django.core.files.storage import FileSystemStorage
 from AIGradingModel import generativeAI
 from django.http import JsonResponse
 import json
@@ -355,3 +358,51 @@ def generate_answer(request):
         model_answer = generativeAI.generate_model_answer(question) 
         return JsonResponse({'model_answer': model_answer})
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+
+
+def upload_images(request, exam_id):
+    if request.method == 'POST':
+        uploaded_files = request.FILES.getlist('images')
+        for uploaded_file in uploaded_files:
+            fs = FileSystemStorage()
+            filename = fs.save(uploaded_file.name, uploaded_file)
+            uploaded_file_url = fs.url(filename)
+            
+            # Reopen the file for OCR processing
+            file_for_ocr = fs.open(filename)
+
+            # Use OCR to extract text and split into ID and answer
+            student_id, extracted_answer = extract_text_and_split(file_for_ocr)
+
+            # Ensure the file is closed after processing
+            file_for_ocr.close()
+
+            # Save the results in the model
+            ExamSubmissionOCR.objects.create(
+                exam_id=exam_id,
+                teacher=request.user,
+                student_id=student_id,
+                image=uploaded_file,
+                extracted_text=extracted_answer
+            )
+
+        messages.success(request, "Images uploaded and processed successfully.")
+        return redirect('view_submissions_ocr', exam_id=exam_id)
+
+    return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id})
+
+
+
+@login_required
+def view_submissions_ocr(request, exam_id):
+    exam = get_object_or_404(Exam, pk=exam_id)
+    submissions = ExamSubmissionOCR.objects.filter(exam=exam)
+    return render(request, 'myapp/teacher/view_submissions_ocr.html', {
+        'exam': exam,
+        'submissions': submissions
+    })
+
+
+

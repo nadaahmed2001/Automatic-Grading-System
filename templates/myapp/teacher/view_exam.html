@@ -52,6 +52,12 @@
         </form>
         <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary">View Students' Submissions</a>
         {% endif %}
+
+
+
+        <a href="{% url 'upload_images' exam.id %}" class="btn btn-primary">Upload Images</a>
+
+        
     </div>
 </div>
 {% endblock %}

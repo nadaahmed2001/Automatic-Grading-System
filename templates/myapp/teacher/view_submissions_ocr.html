@@ -1,0 +1,27 @@
+{% extends "myapp/teacher/teacher-base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>OCR Submissions for Exam: {{ exam.name }}</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Extracted Answer</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+            <tr>
+                <td>{{ submission.student_id }}</td>
+                <td>{{ submission.extracted_text }}</td>
+                <td>
+                    <img src="{{ submission.image.url }}" alt="Student Submission" style="max-width: 100px; max-height: 100px;">
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
