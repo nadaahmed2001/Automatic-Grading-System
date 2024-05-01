@@ -3,11 +3,46 @@
 {% block content %}
 <div class="container">
     <h1>Create an Exam</h1>
-
     <form method="post" action="{% url 'create_exam' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        <div>
+            <label for="id_exam_name">Exam Name:</label>
+            {{ form.name }}
+        </div>
+        <div>
+            <label for="id_question">Question:</label>
+            {{ form.question }}
+        </div>
+        <div>
+            <label for="id_model_answer">Model Answer:</label>
+            {{ form.model_answer }}
+            <button type="button" onclick="generateModelAnswer()">Generate Answer</button>
+        </div>
+        <div>
+            <label for="id_keywordsList">Keywords:</label>
+            {{ form.keywordsList }}
+        </div>
+
         <button type="submit" class="btn btn-primary">Done</button>
     </form>
 </div>
+<script>
+function generateModelAnswer() {
+    const question = document.getElementById('id_question').value;
+    fetch("{% url 'generate_answer' %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({question: question})
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('id_model_answer').value = data.model_answer; // The server responds with JSON that includes model_answer
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
 {% endblock %}

@@ -10,6 +10,10 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from AIGradingModel.grading import StartGrading
+from AIGradingModel import generativeAI
+from django.http import JsonResponse
+import json
+
 
 
 
@@ -91,7 +95,10 @@ def create_exam(request):
         return HttpResponseForbidden("You are not authorized to view this page.")
     if request.method == 'POST':
         form = ExamForm(request.POST)
+
+        print("Now I will check if the form is valid")
         if form.is_valid():
+            print("Form is valid")
             exam = form.save(commit=False)
             exam.teacher = request.user
             exam.save()
@@ -335,3 +342,16 @@ def approve_grades(request, exam_id):
         return render(request, 'myapp/teacher/view_grades.html', {'submissions': [submission], 'exam': submission.exam})
     else:
         return HttpResponseForbidden("Invalid request")
+
+
+
+
+
+@login_required
+def generate_answer(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        question = data.get('question', '')
+        model_answer = generativeAI.generate_model_answer(question) 
+        return JsonResponse({'model_answer': model_answer})
+    return JsonResponse({'error': 'Invalid request'}, status=400)

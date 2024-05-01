@@ -54,7 +54,7 @@ class ExamForm(forms.ModelForm):
         question = cleaned_data.get('question')
         model_answer = cleaned_data.get('model_answer')
         keywordsList = cleaned_data.get('keywordsList')
-        if not question or not model_answer or not keywordsList:
+        if not question or not model_answer:
             raise ValidationError({'question': 'This field is required.'})
         return cleaned_data
 

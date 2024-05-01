@@ -21,7 +21,7 @@ class Exam(models.Model):
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
     question= models.TextField(max_length=10000)
     model_answer = models.TextField(max_length=10000)
-    keywordsList = models.TextField(max_length=10000)
+    keywordsList = models.TextField(max_length=10000,null=True,blank=True)
     is_active = models.BooleanField(default=False)
     time_created = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)

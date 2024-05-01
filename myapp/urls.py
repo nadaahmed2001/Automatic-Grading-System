@@ -22,6 +22,7 @@ urlpatterns = [
     path('teacher/exam/<int:exam_id>/publish/', views.publish_exam, name='publish_exam'),
     path('teacher/exam/<int:exam_id>/unpublish/', views.unpublish_exam, name='unpublish_exam'),
     path('teacher/exam/<int:exam_id>/delete/', views.delete_exam, name='delete_exam'),
+    path('generate_answer/', views.generate_answer, name='generate_answer'),
     # View submissions are submissions that are not graded yet
     path('teacher/exam/<int:exam_id>/view_submissions/', views.view_submissions, name='view_submissions'),
     path('teacher/exam/<int:exam_id>/view_grades/', views.view_grades, name='view_grades'),
