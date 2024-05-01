@@ -181,10 +181,15 @@ def edit_profile_student(request):
         user.last_name = last_name
         user.email = email
         user.username = username
+        print("Old student ID:", user.student.student_id)
+        user.student.student_id = student_id
+        print("New student ID:", user.student.student_id)
+        
 
         if password:  # Check if password was provided
             user.set_password(password)
             user.save()
+            user.student.save()
             print("User is saved with password")
             # Re-authenticate user after password change
             updated_user = authenticate(username=username, password=password)
