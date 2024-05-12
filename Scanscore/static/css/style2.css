@@ -1,0 +1,53 @@
+html,
+body,
+.intro {
+  height: 100%;
+}
+
+.form-control {
+  border-color: transparent;
+}
+
+.input-group>.form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px transparent;
+}
+
+.btn-link:hover {
+  color: #f0b6d5;
+  background-color: rgba(255, 255, 255, .35);
+}
+
+.btn-link:active,
+.btn-link.active {
+  color: #f0b6d5;
+  background-color: rgba(255, 255, 255, .35);
+}
+
+.btn-link:focus,
+.btn-link.focus {
+  color: #f0b6d5;
+  background-color: rgba(255, 255, 255, .35);
+}
+
+.btn-link:active:focus,
+.btn-link.active:focus {
+  color: #f0b6d5;
+  background-color: rgba(255, 255, 255, .35);
+}
+
+.form-control::placeholder {
+  color: #fff;
+}
+
+.purple-gradient {
+  color: #fff;
+  background: linear-gradient(to right, #F0B6D5, #A38495);
+}
+.btn.purple-gradient:hover {
+  color: #fff;
+}
+
+.text-pink {
+  color: #F0B6D5
+}

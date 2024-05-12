@@ -1,92 +1,47 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-مپسر (measurer)">
-<title>Scanscore: Automated Exam Correction</title>
-<style>
-  body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f4f4f9;
-    display: flex;
-    flex-direction: row; /* Change to row for side-by-side elements */
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Ensures full viewport height */
-  }
-  .container {
-    text-align: center;
-    padding: 40px;
-    border-radius: 10px; /* Adds a subtle roundness to container */
-    background-color: #fff; /* White background for content area */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a light shadow effect */
-    flex: 1; /* Makes container take up remaining space */
-  }
-  .description {
-    margin-bottom: 30px;
-  }
-  .description h1 {
-    font-size: 3em; /* Larger heading for impact */
-    margin-bottom: 10px;
-    color: #333; /* Darker heading color */
-  }
-  .description p {
-    font-size: 1.2em; /* Slightly larger paragraph text */
-    color: #777;
-    line-height: 1.5; /* Improves readability */
-  }
-  .buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-  }
-  button {
-    padding: 15px 30px;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em; /* Slightly larger button text */
-    background-color: #7D7BDD;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  button:hover {
-    background-color: #6c6ba8;
-  }
-  .home-image {
-    width: 400px; /* Increased image width */
-    height: auto;
-    border-radius: 10px;
-    margin: 0 20px 20px 0; /* Adjust margins for positioning */
-    animation: tilt 5s ease-in-out infinite; /* Adds a subtle tilting animation */
-  }
-
-  @keyframes tilt {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(3deg); }
-  }
-</style>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>ScanScore</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Add all other vendor CSS files similarly -->
+  <link href="{% static 'css/style1.css' %}" rel="stylesheet">
 </head>
 <body>
+  <header id="header" class="fixed-top">
+    <div class="container">
+      <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"><a  href="{% url 'index' %}">ScanScore</a></h1>
+    </div>
+  </header>
 
-<div class="container">
-  <img src='{% static "image/home.jpg" %}' alt="home Image" class="home-image">
-  <div class="description">
-    <h1>Welcome to<strong> Scanscore</strong></h1>
-    <p>Say Goodbye to Grading Papers!</p>
-  </div>
-  <h2>Register as:</h2>
-  <div class="buttons">
-    <button onclick="location.href='{% url 'register_student' %}'">Student</button>
-    <button onclick="location.href='{% url 'register_teacher' %}'">Teacher</button>
-  </div>
-  <h2>Or</h2>
-  <button onclick="location.href='{% url 'login' %}'">Login</button>
-</div>
+  <section id="hero" class="d-flex align-items-center" style="height: 100vh;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+          <h1>Welcome to <strong>Scanscore</strong></h1>
+          <h2>Say Goodbye to Grading Papers!</h2>
+          <div class="d-flex justify-content-center justify-content-lg-start">
+            <a href='{% url 'register_teacher' %}' class="btn-get-started scrollto">Teacher</a>
+            <a href='{% url 'register_student' %}' class="btn-get-started scrollto" style="margin-left: 20px;">Student</a>
+            <!-- <a href='{% url 'login' %}' class="btn-get-started scrollto" style="margin-left: 20px;">Login</a> -->
+          </div>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+          <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Load other JS vendor files similarly -->
+  <script src="{% static 'js/main.js' %}"></script>
 
 </body>
 </html>

@@ -1,16 +1,142 @@
+{% load static %}
 
-<h2>Login</h2>
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
-    <label for="id_username">Username:</label>
-    <input id="id_username" type="text" name="username" required>
+<!DOCTYPE html>
+<html lang="en">
 
-    <label for="id_password">Password:</label>
-    <input id="id_password" type="password" name="password" required>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>ScanScore</title>
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Add all other vendor CSS files similarly -->
+    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-5.0.0-beta1.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/LineIcons.2.0.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/tiny-slider.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/lindy-uikit.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
+    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
 
-    <button type="submit">Login</button>
-</form>
+    <style>
+       
+        .hero-section-wrapper-5 {
+            margin-top: 10%;
+            background-color: rgb(244, 244, 249, 0.2);
+            /* Soft light blue background for a calm feel */
 
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card {
+            padding: 30px;
+            box-shadow: 5px 5px 6px 8px rgba(0, 0, 0, 0.15);
+            /* Softer shadow */
+            background-color: rgb(255, 255, 255);
+            /* Bright, clean white background */
+            border-radius: 15px;
+            /* Softer round corners */
+        }
+
+        .form-control {
+            min-width: 450px;
+            width: 100%;
+            max-width: 550px;
+            /* Slightly increased for better form factor */
+        }
+
+        .btn {
+            background-color: #4a67d6;
+            /* More vibrant blue */
+            color: white;
+            border: none;
+            /* Remove border */
+        }
+
+        .btn:hover {
+            background-color: #3654d1;
+            /* Slightly darker on hover for better interaction */
+        }
+
+        .form-label {
+            color: #495057;
+            /* Darker label for better readability */
+        }
+    </style>
+</head>
+
+</head>
+
+<body>
+    <header id="header" class="fixed-top">
+        <div class="container">
+          <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"><a  href="{% url 'index' %}">ScanScore</a></h1>
+        </div>
+      </header>
+    <section id="hero" class="d-flex align-items-center pt-0" style="height: 100vh;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 d-flex flex-column justify-content-center order-2 order-lg-1"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div class="card text-black">
+                        <h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: #3654d1;">Login</h2>
+                        <form method="post" action="{% url 'login' %}" class="mx-1 mx-md-4">
+                            {% csrf_token %}
+                            {% if error %}
+                            <p class="error">{{ error }}</p>
+                            {% endif %}
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="fas fa-user fa-lg me-3 fa-fw" style="color: #4a67d6;"></i>
+                                <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                    <input type="text" id="id_username" class="form-control" name="username" required
+                                        aria-label="Username" />
+                                    <label class="form-label" for="id_username">Username</label>
+                                </div>
+                            </div>
+        
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="fas fa-lock fa-lg me-3 fa-fw" style="color: #4a67d6;"></i>
+                                <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                    <input type="password" id="id_password" class="form-control" name="password" required
+                                        aria-label="Password" />
+                                    <label class="form-label" for="id_password">Password</label>
+                                </div>
+                            </div>
+        
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100">Login</button>
+                                
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+            <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+            <!-- Load other JS vendor files similarly -->
+            <script src="{% static 'js/main.js' %}"></script>
+            <script src="{% static 'js/bootstrap-5.0.0-beta1.min.js' %}"></script>
+            <script src="{% static 'js/tiny-slider.js' %}"></script>
+            <script src="{% static 'js/wow.min.js' %}"></script>
+            <script src="{% static 'js/main1.js' %}"></script>
+            <script src="{% static 'js/mdb.umd.min.js' %}"></script>
+        </body>
+
+</html>
