@@ -7,12 +7,14 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>ScanScore</title>
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Add all other vendor CSS files similarly -->
-    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/bootstrap-5.0.0-beta1.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/LineIcons.2.0.css' %}" />
     <link rel="stylesheet" href="{% static 'css/tiny-slider.css' %}" />
@@ -26,9 +28,8 @@
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
 
     <style>
-       
         .hero-section-wrapper-5 {
-            margin-top: 10%;
+            /* margin-top: 10%; */
             background-color: rgb(244, 244, 249, 0.2);
             /* Soft light blue background for a calm feel */
 
@@ -70,24 +71,37 @@
             color: #495057;
             /* Darker label for better readability */
         }
+
+        #header {
+            display: flex;
+            justify-content: center;
+            /* Center the contents horizontally */
+            align-items: center;
+            /* Center the contents vertically */
+            height: 80px;
+            /* Adjust height as needed */
+        }
+
+        #header h1 {
+            margin: 0;
+        }
     </style>
 </head>
 
-</head>
-
 <body>
-    <header id="header" class="fixed-top">
-        <div class="container">
-          <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"><a  href="{% url 'index' %}">ScanScore</a></h1>
-        </div>
-      </header>
-    <section id="hero" class="d-flex align-items-center pt-0" style="height: 100vh;">
+    <section id="hero" class="d-flex align-items-center" style="height: 100vh;">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 d-flex flex-column justify-content-center order-2 order-lg-1"
+                <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
                     data-aos="fade-up" data-aos-delay="200">
+                    <h1 style="margin-left: 60px;">Welcome to
+                        <a style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; "
+                            href="{% url 'login' %}">ScanScore</a>
+                    </h1>
+                    <h2 style="margin-left: 130px;">Say Goodbye to Grading Papers!</h2>
                     <div class="card text-black">
-                        <h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: #3654d1;">Login</h2>
+                        <h2 class="text-center  fw-bold mb-5  mx-md-4 " style="color: #3654d1;font-size: 40px; ">Login
+                        </h2>
                         <form method="post" action="{% url 'login' %}" class="mx-1 mx-md-4">
                             {% csrf_token %}
                             {% if error %}
@@ -101,23 +115,26 @@
                                     <label class="form-label" for="id_username">Username</label>
                                 </div>
                             </div>
-        
+
                             <div class="d-flex flex-row align-items-center mb-4">
                                 <i class="fas fa-lock fa-lg me-3 fa-fw" style="color: #4a67d6;"></i>
                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                                    <input type="password" id="id_password" class="form-control" name="password" required
-                                        aria-label="Password" />
+                                    <input type="password" id="id_password" class="form-control" name="password"
+                                        required aria-label="Password" />
                                     <label class="form-label" for="id_password">Password</label>
                                 </div>
                             </div>
-        
+
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100">Login</button>
-                                
                             </div>
                         </form>
+                        <div class="d-flex justify-content-center justify-content">
+                            <a href='{% url 'register_teacher' %}'>Register as Teacher?</a>
+                            <a href='{% url 'register_student' %}' style="margin-left: 20px;">Register as Student?</a>
+                        </div>
+                        </form>
                     </div>
-
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
                     <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
@@ -125,18 +142,17 @@
             </div>
         </div>
     </section>
-
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
-            <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-            <!-- Load other JS vendor files similarly -->
-            <script src="{% static 'js/main.js' %}"></script>
-            <script src="{% static 'js/bootstrap-5.0.0-beta1.min.js' %}"></script>
-            <script src="{% static 'js/tiny-slider.js' %}"></script>
-            <script src="{% static 'js/wow.min.js' %}"></script>
-            <script src="{% static 'js/main1.js' %}"></script>
-            <script src="{% static 'js/mdb.umd.min.js' %}"></script>
-        </body>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Load other JS vendor files similarly -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/bootstrap-5.0.0-beta1.min.js' %}"></script>
+    <script src="{% static 'js/tiny-slider.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/main1.js' %}"></script>
+    <script src="{% static 'js/mdb.umd.min.js' %}"></script>
+</body>
 
 </html>

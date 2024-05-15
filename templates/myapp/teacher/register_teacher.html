@@ -78,7 +78,7 @@
 <body>
     <header id="header" class="fixed-top">
         <div class="container">
-          <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"><a  href="{% url 'index' %}">ScanScore</a></h1>
+          <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"><a  href="{% url 'login' %}">ScanScore</a></h1>
         </div>
     </header>
     <section id="hero" class="d-flex align-items-center pt-4" style="height: 100vh;">
@@ -121,7 +121,7 @@
                                 <button type="submit" class="btn btn-outline-secondary m-1 w-100 ">Register</button>
                             </div>
                             <p class="text-center mt-3">
-                                Already have an account? <a href="{% url 'index' %}">Login here</a>
+                                Already have an account? <a href="{% url 'login' %}">Login here</a>
                             </p>
                         </form>
                         {% endblock %}
