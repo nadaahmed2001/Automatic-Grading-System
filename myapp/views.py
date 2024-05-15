@@ -354,7 +354,7 @@ def approve_grades(request, exam_id):
             submission.is_approved = True
             submission.save()
         messages.success(request, "Grades approved successfully and sent to students!.")
-        return render(request, 'myapp/teacher/view_grades.html', {'submissions': [submission], 'exam': submission.exam})
+        return render(request, 'myapp/teacher/view_grades.html', {'submissions': submissions, 'exam': exam})
     else:
         return HttpResponseForbidden("Invalid request")
 
