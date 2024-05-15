@@ -185,7 +185,6 @@ def edit_profile_student(request):
         user.student.student_id = student_id
         print("New student ID:", user.student.student_id)
         
-
         if password:  # Check if password was provided
             user.set_password(password)
             user.save()
@@ -198,10 +197,18 @@ def edit_profile_student(request):
                 print("Now logged in as :", updated_user.username)
                 messages.success(request, 'Profile updated successfully.')
                 return redirect('view_profile_student')
+        else:
+            user.save()
+            user.student.save()
+            messages.success(request, 'Profile updated successfully without changing password.')
+            return redirect('view_profile_student')
     else:
-        messages.error(request, "There was an error updating your profile. Please try again.")
-        return redirect('edit_profile_student')
-        
+        # GET method, just show the edit profile form
+        return render(request, 'myapp/student/view_profile.html', {'user': request.user})
+
+    # If something goes wrong, redirect back to the edit form
+    messages.error(request, "There was an error updating your profile. Please try again.")
+    return redirect('edit_profile_student')
 
 @login_required
 def view_profile_teacher(request):
