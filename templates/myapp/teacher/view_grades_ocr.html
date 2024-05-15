@@ -1,0 +1,162 @@
+{% extends "myapp/teacher/teacher-base.html" %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="container">
+
+    <h1>Student Answers for: {{ exam.name }}</h1>
+
+    <style>
+        /* CSS Styling for the table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        /* Button Styling */
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-info {
+            color: #fff;
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .disabled-button {
+            background-color: #6c757d; /* Gray color */
+            border-color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.65; /* reduce the opacity to make it visually distinct as disabled
+        }        
+
+        /* Modal Styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student Answer</th>
+                    <th>Grade (10)</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submissions %}
+                    <tr>
+                        <td>{{ submission.student_id }}</td>
+                        <td>{{ submission.extracted_text}}</td>
+                        <td>
+                            {% comment %} {{ submission.score }} {% endcomment %}
+                            <form action="{% url 'modify_grade_ocr' submission.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="number" name="new_grade" value="{{ submission.score }}" min="0" max="10" required>
+                                <button type="submit" class="btn btn-info">Modify Grade</button>
+                            </form>
+                        
+                        </td>
+                        <td>
+                            <img src="{{ submission.image.url }}" alt="Student Answer" style="max-width: 200px;">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Approve Button -->
+    {% comment %} <form action="{% url 'approve_grades_ocr' exam.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Send Grades to Students</button>
+    </form> {% endcomment %}
+
+
+</div>
+
+
+
+{% endblock %}
+
+
+

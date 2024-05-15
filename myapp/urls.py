@@ -34,7 +34,8 @@ urlpatterns = [
     # OCR related paths
     path('teacher/exam/<int:exam_id>/upload_images/', views.upload_images, name='upload_images'),
     path('teacher/exam/<int:exam_id>/view_submissions_ocr/', views.view_submissions_ocr, name='view_submissions_ocr'),
-    # path('teacher/exam/<int:exam_id>/view_grades_ocr/', views.view_grades_ocr, name='view_grades_ocr'),
+    path('teacher/exam/<int:exam_id>/view_grades_ocr/', views.view_grades_ocr, name='view_grades_ocr'),
+    path('teacher/modify_grade_ocr/<int:submission_id>/', views.modify_grade_ocr, name='modify_grade_ocr'),
     
 
 

@@ -19,6 +19,7 @@ def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng
 
 def extract_text_and_split(file):
     extracted_text_json = ocr_space_file(file)
+    print("Extracted text: ", extracted_text_json.strip())
     response_data = json.loads(extracted_text_json)
     text = response_data["ParsedResults"][0]["ParsedText"] if "ParsedResults" in response_data else ""
 

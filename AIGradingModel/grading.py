@@ -1,4 +1,4 @@
-from myapp.models import Exam, ExamSubmission
+from myapp.models import Exam, ExamSubmission, ExamSubmissionOCR
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -41,4 +41,24 @@ def StartGrading(exam_id):
 
     return exam_submissions
 
+
+def StartGradingOCR(exam_id):
+    exam_submissions = ExamSubmissionOCR.objects.filter(exam_id=exam_id)
+
+    for submission in exam_submissions:
+        # Get the exam model answer and keywords
+        model_answer = submission.exam.model_answer
+        keywords = submission.exam.keywordsList
+
+        # Calculate semantic similarity and keyword score
+        semantic_similarity = calculate_similarity(submission.extracted_text, model_answer)
+        keyword_score = calculate_keyword_score(submission.extracted_text, keywords)
+
+        # Calculate question grade
+        submission.score = semantic_similarity + keyword_score
+        submission.is_graded = True
+        # Update the submission
+        submission.save()
+
+    return exam_submissions
 

@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from AIGradingModel.grading import StartGrading
+from AIGradingModel.grading import StartGrading, StartGradingOCR
 from .models import ExamSubmissionOCR
 from AIGradingModel.OCR_Model.OCR import extract_text_and_split
 from django.core.files.storage import FileSystemStorage
@@ -417,4 +417,27 @@ def view_submissions_ocr(request, exam_id):
     })
 
 
+
+@login_required
+def view_grades_ocr(request, exam_id):
+    exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
+    graded_submissions = StartGradingOCR(exam_id)  # This will update and return graded submissions
+    for submission in graded_submissions:
+        print(f"Submission ID: {submission.id} - Student ID: {submission.student_id} - Score: {submission.score}")
+    return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': graded_submissions, 'exam': exam})
+
+
+@login_required
+def modify_grade_ocr(request, submission_id):
+    if request.method == 'POST':
+        new_grade = request.POST.get('new_grade')
+        submissions=ExamSubmissionOCR.objects.filter(exam__teacher=request.user)
+        submission = submissions.get(id=submission_id) #submission that will update grade
+        print("Before saving: ", submission.score)
+        submission.score = int(new_grade)
+        submission.save()
+        print("After saving: ", submission.score)
+        messages.success(request, "Grade updated successfully.")
+        return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': submissions})
+    return HttpResponseForbidden("Invalid request")
 
