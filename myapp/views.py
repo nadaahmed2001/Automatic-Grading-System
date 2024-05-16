@@ -123,6 +123,29 @@ def view_exam(request, exam_id):
 
 
 @login_required
+def view_exam_student(request, exam_id): 
+    exam = get_object_or_404(Exam, pk=exam_id)
+    print("Exam ID:", exam_id) #Debugging
+    print("User ID:", request.user.id) #Debugging
+
+    try:
+        submission = ExamSubmission.objects.get(exam=exam, student=request.user)
+        print("Submission found:", submission.id) #Debugging
+    except ExamSubmission.DoesNotExist:
+        submission = None
+        print("Submission not found for user:", request.user.id, "and exam:", exam_id) #Debugging
+
+    if not submission:
+        print("No submission found") #Debugging
+        return HttpResponseForbidden("You are not authorized to view this exam.")
+    
+    return render(request, 'myapp/student/view_exam.html', {
+        'exam': exam,
+        'submission': submission
+    })
+
+
+@login_required
 def take_exam(request):
     search_query = request.GET.get('search', '')  # Get the search term from the URL
     # Filter the exams for which the student has not submitted answers
@@ -224,6 +247,7 @@ def edit_profile_teacher(request):
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print("password:", password)
         print("Retrieved data:", first_name, last_name, email, username, password)
 
         # Update user's profile data

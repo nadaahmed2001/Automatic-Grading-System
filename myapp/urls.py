@@ -19,6 +19,8 @@ urlpatterns = [
     path('student/take_exam/', views.take_exam, name='take_exam'),
     path('student/enter_exam/<int:exam_id>/', views.enter_exam, name='enter_exam'),
     path('student/submit_exam/<int:exam_id>/', views.submit_exam, name='submit_exam'),
+    path('student/exam/<int:exam_id>/view/', views.view_exam_student, name='view_exam_student'),
+
     path('teacher/edit_exam/<int:exam_id>/', views.edit_exam, name='edit_exam'),
     path('teacher/exam/<int:exam_id>/publish/', views.publish_exam, name='publish_exam'),
     path('teacher/exam/<int:exam_id>/unpublish/', views.unpublish_exam, name='unpublish_exam'),

@@ -1,0 +1,17 @@
+{% extends "myapp/student/student-base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ exam.name }}</h1>
+    <p><strong>Teacher:</strong> {{ exam.teacher.get_full_name }}</p>
+    <p><strong>Question:</strong> {{ exam.question }}</p>
+    <p><strong>Model Answer:</strong> {{ exam.model_answer }}</p>
+    {% if submission %}
+    <p><strong>Your Answer:</strong> {{ submission.student_answer }}</p>
+    <p><strong>Your Grade:</strong> {{ submission.score }}</p>
+    <p><strong>Date Taken:</strong> {{ submission.time_submitted|date:"D, d M Y" }}</p>
+    {% else %}
+    <p>You have not submitted this exam.</p>
+    {% endif %}
+</div>
+{% endblock %}
