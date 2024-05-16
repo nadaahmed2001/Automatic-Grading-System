@@ -75,7 +75,8 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, 'myapp/index.html')
+    # return to login page
+    return redirect('login')
 
 def student_dashboard(request):
     if not hasattr(request.user, 'student'): # Check if the user is a student
@@ -231,7 +232,7 @@ def edit_profile_teacher(request):
         user.last_name = last_name
         user.email = email
         user.username = username
-
+        print("Password:", password)
         if password:
             user.set_password(password)
             user.save()
