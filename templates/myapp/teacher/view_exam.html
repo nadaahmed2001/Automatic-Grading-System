@@ -52,7 +52,7 @@
 
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'login' %}">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}">Scanscore</a></h1>
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
@@ -127,12 +127,17 @@
                     {% endif %}
             
             
-            
+                    {% if exam.ocr_graded %}
+                    <a href="{% url 'view_grades_ocr' exam.id %}" class="btn btn-primary">View Graded Papers</a>
+                    {% else %}
                     <a href="{% url 'upload_images' exam.id %}" class="btn btn-primary">Upload Images</a>
+                    {% endif %}
             
                     
                 </div>
             </div>
+
+
             {% endblock %}
         </div>
     </section><!-- End Hero -->

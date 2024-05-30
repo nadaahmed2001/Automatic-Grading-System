@@ -14,6 +14,8 @@ from .models import ExamSubmissionOCR
 from AIGradingModel.OCR_Model.OCR import extract_text_and_split
 from django.core.files.storage import FileSystemStorage
 from AIGradingModel import generativeAI
+from AIGradingModel.exportGrades import export_ocr_grades_to_excel
+
 from django.http import JsonResponse
 import json
 
@@ -114,8 +116,8 @@ def create_exam(request):
 
 
 
-
-def view_exam(request, exam_id):
+@login_required
+def view_exam_teacher(request, exam_id): #this will redirect to the specific exam page where the teacher can view the exam details
     exam = Exam.objects.get(pk=exam_id)
     if not (request.user == exam.teacher or hasattr(request.user, 'teacher')):
         return HttpResponseForbidden("You are not authorized to view this exam.")
@@ -446,6 +448,9 @@ def view_submissions_ocr(request, exam_id):
 @login_required
 def view_grades_ocr(request, exam_id):
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
+    exam.ocr_graded = True
+    exam.save()
+    print("now set ocr_graded to", exam.ocr_graded)
     graded_submissions = StartGradingOCR(exam_id)  # This will update and return graded submissions
     for submission in graded_submissions:
         print(f"Submission ID: {submission.id} - Student ID: {submission.student_id} - Score: {submission.score}")
@@ -466,3 +471,9 @@ def modify_grade_ocr(request, submission_id):
         return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': submissions})
     return HttpResponseForbidden("Invalid request")
 
+@login_required
+def export_grades_ocr(request, exam_id):
+    exam = get_object_or_404(Exam, pk=exam_id)
+    print("Exporting grades for exam:", exam.name ,"With ID:", exam_id)
+    submissions = ExamSubmissionOCR.objects.filter(exam_id=exam_id).values('student_id', 'score')
+    return export_ocr_grades_to_excel(exam_id)

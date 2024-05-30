@@ -51,7 +51,7 @@
 
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'login' %}">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}">Scanscore</a></h1>
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
@@ -93,7 +93,7 @@
                         <span class="inactive" style="color: rgb(255, 0, 0);">Inactive</span>
                         {% endif %}
                     </div>
-                    <a href="{% url 'view_exam' exam.id %}" class="col-md-1 col-2">→</a>
+                    <a href="{% url 'view_exam_teacher' exam.id %}" class="col-md-1 col-2">→</a>
                 </div>
                 {% empty %}
                 <div style="text-align: center;">

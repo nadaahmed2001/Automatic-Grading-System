@@ -25,6 +25,7 @@ class Exam(models.Model):
     is_active = models.BooleanField(default=False)
     time_created = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)
+    ocr_graded = models.BooleanField(default=False)
 
 class ExamSubmission(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE,related_name='submissions') #related name is used to access the submissions of a particular exam

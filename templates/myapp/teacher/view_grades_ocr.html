@@ -145,11 +145,15 @@
         </table>
     </div>
 
-    <!-- Approve Button -->
-    {% comment %} <form action="{% url 'approve_grades_ocr' exam.id %}" method="post">
+
+ <form action="{% url 'export_grades_ocr' exam.id %}" method="post"> 
         {% csrf_token %}
-        <button type="submit" class="btn btn-success">Send Grades to Students</button>
-    </form> {% endcomment %}
+        <button type="submit" class="btn btn-primary">Export Grades</button>
+    </form> 
+
+    <a href="{% url 'view_exam_teacher' exam.id %}" class="btn btn-primary">← Back to Exam Details</a>
+
+    
 
 
 </div>
