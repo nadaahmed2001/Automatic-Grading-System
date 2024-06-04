@@ -73,8 +73,8 @@
             background-color: #6c757d; /* Gray color */
             border-color: #6c757d;
             cursor: not-allowed;
-            opacity: 0.65; /* reduce the opacity to make it visually distinct as disabled
-        }        
+            opacity: 0.65; /* reduce the opacity to make it visually distinct as disabled */
+        }
 
         /* Modal Styling */
         .modal {
@@ -87,6 +87,8 @@
             height: 100%; /* Full height */
             overflow: auto; /* Enable scroll if needed */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
@@ -128,16 +130,14 @@
                         <td>{{ submission.student_id }}</td>
                         <td>{{ submission.extracted_text}}</td>
                         <td>
-                            {% comment %} {{ submission.score }} {% endcomment %}
                             <form action="{% url 'modify_grade_ocr' submission.id %}" method="post">
                                 {% csrf_token %}
                                 <input type="number" name="new_grade" value="{{ submission.score }}" min="0" max="10" required>
                                 <button type="submit" class="btn btn-info">Modify Grade</button>
                             </form>
-                        
                         </td>
                         <td>
-                            <img src="{{ submission.image.url }}" alt="Student Answer" style="max-width: 200px;">
+                            <img src="{{ submission.image.url }}" alt="Student Answer" style="max-width: 200px; cursor: pointer;" onclick="showModal('{{ submission.image.url }}')">
                         </td>
                     </tr>
                 {% endfor %}
@@ -145,22 +145,40 @@
         </table>
     </div>
 
-
- <form action="{% url 'export_grades_ocr' exam.id %}" method="post"> 
+    <form action="{% url 'export_grades_ocr' exam.id %}" method="post"> 
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">Export Grades</button>
     </form> 
 
     <a href="{% url 'view_exam_teacher' exam.id %}" class="btn btn-primary">← Back to Exam Details</a>
 
-    
-
-
 </div>
 
+<!-- Image Modal -->
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="hideModal()">&times;</span>
+        <img id="modalImage" src="" style="max-width: 100%;">
+    </div>
+</div>
 
+<script>
+    function showModal(imageUrl) {
+        document.getElementById('modalImage').src = imageUrl;
+        document.getElementById('imageModal').style.display = 'flex';
+    }
+
+    function hideModal() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        let modal = document.getElementById('imageModal');
+        if (event.target == modal) {
+            hideModal();
+        }
+    }
+</script>
 
 {% endblock %}
-
-
-
