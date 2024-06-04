@@ -119,9 +119,11 @@ def create_exam(request):
 @login_required
 def view_exam_teacher(request, exam_id): #this will redirect to the specific exam page where the teacher can view the exam details
     exam = Exam.objects.get(pk=exam_id)
+    exam_submissions = ExamSubmission.objects.filter(exam=exam)
     if not (request.user == exam.teacher or hasattr(request.user, 'teacher')):
         return HttpResponseForbidden("You are not authorized to view this exam.")
-    return render(request, 'myapp/teacher/view_exam.html', {'exam': exam})
+    return render(request, 'myapp/teacher/view_exam.html', {'exam': exam, 'exam_submissions': exam_submissions})
+# sent exam submissions to determine if this exam is graded or not
 
 
 @login_required
@@ -285,7 +287,7 @@ def edit_exam(request, exam_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Exam updated successfully.')
-            return redirect('view_exam', exam_id=exam.id)
+            return redirect('view_exam_teacher', exam_id=exam.id)
     else:
         form = ExamForm(instance=exam)  # Initialize form with instance data on GET (to hold the current data in the form)
     return render(request, 'myapp/teacher/edit_exam.html', {'form': form, 'exam': exam})
@@ -299,7 +301,7 @@ def publish_exam(request, exam_id):
         exam.is_active = True
         exam.save()
         messages.success(request, "Exam published successfully.")
-        return redirect(reverse('view_exam', args=[exam.id]))
+        return redirect('view_exam_teacher', exam_id=exam.id)
     else:
         return HttpResponseForbidden("Invalid request")
 
@@ -311,7 +313,7 @@ def unpublish_exam(request, exam_id):
         exam.is_active = False
         exam.save()
         messages.success(request, "Exam unpublished successfully.")
-        return redirect('view_exam', exam_id=exam.id)
+        return redirect('view_exam_teacher', exam_id=exam.id)
     else:
         return HttpResponseForbidden("Invalid request")
 
@@ -349,23 +351,33 @@ def view_submissions(request, exam_id):
 
 @login_required
 def view_grades(request, exam_id):
+    # check if this exam is alraedy graded or not
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
-    graded_submissions = StartGrading(exam_id)  # This will update and return graded submissions
-    return render(request, 'myapp/teacher/view_grades.html', {'submissions': graded_submissions, 'exam': exam})
+    exam_submissions = ExamSubmission.objects.filter(exam=exam)
+    is_graded = all(submission.is_graded for submission in exam_submissions)
+    if not is_graded:
+        graded_submissions = StartGrading(exam_id)  # This will update and return graded submissions
+        return render(request, 'myapp/teacher/view_grades.html', {'submissions': graded_submissions, 'exam': exam})
+    else:
+        return render(request, 'myapp/teacher/view_grades.html', {'submissions': exam_submissions, 'exam': exam})
 
 
 
 @login_required
 def modify_grade(request, submission_id):
     if request.method == 'POST':
-        new_grade = request.POST.get('new_grade')
+        print("Submission ID:", submission_id)
         submission = get_object_or_404(ExamSubmission, id=submission_id, exam__teacher=request.user)
+        exam = submission.exam
+        submissions = ExamSubmission.objects.filter(exam=exam)  # Retrieve all submissions for the exam
+
+        new_grade = request.POST.get('new_grade')
         submission.score = int(new_grade)
         print(f"Before saving: {submission.score}")  # Log before saving
         submission.save()
         print(f"After saving: {submission.score}")
         messages.success(request, "Grade updated successfully.")
-        return render(request, 'myapp/teacher/view_grades.html', {'submissions': [submission], 'exam': submission.exam})
+        return render(request, 'myapp/teacher/view_grades.html', {'submissions': submissions, 'exam': exam})
     return HttpResponseForbidden("Invalid request")
 
 

@@ -82,7 +82,19 @@
         <div class="container card text-black" style="text-align: center;">
             
             {% block content %}
-        
+
+
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+
             <div class="container">
                 <h1 style="color: blue;">Exam Details</h1>
                 <div class="exam-date">
@@ -114,18 +126,21 @@
                         {% csrf_token %}
                         <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to make the exam available for students?');">Publish</button>
                     </form>
-                    <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary">View Students' Submissions</a>
-                    {% endif %}
-            
-                    <!-- Unpublish Exam -->
-                    {% if exam.is_active %}
+                    {% else %}
                     <form action="{% url 'unpublish_exam' exam.id %}" method="post" style="display: inline-block;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to make the exam unavailable for students?');">Unpublish</button>
                     </form>
+                    {% endif %}
+
+                    {% comment %} If exam has graded submissions , then kust view the grades , else view submissions {% endcomment %}
+                    {% if exam_submissions.0.is_graded %}
+                    <a href="{% url 'view_grades' exam.id %}" class="btn btn-primary">View Grades</a>
+                    {% else %}
                     <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary">View Students' Submissions</a>
                     {% endif %}
             
+
             
                     {% if exam.ocr_graded %}
                     <a href="{% url 'view_grades_ocr' exam.id %}" class="btn btn-primary">View Graded Papers</a>

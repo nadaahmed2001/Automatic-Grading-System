@@ -88,6 +88,15 @@
                         <h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: #3654d1;">Register as
                             Student</h2>
                         {% block content %}
+
+
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert {{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
                         <form method="post" action="{% url 'register_student' %}" class="mx-1 mx-md-4">
                             {% csrf_token %}
                             {% if form.non_field_errors %}

@@ -80,6 +80,15 @@
     <section id="hero" class="d-flex" style="height: 100vh; text-align: left;">
         <div class="container">
             {% block content %}
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
             <div class="exam-list">
                 {% for exam in exams %}
                 <div class="row exam-item"

@@ -94,7 +94,14 @@
 
                                 <h3>Profile Settings</h3>
                             </div>
-
+                            
+                            {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                             <form method="POST" action="{% url 'edit_profile_teacher' %}">
                                 {% csrf_token %}
                                 <div class="row mt-2">

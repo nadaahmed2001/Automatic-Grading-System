@@ -1,6 +1,13 @@
 {% extends "myapp/student/student-base.html" %}
 
 {% block content %}
+{% if messages %}
+{% for message in messages %}
+    <div class="alert {{ message.tags }}">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
 <div class="container">
     <h1>{{ exam.name }}</h1>
     <p><strong>Teacher:</strong> {{ exam.teacher.get_full_name }}</p>

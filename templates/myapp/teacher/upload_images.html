@@ -1,6 +1,13 @@
 {% extends "myapp/teacher/teacher-base.html" %}
 
 {% block content %}
+{% if messages %}
+{% for message in messages %}
+    <div class="alert {{ message.tags }}">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
 <div class="container">
     <h1>Upload Images for Exam ID: {{ exam_id }}</h1>
     <form method="post" enctype="multipart/form-data">
