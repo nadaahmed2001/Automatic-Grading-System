@@ -5,7 +5,6 @@
     <h1>Create an Exam</h1>
     <form method="post" action="{% url 'create_exam' %}">
         {% csrf_token %}
-        {% comment %} {{ form.as_p }} {% endcomment %}
         <div>
             <label for="id_exam_name">Exam Name:</label>
             {{ form.name }}
@@ -13,6 +12,11 @@
         <div>
             <label for="id_question">Question:</label>
             {{ form.question }}
+        </div>
+        <div>
+            <label for="id_constraints">Constraints:</label>
+            <label>Enter any constraints for the model answer, e.g., 'short answer, undergraduate level'</label>
+            <textarea id="constraint_text" rows="3" placeholder="Enter any constraints for the model answer, e.g., 'short answer, undergraduate level'"></textarea>
         </div>
         <div>
             <label for="id_model_answer">Model Answer:</label>
@@ -26,23 +30,36 @@
 
         <button type="submit" class="btn btn-primary">Done</button>
     </form>
+    <div id="error-alert" class="alert alert-danger" style="display: none;"></div>
 </div>
 <script>
 function generateModelAnswer() {
     const question = document.getElementById('id_question').value;
+    const constraints = document.getElementById('constraint_text').value;
+
     fetch("{% url 'generate_answer' %}", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': '{{ csrf_token }}'
         },
-        body: JSON.stringify({question: question})
+        body: JSON.stringify({
+            question: question,
+            constraints: constraints
+        })
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('id_model_answer').value = data.model_answer; // The server responds with JSON that includes model_answer
+        if (data.model_answer) {
+            document.getElementById('id_model_answer').value = data.model_answer;
+            document.getElementById('error-alert').style.display = 'none';
+        } else {
+            throw new Error(data.error || 'Error generating the model answer');
+        }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        alert("This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.");
+    });
 }
 </script>
 {% endblock %}

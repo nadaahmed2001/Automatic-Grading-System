@@ -400,14 +400,27 @@ def approve_grades(request, exam_id):
 
 
 
-
 @login_required
 def generate_answer(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        question = data.get('question', '')
-        model_answer = generativeAI.generate_model_answer(question) 
-        return JsonResponse({'model_answer': model_answer})
+        try:
+            data = json.loads(request.body)
+            question = data.get('question', '')
+            constraints = data.get('constraints', '')
+
+            if not question:
+                return JsonResponse({'error': 'Question is required.'}, status=400)
+
+            model_answer = generativeAI.generate_model_answer(question, constraints)
+            
+            if not model_answer:
+                return JsonResponse({'error': 'Failed to generate model answer.'}, status=500)
+
+            return JsonResponse({'model_answer': model_answer})
+        
+        except Exception as e:
+            return JsonResponse({'error': 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.'}, status=500)
+
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
