@@ -77,22 +77,13 @@
     </header><!-- End Header -->
 
     <!-- Hero Section -->
-    <section id="hero" class="d-flex" style="height: 100vh; text-align: left;">
+    <section id="hero" class="d-flex" style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
         <div class="container">
             {% block content %}
-
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert {{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
-
             <div class="exam-list">
                 {% for exam in exams %}
                 <div class="row exam-item"
-                    style="font-size: large; border-radius: 20px; background-color: white; color: rgb(99, 154, 206); padding: 12px; margin-bottom: 15px;">
+                    style="font-size: 130%; border-radius: 20px; background-color: white; color: rgb(28, 130, 224); padding: 12px; margin-bottom: 15px;">
                     <div class="col-md-4 col-12">{{ exam.name }}</div>
                     <div class="col-md-4 col-12">{{ exam.time_created }}</div>
                     <div class="col-md-3 col-10">
