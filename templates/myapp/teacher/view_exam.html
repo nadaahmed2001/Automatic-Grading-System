@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -77,85 +76,81 @@
         </div>
     </header><!-- End Header -->
 
-    <!-- Hero Section -->
-    <section id="hero" class="d-flex" style="height: 100vh; text-align: left;">
-        <div class="container card text-black" style="text-align: center;">
-            
-            {% block content %}
+    <section id="hero" class="d-flex align-items-center"
+        style="height: 100vh;font-family: Arial, Helvetica, sans-serif;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center order-2 order-lg-1" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="card text-black"
+                    style="border-radius: 25px; padding-bottom: 5%;padding-left: 2%; padding-right: 2%;">
+                    {% block content %}
+                    <div class="container" style="padding-top: 3%;">
+                        <h1 style="color: rgb(85, 85, 253);text-align: center;">Exam Details</h1>
+                        <p class="exam-name">
+                        <div class="d-flex"> <strong style="font-size: 150%;">Exam Name : </strong>
+                            &nbsp;<input type="text" class="form-control" style="width: 25%;" disabled value="{{ exam.name }}">
+                        </div>
+                        <div class="exam-date">
+                            {{ exam.time_created }}
+                        </div>
+                        </p>
+                        <div class="form-group exam-question" style="font-size: 150%;">
+                            <strong for="id_question">Question:</strong>
+                            <textarea id="id_question" name="question" rows="1" class="form-control question"
+                                 disabled>{{ exam.question }}</textarea>
+                        </div>
+                        <br>
+                        <div class="form-group exam-model-answer" style="font-size: 150%;">
+                            <strong for="id_model_answer">Model Answer:</strong>
+                            <textarea id="id_model_answer" name="model_answer" rows="3"
+                                class="form-control model_answer"
+                                placeholder="Enter Model Answer...." disabled>{{ exam.model_answer }}</textarea>
+                        </div>
+                        <!-- Keywords would also be displayed here -->
+                        <br>
+                        <div class="d-flex justify-content-between exam-buttons">
+                            <div style="flex-grow: 1;">
+                                <a href="{% url 'edit_exam' exam.id %}" class="btn btn-primary me-1">Edit</a>
+                        
+                                <form action="{% url 'delete_exam' exam.id %}" method="post" class="d-inline me-1">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this exam?');">Delete</button>
+                                </form>
+                        
+                                {% if not exam.is_active %}
+                                <form action="{% url 'publish_exam' exam.id %}" method="post" class="d-inline me-1">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to make the exam available for students?');">Publish</button>
+                                </form>
+                                {% else %}
+                                <form action="{% url 'unpublish_exam' exam.id %}" method="post" class="d-inline me-1">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to make the exam unavailable for students?');">Unpublish</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {% if exam_submissions.0.is_graded %}
+                                <a href="{% url 'view_grades' exam.id %}" class="btn btn-primary me-1">View Grades</a>
+                                {% else %}
+                                <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary me-1">View Students' Submissions</a>
+                                {% endif %}
+                        
+                                {% if exam.ocr_graded %}
+                                <a href="{% url 'view_grades_ocr' exam.id %}" class="btn btn-primary me-1">View Graded Papers</a>
+                                {% else %}
+                                <a href="{% url 'upload_images' exam.id %}" class="btn btn-primary me-1">Upload Images</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
 
 
-
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert {{ message.tags }}">
-                        {{ message }}
                     </div>
-                {% endfor %}
-            {% endif %}
-
-
-
-            <div class="container">
-                <h1 style="color: blue;">Exam Details</h1>
-                <div class="exam-date">
-                    {{ exam.time_created }}
-                </div>
-                <div class="exam-name">
-                    {{ exam.name }}
-                </div>
-                <div class="exam-question">
-                    {{ exam.question }}
-                </div>
-                <div class="exam-model-answer">
-                    {{ exam.model_answer }}
-                </div>
-                <!-- Keywords would also be displayed here -->
-            
-                <div class="exam-buttons">
-                    <a href="{% url 'edit_exam' exam.id %}" class="btn btn-primary">Edit</a>
-            
-                    <!-- Delete Exam -->
-                    <form action="{% url 'delete_exam' exam.id %}" method="post" style="display: inline-block;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this exam?');">Delete</button>
-                    </form>
-            
-                    <!-- Publish Exam -->
-                    {% if not exam.is_active %}
-                    <form action="{% url 'publish_exam' exam.id %}" method="post" style="display: inline-block;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to make the exam available for students?');">Publish</button>
-                    </form>
-                    {% else %}
-                    <form action="{% url 'unpublish_exam' exam.id %}" method="post" style="display: inline-block;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to make the exam unavailable for students?');">Unpublish</button>
-                    </form>
-                    {% endif %}
-
-                    {% comment %} If exam has graded submissions , then kust view the grades , else view submissions {% endcomment %}
-                    {% if exam_submissions.0.is_graded %}
-                    <a href="{% url 'view_grades' exam.id %}" class="btn btn-primary">View Grades</a>
-                    {% else %}
-                    <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary">View Students' Submissions</a>
-                    {% endif %}
-            
-
-            
-                    {% if exam.ocr_graded %}
-                    <a href="{% url 'view_grades_ocr' exam.id %}" class="btn btn-primary">View Graded Papers</a>
-                    {% else %}
-                    <a href="{% url 'upload_images' exam.id %}" class="btn btn-primary">Upload Images</a>
-                    {% endif %}
-            
-                    
+                    {% endblock %}
                 </div>
             </div>
-
-
-            {% endblock %}
-        </div>
-    </section><!-- End Hero -->
+    </section>
 
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
