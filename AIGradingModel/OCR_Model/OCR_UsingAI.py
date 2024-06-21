@@ -6,13 +6,10 @@ genai.configure(api_key=GOOGLE_API_KEY)
 
 def extract_text_and_ID(file):
 
-  #open the file
   file = PIL.Image.open(file)
 
-  #this model to extract and edit the words were written incorrectly.
   model_1 = genai.GenerativeModel(model_name="gemini-pro-vision")
 
-  #this model writes the words extracted as it without editting on them.
   model_2 = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
   student_id  = model_1.generate_content(["write what was written in the first line containing numbers in the photo", file])
