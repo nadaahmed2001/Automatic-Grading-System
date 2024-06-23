@@ -1,65 +1,356 @@
-{% extends "myapp/teacher/teacher-base.html" %}
+{% load static %}
 
-{% block content %}
-<div class="container">
-    <h1>OCR Submissions for Exam: {{ exam.name }}</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Student ID</th>
-                <th>Extracted Answer</th>
-                <th>Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for submission in submissions %}
-            <tr>
-                <td>{{ submission.student_id }}</td>
-                <td>{{ submission.extracted_text }}</td>
-                <td>
-                    <!-- Image with modal trigger -->
-                    <img src="{{ submission.image.url }}" alt="Student Submission" style="cursor: pointer; max-width: 200px; max-height: 200px;" onclick="showModal('{{ submission.image.url }}')">
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>ScanScore</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-<!-- Grade Button -->
-{% if submissions %} <!-- Only show the button if there are submissions -->
-    <form action="{% url 'view_grades_ocr' exam.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success">Start Grading</button>
-    </form>
-{% endif %}
+    <!-- Google Fonts -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
 
-<!-- Image Modal -->
-<div id="imageModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-    <div class="modal-content" style="background-color:white; border-radius: 10px;padding:5px; overflow: hidden; max-width: 50%; max-height: 80%;">
-        <span class="close" style="cursor:pointer; float:right; font-size:24px;" onclick="hideModal()">&times;</span>
-        <img id="modalImage" src="" style="max-width:70%; display: block; margin: auto;">
-    </div>
-</div>
+    <style>
+        /* Header Styling */
+        #header {
+            width: 100%;
+            background-color: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
 
-<script>
-function showModal(imageUrl) {
-    document.getElementById('modalImage').src = imageUrl;
-    document.getElementById('imageModal').style.display = 'flex';
-}
+        #header .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
 
-function hideModal() {
-    document.getElementById('imageModal').style.display = 'none';
-}
+        #header .logo {
+            text-align: center;
+        }
 
-// Close modal when clicking outside of it
-window.onclick = function(event) {
-    let modal = document.getElementById('imageModal');
-    if (event.target == modal) {
-        hideModal();
-    }
-}
-</script>
+        /* Main Content Styling */
+        #main {
+            margin-top: 70px;
+            /* Adjust based on header height */
+            padding: 2%;
+        }
 
-{% endblock %}
+        /* Grade Colors */
+        .grade.low {
+            color: red;
+        }
+
+        .grade.medium {
+            color: yellow;
+        }
+
+        .grade.high {
+            color: green;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .btn-secondary {
+            margin-top: 10px;
+        }
+
+        #error-alert {
+            margin-top: 20px;
+        }
+
+        .constraint-label {
+            display: block;
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 25px;
+        }
+
+        .form-control.model-answer {
+            width: 100%;
+            height: 150px;
+            resize: vertical;
+        }
+
+        .input-with-button {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-button textarea {
+            flex: 1;
+        }
+
+        .input-with-button button {
+            margin-left: 10px;
+        }
+
+        /* Button Styling */
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-info {
+            color: #fff;
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        /* Table Styling */
+        .table-container {
+            margin-top: 20px;
+        }
+
+        #dataTable thead {
+            border-radius: 25px;
+            background-color: rgb(118, 118, 255);
+            color: white;
+        }
+
+        /* Footer Styling */
+        .sticky-footer {
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header" class="fixed-top" style="padding-left: 2%;padding-right: 2%;">
+        <div class="d-flex align-items-center justify-content-between">
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}">Scanscore</a></h1>
+            <!-- .navbar -->
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}">Home</a></li>
+                    <li><a class="nav-link scrollto active" href="{% url 'create_exam' %}">Make New Exam</a></li>
+                    <li class="dropdown">
+                        <a href="#">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
+                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
+                                loading="lazy" />
+                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
+                                class="bi bi-chevron-down"></i>
+                        </a>
+                        <ul>
+                            <li><a href="{% url 'view_profile_teacher' %}">View Profile</a></li>
+                            <li><a href="{% url 'logout' %}">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+        </div>
+    </header><!-- End Header -->
+
+
+    <section id="hero" style="height: 200vh; font-family: Arial, Helvetica, sans-serif;">
+        <div data-aos="fade-up" data-aos-delay="200">
+            <div class="card text-black" style="margin-top: 2%;margin-left: 2%;margin-right: 2%;">
+                <div class="card-header py-3" style="text-align: center;">
+                    <h6 class="m-0 font-weight-bold text-primary">OCR Submissions for Exam: {{ exam.name }}
+                    </h6>
+                </div>
+                <div class="card-body" style="color: #5f88e0;">
+                    <div class="table-responsive">
+                        <div id="answerModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeModal()">&times;</span>
+                                <div id="answerContent"></div>
+                            </div>
+                        </div>
+                        <table class="table table-hover table-striped" id="dataTable" cellspacing="0"
+                            style="color: black;">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Extracted Answer</th>
+                                    <th>Image</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for submission in submissions %}
+                                <tr>
+                                    <td>{{ submission.student_id }}</td>
+                                    <td>{{ submission.extracted_text }}</td>
+                                    <td>
+                                        <!-- Image with modal trigger -->
+                                        <img src="{{ submission.image.url }}" alt="Student Submission"
+                                            style="cursor: pointer; max-width: 200px; max-height: 200px;"
+                                            onclick="showModal('{{ submission.image.url }}')">
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top: 5%; text-align: right;">
+                        {% if submissions %} <!-- Only show the button if there are submissions -->
+                        <form action="{% url 'view_grades_ocr' exam.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Start Grading</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div id="imageModal" class="modal"
+                        style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+                        <div class="modal-content"
+                            style="background-color:white; border-radius: 10px;padding:5px; overflow: hidden; max-width: 50%; max-height: 80%;">
+                            <span class="close" style="cursor:pointer; float:right; font-size:24px;"
+                                onclick="hideModal()">&times;</span>
+                            <img id="modalImage" src="" style="max-width:70%; display: block; margin: auto;">
+                        </div>
+                    </div>
+                </div>
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2020</span>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+
+    <!-- <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a> -->
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
+    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-2/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+
+    <script>
+        function showModal(imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function hideModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function (event) {
+            let modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                hideModal();
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

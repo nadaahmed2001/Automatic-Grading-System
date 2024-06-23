@@ -455,7 +455,7 @@ def upload_images(request, exam_id):
         messages.success(request, "Images uploaded and processed successfully.")
         return redirect('view_submissions_ocr', exam_id=exam_id)
 
-    return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id})
+    return render(request, 'myapp/teacher/upload_images_test.html', {'exam_id': exam_id})
 
 
 
