@@ -92,11 +92,11 @@
 
                         {% if messages %}
                         {% for message in messages %}
-                        <div class="alert {{ message.tags }}">
-                            {{ message }}
-                        </div>
+                            <div class="alert {{ message.tags }}">
+                                {{ message }}
+                            </div>
                         {% endfor %}
-                        {% endif %}
+                    {% endif %}
                         <form method="post" action="{% url 'register_student' %}" class="mx-1 mx-md-4">
                             {% csrf_token %}
                             {% if form.non_field_errors %}

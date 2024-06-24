@@ -164,12 +164,12 @@
     <section id="hero" class="faq section-bg" style="height: 100vh; text-align: center;">
         {% block content %}
         {% if messages %}
-        {% for message in messages %}
-            <div class="alert {{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
         <div class="container" data-aos="fade-up">
             <div class="row" style=" border-radius: 20px; margin-bottom: 15px;">
                 <div class=" col-md-6" style="text-align: left;">

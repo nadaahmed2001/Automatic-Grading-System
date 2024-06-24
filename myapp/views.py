@@ -15,7 +15,6 @@ from AIGradingModel.OCR_Model.OCR import extract_text_and_split
 from django.core.files.storage import FileSystemStorage
 from AIGradingModel import generativeAI
 from AIGradingModel.exportGrades import export_ocr_grades_to_excel
-
 from django.http import JsonResponse
 import json
 
@@ -186,57 +185,50 @@ def submit_exam(request, exam_id):
 
 @login_required
 def view_profile_student(request):
-
     return render(request, 'myapp/student/view_profile.html', {'user': request.user})
 
 
-
 @login_required
-def edit_profile_student(request):
+def  edit_profile_student(request):
     if request.method == 'POST':
         # Retrieve form data
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        student_id = request.POST.get('student_id')
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print("Retrieved data:", first_name, last_name, student_id, email, username, password)
-
+        student_id = request.POST.get('student_id')
+        print("=======================================")
+        print("user password from database: ", request.user.password)
+        
         # Update user's profile data
         user = request.user
         user.first_name = first_name
         user.last_name = last_name
         user.email = email
         user.username = username
-        print("Old student ID:", user.student.student_id)
         user.student.student_id = student_id
-        print("New student ID:", user.student.student_id)
         
-        if password:  # Check if password was provided
+        if password:
             user.set_password(password)
-            user.save()
-            user.student.save()
-            print("User is saved with password")
-            # Re-authenticate user after password change
+            
+        user.student.save()
+        user.save()
+        
+        
+        if password:
             updated_user = authenticate(username=username, password=password)
             if updated_user:
                 login(request, updated_user)
-                print("Now logged in as :", updated_user.username)
-                messages.success(request, 'Profile updated successfully.')
+                messages.success(request, 'Profile updated successfully, including password change.')
                 return redirect('view_profile_student')
-        else:
-            user.save()
-            user.student.save()
-            messages.success(request, 'Profile updated successfully without changing password.')
-            return redirect('view_profile_student')
-    else:
-        # GET method, just show the edit profile form
-        return render(request, 'myapp/student/view_profile.html', {'user': request.user})
+        
+        messages.success(request, 'Profile updated successfully without changing password.')
+        return redirect('view_profile_student')
 
-    # If something goes wrong, redirect back to the edit form
     messages.error(request, "There was an error updating your profile. Please try again.")
     return redirect('edit_profile_student')
+
 
 @login_required
 def view_profile_teacher(request):
@@ -251,33 +243,33 @@ def edit_profile_teacher(request):
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print("password:", password)
-        print("Retrieved data:", first_name, last_name, email, username, password)
-
+        print("=======================================")
+        print("user password from database: ", request.user.password)
+        
         # Update user's profile data
         user = request.user
         user.first_name = first_name
         user.last_name = last_name
         user.email = email
         user.username = username
-        print("Password:", password)
+        
         if password:
             user.set_password(password)
-            user.save()
-            print("User is saved with password")
-
-            # Re-authenticate user after password change
+        
+        user.save()
+        
+        if password:
             updated_user = authenticate(username=username, password=password)
             if updated_user:
                 login(request, updated_user)
-                print("Now logged in as :", updated_user.username)
-                messages.success(request, 'Profile updated successfully.')
+                messages.success(request, 'Profile updated successfully, including password change.')
                 return redirect('view_profile_teacher')
-    else:
-        messages.error(request, "There was an error updating your profile. Please try again.")
-        return redirect('edit_profile_teacher')
-    
+        
+        messages.success(request, 'Profile updated successfully without changing password.')
+        return redirect('view_profile_teacher')
 
+    messages.error(request, "There was an error updating your profile. Please try again.")
+    return redirect('edit_profile_teacher')
 
 @login_required
 def edit_exam(request, exam_id):

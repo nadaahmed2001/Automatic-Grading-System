@@ -1,21 +1,16 @@
 {% load static %}
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
     <title>ScanScore</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <!-- Favicons -->
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
@@ -44,9 +39,21 @@
         #header .logo {
             text-align: center;
         }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle .toggle-icon {
+            position: absolute;
+            top: 67%;
+            right: 20px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
     </style>
 </head>
-
+{% block content %}
 <body>
 
     <header id="header" class="fixed-top">
@@ -58,11 +65,8 @@
                     <li><a class="nav-link scrollto" href="{% url 'create_exam' %}">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
-                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
-                                loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
-                                class="bi bi-chevron-down"></i>
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp" class="rounded-circle" height="35" alt="Black and White Portrait of a Man" loading="lazy" />
+                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i class="bi bi-chevron-down"></i>
                         </a>
                         <ul>
                             <li><a href="{% url 'view_profile_teacher' %}">View Profile</a></li>
@@ -75,64 +79,67 @@
         </div>
     </header><!-- End Header -->
 
-    <!-- ======= Hero Section ======= -->
-
     <section id="hero" class="pt-4" style="height: 100vh;" class="me-auto">
         <div class="container">
             <div class="container rounded bg-white pt-0" style="padding-bottom: 3%; padding-right: 2%;">
                 <div class="row">
                     <div class="col-md-4 border-right">
-                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
-                                class="rounded-circle mt-5"
-                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
-                                width="150">
-                            <span class="font-weight-bold" style="font-size: large;">{{ user.first_name }} {{user.last_name }}</span><span class="text-black-50"> {{ user.email|default:"No email"}}</span>
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                            <img class="rounded-circle mt-5" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp" width="150">
+                            <span class="font-weight-bold" style="font-size: large;">{{ user.first_name }} {{ user.last_name }}</span>
+                            <span class="text-black-50">{{ user.email|default:"No email" }}</span>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="p-3 py-5">
-
-                                <h3>Profile Settings</h3>
-                            </div>
-                            
-                            {% if messages %}
-                            {% for message in messages %}
-                                <div class="alert {{ message.tags }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+                            <h3>Profile Settings</h3>
                             <form method="POST" action="{% url 'edit_profile_teacher' %}">
                                 {% csrf_token %}
                                 <div class="row mt-2">
-                                    <div class="col-md-6"><label for="first_name">First Name:</label><input type="text"
-                                            for="first_name" id="first_name" name="first_name" class="form-control"
-                                            placeholder="first name" value="{{ user.first_name }}"></div>
-                                    <div class="col-md-6"><label for="last_name">Last Name:</label><input type="text"
-                                            class="form-control" placeholder="last name " id="last_name"
-                                            name="last_name" value="{{ user.last_name }}"></div>
+                                    <div class="col-md-6">
+                                        <label for="first_name">First Name:</label>
+                                        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="first name" value="{{ user.first_name }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="last_name">Last Name:</label>
+                                        <input type="text" class="form-control" placeholder="last name " id="last_name" name="last_name" value="{{ user.last_name }}">
+                                    </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6"><label for="username">Username:</label><input type="text"
-                                            class="form-control" placeholder="username" id="username" name="username"
-                                            value="{{ user.username }}"></div>
-                                    <div class="col-md-6"> <label for="email">Email:</label><input type="email"
-                                            class="form-control" id="email" name="email" value="{{ user.email }}"
-                                            placeholder="email"></div>
+                                    <div class="col-md-6">
+                                        <label for="username">Username:</label>
+                                        <input type="text" class="form-control" placeholder="username" id="username" name="username" value="{{ user.username }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" placeholder="email">
+                                    </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6"><label for="password">Password:</label><input type="password"
-                                            class="form-control" id="password" name="password"></div>
+                                    <div class="col-md-6 password-toggle">
+                                        <label for="password">New Password:</label>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="New password">
+                                        <span class="toggle-icon">
+                                            <i class="bi bi-eye" id="togglePassword"></i>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="row mt-3">
-                                    {% comment %} Role: (not editable) {% endcomment %}
-                                    <div class="col-md-6"> <label for="role">Role:</label><input type="text"
-                                            class="form-control" id="role" name="role" value="{{ user.userType }}"
-                                            readonly></div>
-
+                                    <div class="col-md-6">
+                                        <label for="role">Role:</label>
+                                        <input type="text" class="form-control" id="role" name="role" value="{{ user.userType }}" readonly>
+                                    </div>
                                 </div>
-                                <div class="mt-5" style="text-align: right;"><button
-                                        class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }}">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="mt-5" style="text-align: right;">
+                                    <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -142,25 +149,33 @@
     </section><!-- End Hero -->
 
     <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
-    <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-    <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
-    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-
-    <!-- Template Main JS File -->
-    <script src="{% static 'js/main.js' %}"></script>
-    <!-- //arrow -->
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}" rel="stylesheet"></script>
+    <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}" rel="stylesheet"></script>
+    <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}" rel="stylesheet"></script>
+    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}" rel="stylesheet"></script>
+    <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}" rel="stylesheet"></script>
+    <script src="{% static 'vendor/php-email-form/validate.js' %}" rel="stylesheet"></script>
+    <script src="{% static 'js/main.js' %}" rel="stylesheet"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin='anonymous'></script>
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
 
-
+        togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('bi-eye');
+            this.classList.toggle('bi-eye-slash');
+        });
+    </script>
 </body>
 
 </html>
+
 {% endblock %}

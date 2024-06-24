@@ -92,6 +92,13 @@
     <section id="hero" class="d-flex align-items-center faq section-bg contact" style="height:100vh;">
         <div class="container" data-aos="fade-up">
             {% block content %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
             <div class="section-title" style="color: #47b2e4;font-size: 30px;font-weight: bold;">
                 <p style="color: white;">{{ exam.name }}</p>
                 <p>Teacher: {{ exam.teacher.first_name }} {{ exam.teacher.last_name }}</p>
