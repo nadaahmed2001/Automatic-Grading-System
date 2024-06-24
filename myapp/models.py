@@ -31,7 +31,7 @@ class ExamSubmission(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE,related_name='submissions') #related name is used to access the submissions of a particular exam
     student = models.ForeignKey(User, on_delete=models.CASCADE,related_name='submissions') #related name is used to access the submissions of a particular student
     student_answer = models.TextField(max_length=10000)
-    score = models.IntegerField()
+    score = models.DecimalField(max_digits=8, decimal_places=3) 
     time_submitted = models.DateTimeField(auto_now_add=True)
     is_graded = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False) #If the teacher approves the grade , this will be set to true and then the student can see the grade
@@ -43,7 +43,7 @@ class ExamSubmissionOCR(models.Model):
     student_id = models.CharField(max_length=20)
     image = models.ImageField(upload_to='ocr_images/')
     extracted_text = models.TextField(blank=True, null=True)
-    score = models.IntegerField(default=0)
+    score = models.DecimalField(max_digits=8, decimal_places=3,default=0.000)
     is_graded = models.BooleanField(default=False)
     time_created = models.DateTimeField(auto_now_add=True)
 

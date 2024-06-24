@@ -31,10 +31,10 @@ def register_student(request):
         form = StudentRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Instead of logging in the user, redirect to the login page
             messages.success(request, 'Registration successful. Please log in.')
             return redirect('login')  # Redirect to the login page
         else:
+            messages.error(request, 'Registration unsuccessful. Please enter valid data')
             print("Form errors:", form.errors)  # Debug form errors
     else:
         form = StudentRegistrationForm()
@@ -48,6 +48,9 @@ def register_teacher(request):
             # Instead of logging in the user, redirect to the login page
             messages.success(request, 'Registration successful. Please log in.')
             return redirect('login')  # Redirect to the login page
+        else:
+            messages.error(request, 'Registration unsuccessful. Please enter valid data')
+            print("Form errors:", form.errors)  # Debug form errors
     else:
         form = TeacherRegistrationForm()
     return render(request, 'myapp/teacher/register_teacher.html', {'form': form})

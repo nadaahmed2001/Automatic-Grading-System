@@ -103,6 +103,13 @@
                         <h2 class="text-center  fw-bold mb-5  mx-md-4 " style="color: #3654d1;font-size: 40px; ">Login
                         </h2>
                         <form method="post" action="{% url 'login' %}" class="mx-1 mx-md-4">
+                            {% if messages %}
+                            {% for message in messages %}
+                                <div>
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                            {% endif %}
                             {% csrf_token %}
                             {% if error %}
                             <p class="error">{{ error }}</p>
