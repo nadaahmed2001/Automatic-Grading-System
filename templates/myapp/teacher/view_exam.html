@@ -84,9 +84,19 @@
                 <div class="card text-black"
                     style="border-radius: 25px; padding-bottom: 5%;padding-left: 2%; padding-right: 2%;">
                     {% block content %}
+
+
                     <div class="container" style="padding-top: 3%;">
+                        
                         <h1 style="color: rgb(85, 85, 253);text-align: center;">Exam Details</h1>
                         <p class="exam-name">
+                            {% if messages %}
+                            <div class="alert alert-info" role="alert">
+                                {% for message in messages %}
+                                {{ message }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         <div class="d-flex"> <strong style="font-size: 150%;">Exam Name : </strong>
                             &nbsp;<input type="text" class="form-control" style="width: 25%;" disabled value="{{ exam.name }}">
                         </div>
