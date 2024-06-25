@@ -245,6 +245,13 @@
 
 
     <section id="hero" style="height: 200vh; font-family: Arial, Helvetica, sans-serif;">
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" style="color: red; font-size: 15px;margin-left: 10px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
         <div data-aos="fade-up" data-aos-delay="200">
             <div class="card text-black" style="margin-top: 2%;margin-left: 2%;margin-right: 2%;">
                 <div class="card-header py-3" style="text-align: center;">
