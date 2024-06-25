@@ -352,6 +352,9 @@ def view_grades(request, exam_id):
     is_graded = all(submission.is_graded for submission in exam_submissions)
     if not is_graded:
         graded_submissions = StartGrading(exam_id)  # This will update and return graded submissions
+        for submission in graded_submissions:
+            if submission.score < 0:
+                submission.score = 0.000
         return render(request, 'myapp/teacher/view_grades.html', {'submissions': graded_submissions, 'exam': exam})
     else:
         return render(request, 'myapp/teacher/view_grades.html', {'submissions': exam_submissions, 'exam': exam})
@@ -384,6 +387,8 @@ def approve_grades(request, exam_id):
         print("Approving grades for exam:", exam.name)
         
         for submission in submissions:
+            if submission.score < 0:
+                submission.score = 0.000
             print(f"Now approving Submission with ID {submission.id} - Student {submission.student.username} - Score {submission.score}")
             submission.is_approved = True
             submission.save()
@@ -473,6 +478,8 @@ def view_grades_ocr(request, exam_id):
     print("now set ocr_graded to", exam.ocr_graded)
     graded_submissions = StartGradingOCR(exam_id)  # This will update and return graded submissions
     for submission in graded_submissions:
+        if submission.score < 0:
+            submission.score = 0.000
         print(f"Submission ID: {submission.id} - Student ID: {submission.student_id} - Score: {submission.score}")
     return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': graded_submissions, 'exam': exam})
 

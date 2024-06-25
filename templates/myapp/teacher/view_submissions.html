@@ -292,6 +292,13 @@
                                     <div id="answerContent"></div>
                                 </div>
                             </div>
+                            {%if messages%}
+                                {%for message in messages%}
+                                    <div class="alert alert-{{message.tags}}" id="error-alert" role="alert">
+                                        {{message}}
+                                    </div>
+                                {%endfor%}
+                            {%endif%}
                             <table class="table table-hover  table-striped" id="dataTable" width="100%"
                                 cellspacing="0" >
                                 <thead style="color: #007bff;" >
