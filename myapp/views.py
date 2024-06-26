@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from AIGradingModel.grading import StartGrading, StartGradingOCR
+from AIGradingModel.OCR_Model.OCR_UsingAI import extract_text_and_ID
 from .models import ExamSubmissionOCR
 from AIGradingModel.OCR_Model.OCR import extract_text_and_split
 from django.core.files.storage import FileSystemStorage
@@ -426,36 +427,63 @@ def generate_answer(request):
 
 
 
+@login_required
 def upload_images(request, exam_id):
     if request.method == 'POST':
+        model_choice = request.POST.get('model')
+        edit = 'true' if model_choice == 'model1' else 'false'
+
         uploaded_files = request.FILES.getlist('images')
         for uploaded_file in uploaded_files:
-            fs = FileSystemStorage()
-            filename = fs.save(uploaded_file.name, uploaded_file)
-            uploaded_file_url = fs.url(filename)
-            
-            # Reopen the file for OCR processing
-            file_for_ocr = fs.open(filename)
+            # try:
+                fs = FileSystemStorage()
+                filename = fs.save(uploaded_file.name, uploaded_file)
+                uploaded_file_url = fs.url(filename)
+                
+                # Reopen the file for OCR processing
+                file_for_ocr = fs.open(filename, 'rb')
+                
 
-            # Use OCR to extract text and split into ID and answer
-            student_id, extracted_answer = extract_text_and_split(file_for_ocr)
+                # Use OCR to extract text and split into ID and answer
+                student_id, student_name, extracted_answer = extract_text_and_ID(file_for_ocr, edit)
+                print("Hello from view upload_images")
+                print("Student ID:", student_id)
+                print("Student Name:", student_name)
+                print("Extracted Answer:", extracted_answer)
 
-            # Ensure the file is closed after processing
-            file_for_ocr.close()
+                # Ensure the file is closed after processing
+                file_for_ocr.close()
 
-            # Save the results in the model
-            ExamSubmissionOCR.objects.create(
-                exam_id=exam_id,
-                teacher=request.user,
-                student_id=student_id,
-                image=uploaded_file,
-                extracted_text=extracted_answer
-            )
+                # Save the results in the model
+                ExamSubmissionOCR.objects.create(
+                    exam_id=exam_id,
+                    teacher=request.user,
+                    student_id=student_id,
+                    student_name=student_name,
+                    image=uploaded_file,
+                    extracted_text=extracted_answer
+                )
+
+            # except Exception as e:
+            #     messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
+            #     return redirect('upload_images', exam_id=exam_id)
 
         messages.success(request, "Images uploaded and processed successfully.")
         return redirect('view_submissions_ocr', exam_id=exam_id)
+    
+    exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
+    return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id, 'exam': exam})
 
-    return render(request, 'myapp/teacher/upload_images_test.html', {'exam_id': exam_id})
+
+@login_required
+def view_submissions_ocr(request, exam_id):
+    exam = get_object_or_404(Exam, pk=exam_id)
+    submissions = ExamSubmissionOCR.objects.filter(exam=exam)
+    return render(request, 'myapp/teacher/view_submissions_ocr.html', {
+        'exam': exam,
+        'submissions': submissions
+    })
+
 
 
 

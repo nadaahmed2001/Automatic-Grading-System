@@ -3,7 +3,7 @@ from IPython.display import display, Markdown
 import google.generativeai as genai
 from sentence_transformers import SentenceTransformer, util
 
-GOOGLE_API_KEY = 'AIzaSyAtW0576BvHlrWHvAVguRRYzp_Afm9z7uc'
+GOOGLE_API_KEY = 'AIzaSyCJH_fwy1ryrGkA30qHwkcGL6XFUUQhHo4'
 genai.configure(api_key=GOOGLE_API_KEY)
 
 def generate_model_answer(question, constraints):

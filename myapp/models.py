@@ -40,6 +40,7 @@ class ExamSubmissionOCR(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='ocr_submissions')
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ocr_submissions')
     student_id = models.CharField(max_length=20)
+    student_name= models.CharField(max_length=100,default='Anonymous')
     image = models.ImageField(upload_to='ocr_images/')
     extracted_text = models.TextField(blank=True, null=True)
     score = models.DecimalField(max_digits=8, decimal_places=3,default=0.000)
