@@ -1,23 +1,24 @@
-import textwrap
-from IPython.display import display, Markdown
-import google.generativeai as genai
-from sentence_transformers import SentenceTransformer, util
+from groq import Groq
 
-GOOGLE_API_KEY = 'AIzaSyCJH_fwy1ryrGkA30qHwkcGL6XFUUQhHo4'
-genai.configure(api_key=GOOGLE_API_KEY)
 
+api_key = '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'
+
+client = Groq(api_key=api_key)
 def generate_model_answer(question, constraints):
     try:
-        model = genai.GenerativeModel('gemini-pro')
-
-        model_prompt = f"Explain {question}"
-        if constraints:
-            model_prompt += f" ,{constraints}"
-
-        # Generate the model answer
-        model_response = model.generate_content(model_prompt).text
-        return model_response
+        model = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"Explain {question}, {constraints}",
+                }
+            ],
+            model="llama3-8b-8192",
+        )
+        print(model.choices[0].message.content)
+        return model.choices[0].message.content
 
     except Exception as e:
         print(f"Error generating content: {e}")
         return None
+    

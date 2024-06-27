@@ -1,8 +1,11 @@
 import google.generativeai as genai
 import PIL.Image
+# import os
 
 GOOGLE_API_KEY = 'AIzaSyBESXyRjSDiJTWA9IxeG5bZveutG-j5Y3c'
 genai.configure(api_key=GOOGLE_API_KEY)
+# genai.configure(api_key=os.environ['AIzaSyBESXyRjSDiJTWA9IxeG5bZveutG-j5Y3c'])
+
 
 def extract_text_and_ID(file, edit='false'):
     file = PIL.Image.open(file)
