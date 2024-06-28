@@ -6,6 +6,11 @@ import numpy as np
 import os
 import json
 
+def load_model():
+    processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten')
+    model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-base-handwritten')
+    return processor, model
+
 def Segment_exam_Paper(file):
     # Constants
     KNOWN_LINE_DISTANCE_CM = 0.5  # Known distance between lines in cm
@@ -73,22 +78,14 @@ def Segment_exam_Paper(file):
     return lines
 
 
-def extract_student_answer(segments):
-
-    processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten')
-    model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-base-handwritten')
-
-    # Exclude the first two images from the list (ID,Name)
+def extract_student_answer(segments, processor, model):
+    # Exclude the first two images from the list (ID, Name)
     answer = segments[2:]
 
-    student_answer=""
+    student_answer = ""
 
     for line in answer:
-
         line_img = Image.fromarray(line).convert("RGB")
-        # Update the processor to use a single mean value for grayscale normalization
-        #processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten', image_mean=0.5, image_std=0.5)
-
 
         pixel_values = processor(images=line_img, return_tensors="pt").pixel_values
 
@@ -102,7 +99,6 @@ def extract_student_answer(segments):
         student_answer = student_answer.strip()
 
     return student_answer
-
 
 def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng'):
 
