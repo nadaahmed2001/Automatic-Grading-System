@@ -439,20 +439,15 @@ def upload_images(request, exam_id):
             # try:
                 fs = FileSystemStorage()
                 filename = fs.save(uploaded_file.name, uploaded_file)
-                uploaded_file_url = fs.url(filename)
-                
-                # Reopen the file for OCR processing
-                file_for_ocr = fs.open(filename)
+                file_path = fs.path(filename)
+                print("FiEL PATH", file_path)
                 
                 # Use OCR to extract text and split into ID and answer
-                student_id, student_name, extracted_answer = extract_ID_Name_Answer(file_for_ocr)
+                student_id, student_name, extracted_answer = extract_ID_Name_Answer(file_path)
                 print("Hello from view upload_images")
                 print("Student ID:", student_id)
                 print("Student Name:", student_name)
                 print("Extracted Answer:", extracted_answer)
-
-                # Ensure the file is closed after processing
-                file_for_ocr.close()
 
                 # Save the results in the model
                 ExamSubmissionOCR.objects.create(
@@ -466,6 +461,7 @@ def upload_images(request, exam_id):
 
             # except Exception as e:
             #     messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
+            #     print(f"Error processing file {uploaded_file.name}: {e}")  # Log the error for debugging
             #     return redirect('upload_images', exam_id=exam_id)
 
         messages.success(request, "Images uploaded and processed successfully.")
@@ -473,7 +469,6 @@ def upload_images(request, exam_id):
     
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
     return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id, 'exam': exam})
-
 
 
 @login_required

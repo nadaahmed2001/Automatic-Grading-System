@@ -271,14 +271,17 @@
                             <thead>
                                 <tr>
                                     <th>Student ID</th>
+                                    <th>Name:</th>
                                     <th>Extracted Answer</th>
                                     <th>Image</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for submission in submissions %}
                                 <tr>
                                     <td>{{ submission.student_id }}</td>
+                                    <td>{{ submission.student_name }}</td>
                                     <td>{{ submission.extracted_text }}</td>
                                     <td>
                                         <!-- Image with modal trigger -->

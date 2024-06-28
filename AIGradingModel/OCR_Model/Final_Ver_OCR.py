@@ -1,5 +1,5 @@
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
-import PIL.Image
+from PIL import Image
 import requests
 import cv2
 import numpy as np
