@@ -12,7 +12,8 @@ from django.http import HttpResponseRedirect
 from AIGradingModel.grading import StartGrading, StartGradingOCR
 from AIGradingModel.OCR_Model.OCR_UsingAI import extract_text_and_ID
 from .models import ExamSubmissionOCR
-from AIGradingModel.OCR_Model.OCR import extract_text_and_split
+# from AIGradingModel.OCR_Model.OCR import extract_text_and_split
+from AIGradingModel.OCR_Model.Final_Ver_OCR import extract_ID_Name_Answer
 from django.core.files.storage import FileSystemStorage
 from AIGradingModel import generativeAI
 from AIGradingModel.exportGrades import export_ocr_grades_to_excel
@@ -441,11 +442,10 @@ def upload_images(request, exam_id):
                 uploaded_file_url = fs.url(filename)
                 
                 # Reopen the file for OCR processing
-                file_for_ocr = fs.open(filename, 'rb')
+                file_for_ocr = fs.open(filename)
                 
-
                 # Use OCR to extract text and split into ID and answer
-                student_id, student_name, extracted_answer = extract_text_and_ID(file_for_ocr, edit)
+                student_id, student_name, extracted_answer = extract_ID_Name_Answer(file_for_ocr)
                 print("Hello from view upload_images")
                 print("Student ID:", student_id)
                 print("Student Name:", student_name)
@@ -473,6 +473,7 @@ def upload_images(request, exam_id):
     
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
     return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id, 'exam': exam})
+
 
 
 @login_required
