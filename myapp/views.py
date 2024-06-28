@@ -13,7 +13,7 @@ from AIGradingModel.grading import StartGrading, StartGradingOCR
 from AIGradingModel.OCR_Model.OCR_UsingAI import extract_text_and_ID
 from .models import ExamSubmissionOCR
 # from AIGradingModel.OCR_Model.OCR import extract_text_and_split
-from AIGradingModel.OCR_Model.Final_Ver_OCR import extract_ID_Name_Answer
+from AIGradingModel.OCR_Model.Final_Ver_OCR import extract_ID_Name_Answer,load_model
 from django.core.files.storage import FileSystemStorage
 from AIGradingModel import generativeAI
 from AIGradingModel.exportGrades import export_ocr_grades_to_excel
@@ -435,6 +435,7 @@ def upload_images(request, exam_id):
         edit = 'true' if model_choice == 'model1' else 'false'
 
         uploaded_files = request.FILES.getlist('images')
+        processor, model = load_model()
         for uploaded_file in uploaded_files:
             # try:
                 fs = FileSystemStorage()
@@ -443,7 +444,7 @@ def upload_images(request, exam_id):
                 print("FiEL PATH", file_path)
                 
                 # Use OCR to extract text and split into ID and answer
-                student_id, student_name, extracted_answer = extract_ID_Name_Answer(file_path)
+                student_id, student_name, extracted_answer = extract_ID_Name_Answer(file_path, processor, model)
                 print("Hello from view upload_images")
                 print("Student ID:", student_id)
                 print("Student Name:", student_name)
