@@ -1,6 +1,5 @@
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
-# from google.colab.patches import cv2_imshow # Import cv2_imshow for Colab
-from PIL import Image
+import PIL.Image
 import requests
 import cv2
 import numpy as np
@@ -10,7 +9,7 @@ import json
 def Segment_exam_Paper(file):
     # Constants
     KNOWN_LINE_DISTANCE_CM = 0.5  # Known distance between lines in cm
-    PIXELS_PER_CM = 96 / 2.54  
+    PIXELS_PER_CM = 96 / 2.54
 
     # Read the image
     img = cv2.imread(file)
@@ -74,13 +73,13 @@ def Segment_exam_Paper(file):
     return lines
 
 
-def extract_student_answer(file):
+def extract_student_answer(segments):
 
     processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten')
     model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-base-handwritten')
 
     # Exclude the first two images from the list (ID,Name)
-    answer = file[2:]
+    answer = segments[2:]
 
     student_answer=""
 
@@ -88,7 +87,7 @@ def extract_student_answer(file):
 
         line_img = Image.fromarray(line).convert("RGB")
         # Update the processor to use a single mean value for grayscale normalization
-        #processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten', image_mean=0.5, image_std=0.5) 
+        #processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten', image_mean=0.5, image_std=0.5)
 
 
         pixel_values = processor(images=line_img, return_tensors="pt").pixel_values
@@ -98,14 +97,14 @@ def extract_student_answer(file):
 
         extracted_text = extracted_text.strip()
         extracted_text = extracted_text[1:]
-      
+
         student_answer += "\n" + extracted_text  # Concatenate extracted text
         student_answer = student_answer.strip()
 
     return student_answer
 
 
-def ocr_space_file(filename, overlay=False, api_key='1b70baf52f88957', language='eng'):
+def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng'):
 
         payload = {'isOverlayRequired': overlay,
                   'apikey': api_key,
@@ -116,7 +115,7 @@ def ocr_space_file(filename, overlay=False, api_key='1b70baf52f88957', language=
                   }
         # Save the image to a temporary file
         temp_filename = "temp_image.png"
-        filename.save(temp_filename)
+        file.save(temp_filename)
 
         with open(temp_filename, 'rb') as f:
             r = requests.post('https://api.ocr.space/parse/image',
@@ -131,8 +130,8 @@ def ocr_space_file(filename, overlay=False, api_key='1b70baf52f88957', language=
 def extract_ID_Name_Answer(file):
     images = Segment_exam_Paper(file)
 
-    extracted_ID   = json.loads(ocr_space_file(filename = Image.fromarray(images[0]).convert("RGB"), language='eng'))
-    extracted_Name = json.loads(ocr_space_file(filename = Image.fromarray(images[1]).convert("RGB"), language='eng'))
+    extracted_ID   = json.loads(ocr_space_file(file = Image.fromarray(images[0]).convert("RGB"), language='eng'))
+    extracted_Name = json.loads(ocr_space_file(file = Image.fromarray(images[1]).convert("RGB"), language='eng'))
 
     student_ID    = extracted_ID["ParsedResults"][0]["ParsedText"]
     student_Name  = extracted_Name["ParsedResults"][0]["ParsedText"]
