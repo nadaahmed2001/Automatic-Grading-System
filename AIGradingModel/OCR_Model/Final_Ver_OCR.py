@@ -1,5 +1,5 @@
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
-from google.colab.patches import cv2_imshow # Import cv2_imshow for Colab
+# from google.colab.patches import cv2_imshow # Import cv2_imshow for Colab
 from PIL import Image
 import requests
 import cv2
