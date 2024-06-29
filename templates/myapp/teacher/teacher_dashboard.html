@@ -28,8 +28,56 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
-
     <style>
+        :root {
+            --background-color: #ffffff;
+            --background-color-rgb: 255, 255, 255;
+            --default-color: #444444;
+            --default-color-rgb: 68, 68, 68;
+            --heading-color: #9e69a9;
+            --heading-color-rgb: 55, 81, 126;
+            --accent-color: #9e69a9;
+            --accent-color-rgb: 71, 178, 228;
+            --contrast-color: #ffffff;
+            --contrast-color-rgb: 255, 255, 255;
+        }
+
+        #hero {
+            width: 100%;
+            height: 80vh;
+            background: #47294c;
+        }
+
+        #home:hover {
+            color: #9e69a9;
+            width: 120px;
+            border-radius: 50px;
+            background-color: #f1a091;
+            font-size: 19px;
+        }
+
+        #home {
+            color: #d9c2de;
+            width: 120px;
+            border-radius: 50px;
+            font-size: 19px;
+        }
+
+        #makenew {
+            font-size: 17px;
+            width: 190px;
+            margin-left: 10px;
+        }
+
+        #makenew:hover {
+            font-size: 17px;
+            width: 190px;
+            color: #9e69a9;
+            border-radius: 50px;
+            background-color: #f1a091;
+            margin-left: 10px;
+        }
+
         #header {
             background-color: transparent;
         }
@@ -44,6 +92,31 @@
         #header .logo {
             text-align: center;
         }
+
+        #username {
+            font-size: 18px;
+        }
+
+        #username:hover {
+            font-size: 18px;
+            color: #9e69a9;
+        }
+
+        /*------------------------------------------------------------------------------------------*/
+        #exam-list {
+            border-radius: 20px;
+            background-color: #f1a091;
+            color: #906899;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 23px;
+        }
+
+        #arrow-dir {
+            color: #9e69a9;
+            text-decoration: none;
+            font-size: 28px;
+        }
     </style>
 </head>
 
@@ -51,18 +124,18 @@
 
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="{% url 'teacher_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{% url 'create_exam' %}">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto active" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
                                 class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
                                 loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
                         <ul>
@@ -77,7 +150,8 @@
     </header><!-- End Header -->
 
     <!-- Hero Section -->
-    <section id="hero" class="d-flex" style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
+    <section id="hero" class="d-flex"
+        style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
         <div class="container">
             {% block content %}
             {% if messages %}
@@ -89,18 +163,17 @@
             {% endif %}
             <div class="exam-list">
                 {% for exam in exams %}
-                <div class="row exam-item"
-                    style="font-size: 130%; border-radius: 20px; background-color: white; color: rgb(28, 130, 224); padding: 12px; margin-bottom: 15px;">
+                <div class="row exam-item" id="exam-list">
                     <div class="col-md-4 col-12">{{ exam.name }}</div>
                     <div class="col-md-4 col-12">{{ exam.time_created }}</div>
                     <div class="col-md-3 col-10">
                         {% if exam.is_active %}
-                        <span class="active" style="color: rgb(0, 255, 0);">Active</span>
+                        <span class="active" style="color:#fff">Active</span>
                         {% else %}
-                        <span class="inactive" style="color: rgb(255, 0, 0);">Inactive</span>
+                        <span class="inactive" style="color: #d4b3db">Inactive</span>
                         {% endif %}
                     </div>
-                    <a href="{% url 'view_exam_teacher' exam.id %}" class="col-md-1 col-2">→</a>
+                    <a href="{% url 'view_exam_teacher' exam.id %}" class="col-md-1 col-2" id="arrow-dir">→</a>
                 </div>
                 {% empty %}
                 <div style="text-align: center;">
