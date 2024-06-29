@@ -11,6 +11,8 @@ def load_model():
     model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-base-handwritten')
     return processor, model
 
+processor, model = load_model()
+
 def Segment_exam_Paper(file):
     # Constants
     KNOWN_LINE_DISTANCE_CM = 0.5  # Known distance between lines in cm

@@ -10,18 +10,16 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from AIGradingModel.grading import StartGrading, StartGradingOCR
-from AIGradingModel.OCR_Model.OCR_UsingAI import extract_text_and_ID
+from AIGradingModel.OCR_Model.OCR_Gemini_Model import OCR_Gemini_Model #Gemeni
 from .models import ExamSubmissionOCR
 # from AIGradingModel.OCR_Model.OCR import extract_text_and_split
-from AIGradingModel.OCR_Model.Final_Ver_OCR import extract_ID_Name_Answer,load_model
+from AIGradingModel.OCR_Model.Final_Ver_OCR import extract_ID_Name_Answer,load_model #Microsoft
+from AIGradingModel.OCR_Model.Final_Ver_OCR import processor,model
 from django.core.files.storage import FileSystemStorage
 from AIGradingModel import generativeAI
 from AIGradingModel.exportGrades import export_ocr_grades_to_excel
 from django.http import JsonResponse
 import json
-
-
-
 
 def index(request):
     return render(request, 'myapp/index.html')
@@ -435,7 +433,7 @@ def upload_images(request, exam_id):
         edit = 'true' if model_choice == 'model1' else 'false'
 
         uploaded_files = request.FILES.getlist('images')
-        processor, model = load_model()
+        # processor, model = load_model()
         for uploaded_file in uploaded_files:
             # try:
                 fs = FileSystemStorage()
@@ -444,6 +442,7 @@ def upload_images(request, exam_id):
                 print("FiEL PATH", file_path)
                 
                 # Use OCR to extract text and split into ID and answer
+                #Microsoft model
                 student_id, student_name, extracted_answer = extract_ID_Name_Answer(file_path, processor, model)
                 print("Hello from view upload_images")
                 print("Student ID:", student_id)
@@ -470,6 +469,51 @@ def upload_images(request, exam_id):
     
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
     return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id, 'exam': exam})
+
+
+# @login_required
+# def upload_images(request, exam_id):
+#     if request.method == 'POST':
+#         model_choice = request.POST.get('model')
+#         # edit = 'true' if model_choice == 'model1' else 'false'
+
+#         uploaded_files = request.FILES.getlist('images')
+#         processor, model = load_model()
+#         for uploaded_file in uploaded_files:
+#             # try:
+#                 fs = FileSystemStorage()
+#                 filename = fs.save(uploaded_file.name, uploaded_file)
+#                 file_path = fs.path(filename)
+#                 print("FiEL PATH", file_path)
+                
+#                 # Use OCR to extract text and split into ID and answer
+#                 #Gemeni model
+#                 student_id, student_name, extracted_answer = OCR_Gemini_Model(file_path, edit='false')
+#                 print("Hello from view upload_images")
+#                 print("Student ID:", student_id)
+#                 print("Student Name:", student_name)
+#                 print("Extracted Answer:", extracted_answer)
+
+#                 # Save the results in the model
+#                 ExamSubmissionOCR.objects.create(
+#                     exam_id=exam_id,
+#                     teacher=request.user,
+#                     student_id=student_id,
+#                     student_name=student_name,
+#                     image=uploaded_file,
+#                     extracted_text=extracted_answer
+#                 )
+
+#             # except Exception as e:
+#             #     messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
+#             #     print(f"Error processing file {uploaded_file.name}: {e}")  # Log the error for debugging
+#             #     return redirect('upload_images', exam_id=exam_id)
+
+#         messages.success(request, "Images uploaded and processed successfully.")
+#         return redirect('view_submissions_ocr', exam_id=exam_id)
+    
+#     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
+#     return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id, 'exam': exam})
 
 
 @login_required
