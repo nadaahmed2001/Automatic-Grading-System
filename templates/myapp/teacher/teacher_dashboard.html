@@ -28,6 +28,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
     <style>
         :root {
             --background-color: #ffffff;
@@ -104,7 +105,7 @@
 
         /*------------------------------------------------------------------------------------------*/
         #exam-list {
-            border-radius: 20px;
+            border-radius: 30px;
             background-color: #f1a091;
             color: #906899;
             padding: 12px;
@@ -117,6 +118,10 @@
             text-decoration: none;
             font-size: 28px;
         }
+        .Ac{
+  border: 2px solid #d4b3db !important;
+}
+        
     </style>
 </head>
 
@@ -128,11 +133,11 @@
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
+                    <li><a class="nav-link scrollto active Ac" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
                     <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
+                            <img src="{% static 'img/unknown_user.jpg' %}"
                                 class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
                                 loading="lazy" />
                             <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i

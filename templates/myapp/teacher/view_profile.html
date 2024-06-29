@@ -10,7 +10,9 @@
     <meta content="" name="keywords">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
@@ -23,6 +25,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
         #header {
@@ -51,96 +54,162 @@
             transform: translateY(-50%);
             cursor: pointer;
         }
+
+        .Ac {
+            border: 2px solid #d4b3db !important;
+        }
+
+        /* Button Styling */
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: none;
+            border-radius: 22px;
+        }
+
+        .btn-primary {
+            background-color: #f1a091 !important;
+            color: #77517f !important;
+            font-size: 130%;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        .btn:hover {
+            background-color: #f1a091 !important;
+            color: #77517f !important;
+        }
+
+        .btn-info {
+            background-color: #f1a091 !important;
+            color: #77517f !important;
+            font-size: 130%;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        .btn-success {
+            color: #77517f;
+            background-color: #f1a091 !important;
+            border-color: #f1a091;
+            font-size: 130%;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
     </style>
 </head>
 {% block content %}
-<body>
 
-    <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center">
-            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}">Scanscore</a></h1>
-            <nav id="navbar" class="navbar">
+<body style="background: #47294c;">
+
+    <header id="header">
+        <div class="container align-items-center justify-content-between">
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
+            <!-- .navbar -->
+            <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="{% url 'teacher_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{% url 'create_exam' %}">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto active Ac" href="{% url 'teacher_dashboard' %}" id="home">Home</a>
+                    </li>
+                    <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp" class="rounded-circle" height="35" alt="Black and White Portrait of a Man" loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i class="bi bi-chevron-down"></i>
+                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
+                                alt="Black and White Portrait of a Man" loading="lazy" />
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
+                                class="bi bi-chevron-down"></i>
                         </a>
                         <ul>
                             <li><a href="{% url 'view_profile_teacher' %}">View Profile</a></li>
                             <li><a href="{% url 'logout' %}">Log out</a></li>
                         </ul>
                     </li>
-                    <i class="bi bi-list mobile-nav-toggle"></i>
                 </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
         </div>
     </header><!-- End Header -->
 
-    <section id="hero" class="pt-4" style="height: 100vh;" class="me-auto">
+    <section class="align-items-center"
+        style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;">
         <div class="container">
-            <div class="container rounded bg-white pt-0" style="padding-bottom: 3%; padding-right: 2%;">
-                <div class="row">
-                    <div class="col-md-4 border-right">
-                        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                            <img class="rounded-circle mt-5" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp" width="150">
-                            <span class="font-weight-bold" style="font-size: large;">{{ user.first_name }} {{ user.last_name }}</span>
-                            <span class="text-black-50">{{ user.email|default:"No email" }}</span>
+            <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="row">
+                        <div class="col-md-4 border-right">
+                            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                <img class="rounded-circle mt-5" src="{% static 'img/unknown_user.jpg' %}" width="150">
+                                <span class="font-weight-bold" style="font-size: large;">{{ user.first_name }}
+                                    {{user.last_name }}</span>
+                                <span class="text-black-50">{{ user.email|default:"No email" }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="p-3 py-5">
-                            <h3>Profile Settings</h3>
-                            <form method="POST" action="{% url 'edit_profile_teacher' %}">
-                                {% csrf_token %}
-                                <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <label for="first_name">First Name:</label>
-                                        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="first name" value="{{ user.first_name }}">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="last_name">Last Name:</label>
-                                        <input type="text" class="form-control" placeholder="last name " id="last_name" name="last_name" value="{{ user.last_name }}">
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <label for="username">Username:</label>
-                                        <input type="text" class="form-control" placeholder="username" id="username" name="username" value="{{ user.username }}">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="email">Email:</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" placeholder="email">
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6 password-toggle">
-                                        <label for="password">New Password:</label>
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="New password">
-                                        <span class="toggle-icon">
-                                            <i class="bi bi-eye" id="togglePassword"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <label for="role">Role:</label>
-                                        <input type="text" class="form-control" id="role" name="role" value="{{ user.userType }}" readonly>
-                                    </div>
-                                </div>
+                        <div class="col-md-8">
+                            <div class="p-3 py-5">
+                                <h3>Profile Settings</h3>
                                 {% if messages %}
-                                    {% for message in messages %}
-                                        <div class="alert alert-{{ message.tags }}">
-                                            {{ message }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                <div class="mt-5" style="text-align: right;">
-                                    <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                                {% for message in messages %}
+                                <div class="alert {{ message.tags }}" lass="alert alert-info" role="alert">
+                                    {{ message }}
                                 </div>
-                            </form>
+                                {% endfor %}
+                                {% endif %}
+                                <form method="POST" action="{% url 'edit_profile_teacher' %}">
+                                    {% csrf_token %}
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <label for="first_name">First Name:</label>
+                                            <input type="text" id="first_name" name="first_name" class="form-control"
+                                                placeholder="first name" value="{{ user.first_name }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="last_name">Last Name:</label>
+                                            <input type="text" class="form-control" placeholder="last name "
+                                                id="last_name" name="last_name" value="{{ user.last_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <label for="username">Username:</label>
+                                            <input type="text" class="form-control" placeholder="username" id="username"
+                                                name="username" value="{{ user.username }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="email">Email:</label>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                value="{{ user.email }}" placeholder="email">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6 password-toggle">
+                                            <label for="password">New Password:</label>
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder="New password">
+                                            <span class="toggle-icon">
+                                                <i class="bi bi-eye" id="togglePassword"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <label for="role">Role:</label>
+                                            <input type="text" class="form-control" id="role" name="role"
+                                                value="{{ user.userType }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5" style="text-align: right;">
+                                        <button class="btn btn-primary profile-button" type="submit">Save
+                                            Profile</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,7 +218,8 @@
     </section><!-- End Hero -->
 
     <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="{% static 'vendor/aos/aos.js' %}"></script>

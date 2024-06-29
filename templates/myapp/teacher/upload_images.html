@@ -156,6 +156,9 @@
             font-size: 1.2rem;
             color: #333;
         }
+        .active{
+  border: 2px solid #d4b3db !important;
+}
     </style>
 </head>
 
@@ -170,7 +173,7 @@
                     <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
+                            <img src="{% static 'img/unknown_user.jpg' %}"
                                 class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
                                 loading="lazy" />
                             <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i

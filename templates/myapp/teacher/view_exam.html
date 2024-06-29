@@ -28,6 +28,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
         #header {
@@ -44,6 +45,10 @@
         #header .logo {
             text-align: center;
         }
+
+        .Ac {
+            border: 2px solid #d4b3db !important;
+        }
     </style>
 </head>
 
@@ -56,12 +61,11 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto active" href="{% url 'create_exam' %}">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto active Ac" href="{% url 'create_exam' %}">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
-                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
-                                loading="lazy" />
+                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
+                                alt="Black and White Portrait of a Man" loading="lazy" />
                             <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
@@ -84,21 +88,18 @@
                 <div class="card text-black"
                     style="border-radius: 25px; padding-bottom: 5%;padding-left: 2%; padding-right: 2%;">
                     {% block content %}
-
-
                     <div class="container" style="padding-top: 3%;">
-                        
                         <h1 style="color: rgb(85, 85, 253);text-align: center;">Exam Details</h1>
-                        <p class="exam-name">
-                            {% if messages %}
-                            <div class="alert alert-info" role="alert">
-                                {% for message in messages %}
-                                {{ message }}
-                                {% endfor %}
-                            </div>
-                            {% endif %}
+                        {% if messages %}
+                        <div class="alert alert-info" role="alert">
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                         <div class="d-flex"> <strong style="font-size: 150%;">Exam Name : </strong>
-                            &nbsp;<input type="text" class="form-control" style="width: 25%;" disabled value="{{ exam.name }}">
+                            &nbsp;<input type="text" class="form-control" style="width: 25%;" disabled
+                                value="{{ exam.name }}">
                         </div>
                         <div class="exam-date">
                             {{ exam.time_created }}
@@ -107,35 +108,38 @@
                         <div class="form-group exam-question" style="font-size: 150%;">
                             <strong for="id_question">Question:</strong>
                             <textarea id="id_question" name="question" rows="1" class="form-control question"
-                                 disabled>{{ exam.question }}</textarea>
+                                disabled>{{ exam.question }}</textarea>
                         </div>
                         <br>
                         <div class="form-group exam-model-answer" style="font-size: 150%;">
                             <strong for="id_model_answer">Model Answer:</strong>
                             <textarea id="id_model_answer" name="model_answer" rows="3"
-                                class="form-control model_answer"
-                                placeholder="Enter Model Answer...." disabled>{{ exam.model_answer }}</textarea>
+                                class="form-control model_answer" placeholder="Enter Model Answer...."
+                                disabled>{{ exam.model_answer }}</textarea>
                         </div>
                         <!-- Keywords would also be displayed here -->
                         <br>
                         <div class="d-flex justify-content-between exam-buttons">
                             <div style="flex-grow: 1;">
                                 <a href="{% url 'edit_exam' exam.id %}" class="btn btn-primary me-1">Edit</a>
-                        
+
                                 <form action="{% url 'delete_exam' exam.id %}" method="post" class="d-inline me-1">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this exam?');">Delete</button>
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this exam?');">Delete</button>
                                 </form>
-                        
+
                                 {% if not exam.is_active %}
                                 <form action="{% url 'publish_exam' exam.id %}" method="post" class="d-inline me-1">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to make the exam available for students?');">Publish</button>
+                                    <button type="submit" class="btn btn-success"
+                                        onclick="return confirm('Are you sure you want to make the exam available for students?');">Publish</button>
                                 </form>
                                 {% else %}
                                 <form action="{% url 'unpublish_exam' exam.id %}" method="post" class="d-inline me-1">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to make the exam unavailable for students?');">Unpublish</button>
+                                    <button type="submit" class="btn btn-warning"
+                                        onclick="return confirm('Are you sure you want to make the exam unavailable for students?');">Unpublish</button>
                                 </form>
                                 {% endif %}
                             </div>
@@ -143,17 +147,20 @@
                                 {% if exam_submissions.0.is_graded %}
                                 <a href="{% url 'view_grades' exam.id %}" class="btn btn-primary me-1">View Grades</a>
                                 {% else %}
-                                <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary me-1">View Students' Submissions</a>
+                                <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary me-1">View
+                                    Students' Submissions</a>
                                 {% endif %}
-                        
+
                                 {% if exam.ocr_graded %}
-                                <a href="{% url 'view_grades_ocr' exam.id %}" class="btn btn-primary me-1">View Graded Papers</a>
+                                <a href="{% url 'view_grades_ocr' exam.id %}" class="btn btn-primary me-1">View Graded
+                                    Papers</a>
                                 {% else %}
-                                <a href="{% url 'upload_images' exam.id %}" class="btn btn-primary me-1">Upload Images</a>
+                                <a href="{% url 'upload_images' exam.id %}" class="btn btn-primary me-1">Upload
+                                    Images</a>
                                 {% endif %}
                             </div>
                         </div>
-                        
+
 
 
                     </div>

@@ -26,6 +26,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
         #header {
@@ -98,6 +99,9 @@
             margin-left: 10px;
             /* Adjust margin as needed */
         }
+        .Ac{
+  border: 2px solid #d4b3db !important;
+}
     </style>
 </head>
 
@@ -110,10 +114,10 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto active" href="{% url 'create_exam' %}">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto active Ac" href="{% url 'create_exam' %}">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
+                            <img src="{% static 'img/unknown_user.jpg' %}"
                                 class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
                                 loading="lazy" />
                             <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
