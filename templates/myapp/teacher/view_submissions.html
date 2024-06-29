@@ -317,6 +317,12 @@
                     <h1 style="text-align: center;color:#a562b1;">Student Answers for: {{ exam.name }}</h1>
                     <div class="card-body">
                         <div class="table-responsive">
+                            <div id="answerModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close" onclick="closeModal()">&times;</span>
+                                    <div id="answerContent"></div>
+                                </div>
+                            </div>
                             <table id="basic-datatables" class="display table table-striped table-hover"
                                 style="border-radius: 22px !important; text-align: center;">
                                 <thead>
