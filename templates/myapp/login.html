@@ -28,6 +28,27 @@
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
 
     <style>
+        
+a {
+  color: #d9c2de;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #9e69a9;
+  text-decoration: none;
+}
+
+#hero h2 {
+  color:#9e69a9;;
+  margin-bottom: 50px;
+  font-size: 24px;
+}
+        #hero {
+  width: 100%;
+  height: 80vh;
+  background: #574870;
+}
         .hero-section-wrapper-5 {
             /* margin-top: 10%; */
             background-color: rgb(244, 244, 249, 0.2);
@@ -85,6 +106,29 @@
         #header h1 {
             margin: 0;
         }
+        #reg1{
+            color:#ab37c4;
+        }
+        #reg1:hover{
+            color:#d9c2de;
+        }
+        #reg2{
+            color:#ab37c4;
+        }
+        #reg2:hover{
+            color:#d9c2de;
+        }
+        #log-btn{
+            background-color: #f1a091;
+            color: #9e69a9;
+            border: none;
+            position: relative;
+            left: 1%;
+            font-size: 20px;
+        }
+        #img-log{
+            border-radius: 50%;
+        }
     </style>
 </head>
 
@@ -100,7 +144,7 @@
                     </h1>
                     <h2 style="margin-left: 130px;">Say Goodbye to Grading Papers!</h2>
                     <div class="card text-black">
-                        <h2 class="text-center  fw-bold mb-5  mx-md-4 " style="color: #3654d1;font-size: 40px; ">Login
+                        <h2 class="text-center  fw-bold mb-5  mx-md-4 " style="color: #9e69a9;font-size: 40px; ">Login
                         </h2>
                         <form method="post" action="{% url 'login' %}" class="mx-1 mx-md-4">
                             {% if messages %}
@@ -115,7 +159,7 @@
                             <p class="error">{{ error }}</p>
                             {% endif %}
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fas fa-user fa-lg me-3 fa-fw" style="color: #4a67d6;"></i>
+                                <i class="fas fa-user fa-lg me-3 fa-fw" style="color: #9e69a9;"></i>
                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
                                     <input type="text" id="id_username" class="form-control" name="username" required
                                         aria-label="Username" />
@@ -124,7 +168,7 @@
                             </div>
 
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fas fa-lock fa-lg me-3 fa-fw" style="color: #4a67d6;"></i>
+                                <i class="fas fa-lock fa-lg me-3 fa-fw" style="color: #9e69a9;"></i>
                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
                                     <input type="password" id="id_password" class="form-control" name="password"
                                         required aria-label="Password" />
@@ -133,18 +177,18 @@
                             </div>
 
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100">Login</button>
+                                <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100" id="log-btn">Login</button>
                             </div>
                         </form>
                         <div class="d-flex justify-content-center justify-content">
-                            <a href='{% url 'register_teacher' %}'>Register as Teacher?</a>
-                            <a href='{% url 'register_student' %}' style="margin-left: 20px;">Register as Student?</a>
+                            <a href='{% url 'register_teacher' %}' id="reg1">Register as Teacher?</a>
+                            <a href='{% url 'register_student' %}' style="margin-left: 20px;"id="reg2">Register as Student?</a>
                         </div>
                         </form>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
+                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="" id="img-log">
                 </div>
             </div>
         </div>
