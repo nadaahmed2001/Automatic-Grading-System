@@ -59,9 +59,6 @@
             box-sizing: border-box;
         }
 
-        .btn-secondary {
-            margin-top: 10px;
-        }
 
         #error-alert {
             margin-top: 20px;
@@ -101,26 +98,50 @@
         }
         .Ac{
   border: 2px solid #d4b3db !important;
+  color: #d4b3db;
+
 }
+    /* Button Styling */
+    .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: none;
+            border-radius: 22px;
+        }
+
+        .btn-primary {
+            background-color: #f1a091 !important;
+            color: #77517f !important;
+            font-size: 20px !important;
+            padding: 10px 20px;
+        }
     </style>
 </head>
 
-<body>
+<body style="background: #47294c;">
 
-    <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}">Scanscore</a></h1>
+    <header id="header">
+        <div class="container align-items-center justify-content-between">
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto active Ac" href="{% url 'create_exam' %}">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
+                    <li><a class="nav-link scrollto active Ac" style="border-radius: 22px;" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
                             <img src="{% static 'img/unknown_user.jpg' %}"
                                 class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
                                 loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
                         <ul>
@@ -135,11 +156,12 @@
     </header><!-- End Header -->
 
     <!-- Hero Section -->
-    <section id="hero" class="d-flex align-items-center" style="height: 100vh;font-family: Arial, Helvetica, sans-serif;">
-        <div class="container">
-            <div class="d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="card text-black" style="font-size: 150%;">
-                    <h1 style="color: rgb(94, 94, 252);text-align: center;">Edit Exam</h1>
+    <section class="align-items-center"
+    style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;">
+    <div class="container">
+        <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="card text-black">
+                <h1 style="text-align: center;">Edit Exam</h1>
                     <form method="post" action="{% url 'edit_exam' exam.id %}">
                         {% csrf_token %}
                         <div class="form-group d-flex">

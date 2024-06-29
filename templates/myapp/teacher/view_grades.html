@@ -313,15 +313,7 @@
         <div class="container">
             <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="card text-black">
-                    <div class="d-flex justify-content-between" style="margin-top:0.5%;">
-                        <h1></h1>
                         <h1 style="text-align: center;color:#a562b1;">Student Answers for: {{ exam.name }}</h1>
-                        <form style="text-align: right;" action="{% url 'approve_grades' exam.id %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-success">Send Grades to Students</button>
-                        </form>
-                    </div>
-
                     <div class="card-body">
                         <div class="table-responsive">
                             <div id="answerModal" class="modal">
@@ -380,7 +372,14 @@
                                 </tbody>
                             </table>
                         </div>
-
+                        <div class="d-flex justify-content-between" style="text-align: right; margin-top: 2%;">
+                            <form style="text-align: right;" action="{% url 'approve_grades' exam.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Send Grades to Students</button>
+                            </form>
+                            <a href="{% url 'view_exam_teacher' exam.id %}" class="btn btn-success">← Back to Exam
+                                Details</a>
+                        </div>   
                     </div>
                 </div>
             </div>

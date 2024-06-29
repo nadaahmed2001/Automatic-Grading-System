@@ -81,26 +81,31 @@
 
         .form-control.model-answer {
             width: 100%;
-            height: 150px; /* Adjust height as needed */
+            height: 150px;
+            /* Adjust height as needed */
             resize: vertical;
         }
+
         .input-with-button {
-    display: flex;
-    align-items: center;
-}
+            display: flex;
+            align-items: center;
+        }
 
-.input-with-button textarea {
-    flex: 1;
-}
+        .input-with-button textarea {
+            flex: 1;
+        }
 
-.input-with-button button {
-    margin-left: 10px; /* Adjust margin as needed */
-}
-.Ac{
-  border: 2px solid #d4b3db !important;
-}
-  /* Button Styling */
-  .btn {
+        .input-with-button button {
+            margin-left: 10px;
+            /* Adjust margin as needed */
+        }
+
+        .Ac {
+            border: 2px solid #d4b3db !important;
+        }
+
+        /* Button Styling */
+        .btn {
             display: inline-block;
             padding: 6px 12px;
             margin-bottom: 0;
@@ -118,7 +123,7 @@
         .btn-primary {
             background-color: #f1a091 !important;
             color: #77517f !important;
-            font-size: 20px  !important;
+            font-size: 20px !important;
             padding: 10px 20px;
         }
 
@@ -131,12 +136,14 @@
             background-color: #f1a091 !important;
             color: #77517f !important;
         }
-        .btn-secondary{
+
+        .btn-secondary {
             background-color: #f1a091 !important;
             color: #77517f !important;
-            font-size: 15px  !important;
+            font-size: 15px !important;
             padding: 7px 19px;
         }
+
         .btn-success {
             color: #77517f;
             background-color: #f1a091 !important;
@@ -144,6 +151,11 @@
             font-size: 130%;
             padding-top: 6px;
             padding-bottom: 6px;
+        }
+
+        .Ac {
+            border: 2px solid #d4b3db !important;
+            color: #d4b3db;
         }
     </style>
 </head>
@@ -155,8 +167,8 @@
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active Ac" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
+                    <li><a class="nav-link scrollto active Ac" style="border-radius: 22px;" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
                             <img src="{% static 'img/unknown_user.jpg' %}"
@@ -175,7 +187,6 @@
             </nav><!-- .navbar -->
         </div>
     </header><!-- End Header -->
-
     <!-- Hero Section -->
     <section class="align-items-center"
         style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;">
@@ -187,31 +198,37 @@
                         {% csrf_token %}
                         <div class="form-group d-flex">
                             <strong for="id_exam_name">Exam Name :&nbsp;&nbsp;</strong>
-                            &nbsp;<input id="id_exam_name" type="text" name="name" class="form-control name" style="width: 25%;">
+                            &nbsp;<input id="id_exam_name" type="text" name="name" class="form-control name"
+                                style="width: 25%;">
                         </div>
                         <div class="form-group">
                             <strong for="id_question">Question:</strong>
-                            <textarea id="id_question" name="question" rows="1" class="form-control question" placeholder="Enter Question...."></textarea>
+                            <textarea id="id_question" name="question" rows="1" class="form-control question"
+                                placeholder="Enter Question...."></textarea>
                         </div>
                         <div class="form-group">
                             <strong for="id_constraints">Constraints:</strong>
-                            <textarea id="constraint_text" rows="1" class="form-control" placeholder="Enter any constraints for the model answer, e.g., 'short answer, undergraduate level'"></textarea>
+                            <textarea id="constraint_text" rows="1" class="form-control"
+                                placeholder="Enter any constraints for the model answer, e.g., 'short answer, undergraduate level'"></textarea>
                         </div>
                         <div class="form-group">
                             <strong for="id_model_answer">Model Answer:</strong>
                             <div class="input-with-button">
-                                <textarea id="id_model_answer" name="model_answer" rows="1" class="form-control model_answer" placeholder="Enter Model Answer...."></textarea>
-                                <button type="button" class="btn btn-secondary" onclick="generateModelAnswer()">Generate Answer</button>
+                                <textarea id="id_model_answer" name="model_answer" rows="1"
+                                    class="form-control model_answer" placeholder="Enter Model Answer...."></textarea>
+                                <button type="button" class="btn btn-secondary" onclick="generateModelAnswer()">Generate
+                                    Answer</button>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <strong for="id_keywordsList">Keywords:</strong>
-                            <textarea id="id_keywordsList" name="keywordsList" rows="1" class="form-control keywordsList" placeholder="Enter keywords...."></textarea>
+                            <textarea id="id_keywordsList" name="keywordsList" rows="1"
+                                class="form-control keywordsList" placeholder="Enter keywords...."></textarea>
                         </div>
                         <div style="text-align: right;margin-top: 2%;margin-bottom: 2%;">
-                        <button  type="submit" class="btn btn-primary">Done</button>
-                    </div>
+                            <button type="submit" class="btn btn-primary">Done</button>
+                        </div>
                     </form>
                     <div id="error-alert" class="alert alert-danger" style="display: none;"></div>
                 </div>

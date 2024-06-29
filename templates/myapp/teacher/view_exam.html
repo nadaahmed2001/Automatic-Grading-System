@@ -49,6 +49,22 @@
         .Ac {
             border: 2px solid #d4b3db !important;
         }
+        .btn{
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: none;
+            border-radius: 22px;
+            font-size: 16px !important;
+            padding: 10px 20px;
+            
+        }
     </style>
 </head>
 
@@ -56,17 +72,18 @@
 
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto active Ac" href="{% url 'create_exam' %}">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto active Ac" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
-                                alt="Black and White Portrait of a Man" loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
+                            <img src="{% static 'img/unknown_user.jpg' %}"
+                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
+                                loading="lazy" />
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
                         <ul>
@@ -89,7 +106,7 @@
                     style="border-radius: 25px; padding-bottom: 5%;padding-left: 2%; padding-right: 2%;">
                     {% block content %}
                     <div class="container" style="padding-top: 3%;">
-                        <h1 style="color: rgb(85, 85, 253);text-align: center;">Exam Details</h1>
+                        <h1 style="color: #654e6a;;text-align: center;">Exam Details</h1>
                         {% if messages %}
                         <div class="alert alert-info" role="alert">
                             {% for message in messages %}
@@ -145,17 +162,17 @@
                             </div>
                             <div>
                                 {% if exam_submissions.0.is_graded %}
-                                <a href="{% url 'view_grades' exam.id %}" class="btn btn-primary me-1">View Grades</a>
+                                <a style="color: #77517f;background-color: #f1a091 !important;border-color: #f1a091;" href="{% url 'view_grades' exam.id %}" class="btn btn-primary me-1">View Grades</a>
                                 {% else %}
-                                <a href="{% url 'view_submissions' exam.id %}" class="btn btn-primary me-1">View
+                                <a style="color: #77517f;background-color: #f1a091 !important;border-color: #f1a091;" href="{% url 'view_submissions' exam.id %}" class="btn btn-primary me-1">View
                                     Students' Submissions</a>
                                 {% endif %}
 
                                 {% if exam.ocr_graded %}
-                                <a href="{% url 'view_grades_ocr' exam.id %}" class="btn btn-primary me-1">View Graded
+                                <a  style=" color: #77517f;background-color: #f1a091 !important;border-color: #f1a091;" href="{% url 'view_grades_ocr' exam.id %}" class="btn btn-primary me-1">View Graded
                                     Papers</a>
                                 {% else %}
-                                <a href="{% url 'upload_images' exam.id %}" class="btn btn-primary me-1">Upload
+                                <a style=" color: #77517f;background-color: #f1a091 !important;border-color: #f1a091;" href="{% url 'upload_images' exam.id %}" class="btn btn-primary me-1">Upload
                                     Images</a>
                                 {% endif %}
                             </div>
