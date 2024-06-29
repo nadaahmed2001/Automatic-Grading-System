@@ -51,6 +51,7 @@
   font-size: 18px;
   color: #9e69a9;
 }
+
 /* Fonts */
 :root {
   --default-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -64,7 +65,7 @@
   --background-color-rgb: 255, 255, 255;
   --default-color: #444444;
   --default-color-rgb: 68, 68, 68;
-  --heading-color: #37517e;
+  --heading-color: #47294c;
   --heading-color-rgb: 55, 81, 126;
   --accent-color: #9e69a9;
   --accent-color-rgb: 71, 178, 228;
@@ -75,16 +76,15 @@
 /* Nav Menu Colors */
 :root {
   --nav-color: #ffffff;
-  --nav-hover-color: #9e69a9;
+  --nav-hover-color: #47294c;
   --nav-dropdown-color: #444444;
-  --nav-dropdown-hover-color: #9e69a9;
+  --nav-dropdown-hover-color: #47294c;
   --nav-dropdown-background-color: #ffffff;
 }
 
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
-  color:#9e69a9;
 }
 
 /*--------------------------------------------------------------
@@ -97,16 +97,19 @@ body {
 }
 
 a {
-  color: var(--accent-color);
+  color: #9e69a9;
   text-decoration: none;
   transition: 0.3s;
 }
 
 a:hover {
-  color: rgba(var(--accent-color-rgb), 0.75);
+  color: #9e69a9;
   text-decoration: none;
 }
-
+a.dropdown:hover {
+  color: #9e69a9;
+  text-decoration: none;
+}
 h1,
 h2,
 h3,
@@ -253,7 +256,7 @@ h6 {
   .navmenu .dropdown ul {
     margin: 0;
     padding: 10px 0;
-    background: var(--nav-dropdown-background-color);
+    background: #47294c;
     display: block;
     position: absolute;
     visibility: hidden;
@@ -274,7 +277,7 @@ h6 {
     padding: 10px 20px;
     font-size: 15px;
     text-transform: none;
-    color: var(--nav-dropdown-color);
+    color: #47294c;
   }
 
   .navmenu .dropdown ul a i {
@@ -284,7 +287,7 @@ h6 {
   .navmenu .dropdown ul a:hover,
   .navmenu .dropdown ul .active:hover,
   .navmenu .dropdown ul li:hover>a {
-    color: var(--nav-dropdown-hover-color);
+    color: #47294c;
   }
 
   .navmenu .dropdown:hover>ul {
@@ -313,7 +316,7 @@ h6 {
   .navmenu .megamenu ul {
     margin: 0;
     padding: 10px;
-    background: var(--nav-dropdown-background-color);
+    background: #47294c;
     box-shadow: 0px 0px 20px rgba(var(--default-color-rgb), 0.1);
     position: absolute;
     top: 130%;
@@ -335,13 +338,13 @@ h6 {
   .navmenu .megamenu ul li:hover>a {
     padding: 10px 20px;
     font-size: 15px;
-    color: var(--nav-dropdown-color);
+    color: #47294c;
   }
 
   .navmenu .megamenu ul li a:hover,
   .navmenu .megamenu ul li .active,
   .navmenu .megamenu ul li .active:hover {
-    color: var(--nav-dropdown-hover-color);
+    color: #47294c;
   }
 
   .navmenu .megamenu:hover>ul {
@@ -378,16 +381,16 @@ h6 {
     padding: 10px 0;
     margin: 0;
     border-radius: 6px;
-    background-color: var(--nav-dropdown-background-color);
+    background-color: #9e69a9;
     overflow-y: auto;
     transition: 0.3s;
     z-index: 9998;
-    box-shadow: 0px 0px 30px rgba(var(--default-color-rgb), 0.1);
+    box-shadow: 0px 0px 30px #9e69a9;
   }
 
   .navmenu a,
   .navmenu a:focus {
-    color: var(--nav-dropdown-color);
+    color: #47294c;
     padding: 10px 20px;
     font-family: var(--nav-font);
     font-size: 17px;
@@ -411,24 +414,24 @@ h6 {
     justify-content: center;
     border-radius: 50%;
     transition: 0.3s;
-    background-color: rgba(var(--accent-color-rgb), 0.1);
+    background-color: #9e69a9;
   }
 
   .navmenu a i:hover,
   .navmenu a:focus i:hover {
-    background-color: var(--accent-color);
+    background-color: #9e69a9;
     color: var(--contrast-color);
   }
 
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
-    color: var(--nav-dropdown-hover-color);
+    color: #9e69a9;
   }
 
   .navmenu .active i,
   .navmenu .active:focus i {
-    background-color: var(--accent-color);
+    background-color: #9e69a9;
     color: var(--contrast-color);
     transform: rotate(180deg);
   }
@@ -439,19 +442,19 @@ h6 {
     z-index: 99;
     padding: 10px 0;
     margin: 10px 20px;
-    background-color: var(--nav-dropdown-background-color);
+    background-color: #9e69a9;
     border: 1px solid rgba(var(--default-color-rgb), 0.1);
     box-shadow: none;
     transition: all 0.5s ease-in-out;
   }
 
   .navmenu .dropdown ul ul {
-    background-color: rgba(33, 37, 41, 0.1);
+    background-color: #9e69a9;
   }
 
   .navmenu .dropdown>.dropdown-active {
     display: block;
-    background-color: rgba(33, 37, 41, 0.03);
+    background-color: #9e69a9;
   }
 
   .mobile-nav-active {
@@ -877,7 +880,7 @@ section,
 # Hero Section
 --------------------------------------------------------------*/
 .hero {
-  --background-color: #37517e;
+  --background-color: #47294c;
   --default-color: #ffffff;
   --default-color-rgb: 255, 255, 255;
   --heading-color: #ffffff;
