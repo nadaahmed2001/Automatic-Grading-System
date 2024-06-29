@@ -12,8 +12,7 @@
     <meta content="" name="keywords">
 
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i"
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -26,59 +25,6 @@
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
-        /* #hero {
-            width: 100%;
-            height: 80vh;
-            background: #47294c;
-        }
-       #home:hover {
-            color:#9e69a9;
-            width: 120px;
-            border-radius: 50px;
-            background-color: #f1a091;
-            font-size: 19px;
-        }
-        #home{
-            color: #d9c2de;
-            width: 120px;
-            border-radius: 50px;
-            font-size: 19px;
-        }
-        #makenew{
-            font-size: 17px;
-            width: 190px;
-            margin-left: 10px;
-        }
-        #makenew:hover {
-            font-size: 17px;
-            width: 190px;
-            color:#9e69a9;
-            border-radius: 50px;
-            background-color: #f1a091;
-            margin-left: 10px;
-        }
-        #header {
-            background-color: transparent;
-        }
-
-        #header .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-
-        #header .logo {
-            text-align: center;
-        }
-        #username {
-            font-size: 18px;
-        }
-        #username:hover {
-            font-size: 18px;
-            color: #9e69a9;
-        } */
-        /*------------------------------------------------------------------------------------------*/
         .upload-form {
             background: #fff;
             padding: 20px;
@@ -167,7 +113,6 @@
             margin-top: 40px;
         }
 
-
         #submit {
             position: relative;
             left: 42%;
@@ -179,6 +124,38 @@
             color: #77517f;
             top: 6%;
         }
+
+        /* Loading Overlay Styles */
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            text-align: center;
+            padding-top: 200px;
+        }
+
+        .loading-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .loading-box .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -187,7 +164,6 @@
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center justify-content-between">
             <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
-            <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto active" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
@@ -207,23 +183,21 @@
                     </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
+            </nav>
         </div>
-    </header><!-- End Header -->
+    </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="d-flex"
-        style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
+    <section id="hero" class="d-flex" style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
         <div class="container">
             {% if messages %}
             {% for message in messages %}
-            {% comment %} call the javascript function {% endcomment %}
             <script>
                 alert('{{ message }}')
             </script>
             {% endfor %}
             {% endif %}
-            <form method="post" enctype="multipart/form-data" class="upload-form">
+            <form method="post" enctype="multipart/form-data" class="upload-form" onsubmit="showLoadingOverlay()">
                 {% csrf_token %}
                 <div class="form-group">
                     <h1>Upload Images for Exam: {{exam.name}}</h1>
@@ -234,8 +208,17 @@
                 <button type="submit" class="btn btn-primary mt-3" id="submit">Submit</button>
             </form>
         </div>
-    </section><!-- End Hero -->
+    </section>
 
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="loading-box">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="loading-text">Please wait while we are processing the images...</div>
+        </div>
+    </div>
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
@@ -252,6 +235,13 @@
     <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/upload_image.js' %}"></script>
+
+    <!-- Custom JS to handle loading overlay -->
+    <script>
+        function showLoadingOverlay() {
+            document.getElementById('loading-overlay').style.display = 'block';
+        }
+    </script>
 
 </body>
 
