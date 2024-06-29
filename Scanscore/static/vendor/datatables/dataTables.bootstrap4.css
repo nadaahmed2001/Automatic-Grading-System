@@ -29,6 +29,7 @@ div.dataTables_wrapper div.dataTables_length label {
 div.dataTables_wrapper div.dataTables_length select {
   width: auto;
   display: inline-block;
+  border-radius:29px;
 }
 div.dataTables_wrapper div.dataTables_filter {
   text-align: right;
@@ -42,6 +43,7 @@ div.dataTables_wrapper div.dataTables_filter input {
   margin-left: 0.5em;
   display: inline-block;
   width: auto;
+  border-radius: 22px;
 }
 div.dataTables_wrapper div.dataTables_info {
   padding-top: 0.85em;

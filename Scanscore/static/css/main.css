@@ -1,15 +1,56 @@
-/**
-* Template Name: Arsha
-* Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
-* Updated: May 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+/* Header Style*/
+#hero {
+  width: 100%;
+  height: 80vh;
+  background: #47294c;
+}
+#home:hover {
+  color:#9e69a9;
+  width: 120px;
+  border-radius: 50px;
+  background-color: #f1a091;
+  font-size: 19px;
+}
+#home{
+  color: #d9c2de;
+  width: 120px;
+  border-radius: 50px;
+  font-size: 19px;
+}
+#makenew{
+  font-size: 17px;
+  width: 190px;
+  margin-left: 10px;
+}
+#makenew:hover {
+  font-size: 17px;
+  width: 190px;
+  color:#9e69a9;
+  border-radius: 50px;
+  background-color: #f1a091;
+  margin-left: 10px;
+}
+#header {
+  background-color: transparent;
+}
 
-/*--------------------------------------------------------------
-# Font & Color Variables
-# Help: https://bootstrapmade.com/color-system/
---------------------------------------------------------------*/
+#header .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#header .logo {
+  text-align: center;
+}
+#username {
+  font-size: 18px;
+}
+#username:hover {
+  font-size: 18px;
+  color: #9e69a9;
+}
 /* Fonts */
 :root {
   --default-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -25,7 +66,7 @@
   --default-color-rgb: 68, 68, 68;
   --heading-color: #37517e;
   --heading-color-rgb: 55, 81, 126;
-  --accent-color: #47b2e4;
+  --accent-color: #9e69a9;
   --accent-color-rgb: 71, 178, 228;
   --contrast-color: #ffffff;
   --contrast-color-rgb: 255, 255, 255;
@@ -34,15 +75,16 @@
 /* Nav Menu Colors */
 :root {
   --nav-color: #ffffff;
-  --nav-hover-color: #47b2e4;
+  --nav-hover-color: #9e69a9;
   --nav-dropdown-color: #444444;
-  --nav-dropdown-hover-color: #47b2e4;
+  --nav-dropdown-hover-color: #9e69a9;
   --nav-dropdown-background-color: #ffffff;
 }
 
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
+  color:#9e69a9;
 }
 
 /*--------------------------------------------------------------

@@ -12,7 +12,9 @@
     <meta content="" name="keywords">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
@@ -21,8 +23,40 @@
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
+        /* #hero {
+            width: 100%;
+            height: 80vh;
+            background: #47294c;
+        }
+       #home:hover {
+            color:#9e69a9;
+            width: 120px;
+            border-radius: 50px;
+            background-color: #f1a091;
+            font-size: 19px;
+        }
+        #home{
+            color: #d9c2de;
+            width: 120px;
+            border-radius: 50px;
+            font-size: 19px;
+        }
+        #makenew{
+            font-size: 17px;
+            width: 190px;
+            margin-left: 10px;
+        }
+        #makenew:hover {
+            font-size: 17px;
+            width: 190px;
+            color:#9e69a9;
+            border-radius: 50px;
+            background-color: #f1a091;
+            margin-left: 10px;
+        }
         #header {
             background-color: transparent;
         }
@@ -37,14 +71,25 @@
         #header .logo {
             text-align: center;
         }
-
+        #username {
+            font-size: 18px;
+        }
+        #username:hover {
+            font-size: 18px;
+            color: #9e69a9;
+        } */
+        /*------------------------------------------------------------------------------------------*/
         .upload-form {
-            background: #f8f9fa;
+            background: #fff;
             padding: 20px;
             border: 1px solid #e9ecef;
-            border-radius: 20px;
-            max-width: 600px;
+            border-radius: 30px;
+            max-width: 900px;
             margin: auto;
+            position: relative;
+            top: 15%;
+            height: 320px;
+            left: 2%;
         }
 
         .form-control {
@@ -89,11 +134,51 @@
         }
 
         #hero h1 {
-            font-size: 30px;
-            margin-bottom: 20px; /* Space between heading and form */
-            color: #333; /* Heading color */
+            font-size: 45px;
+            margin-bottom: 20px;
+            color: #654e6a;
+            text-align: center;
+            position: relative;
+            top: 20%;
+            margin-top: 20px;
         }
 
+        .form-control::file-selector-button {
+            padding: .375rem .75rem;
+            margin: -.375rem -.75rem;
+            -webkit-margin-end: .75rem;
+            margin-inline-end: .75rem;
+            color: var(--bs-body-color);
+            background-color: var(--bs-tertiary-bg);
+            pointer-events: none;
+            border-color: inherit;
+            border-style: solid;
+            border-width: 0;
+            border-inline-end-width: var(--bs-border-width);
+            border-radius: 5px;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            width: 100px;
+        }
+
+        #browse {
+            width: 730px;
+            position: relative;
+            left: 8%;
+            margin-top: 40px;
+        }
+
+
+        #submit {
+            position: relative;
+            left: 42%;
+            width: 150px;
+            height: 50px;
+            font-size: 25px;
+            border-radius: 25px;
+            background: #f1a091;
+            color: #77517f;
+            top: 6%;
+        }
     </style>
 </head>
 
@@ -101,18 +186,18 @@
 
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="{% url 'teacher_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{% url 'create_exam' %}">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto active" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
                                 class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
                                 loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
                         <ul>
@@ -127,7 +212,8 @@
     </header><!-- End Header -->
 
     <!-- Hero Section -->
-    <section id="hero" class="d-flex" style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
+    <section id="hero" class="d-flex"
+        style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
         <div class="container">
             {% if messages %}
             {% for message in messages %}
@@ -141,19 +227,18 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <h1>Upload Images for Exam: {{exam.name}}</h1>
-                    
-                <div class="form-group">
-                    <input type="file" name="images" multiple required class="form-control">
+                    <div class="form-group" id="browse">
+                        <input type="file" name="images" multiple required class="form-control">
+                    </div>
                 </div>
-
-            </div>
-                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                <button type="submit" class="btn btn-primary mt-3" id="submit">Submit</button>
             </form>
         </div>
     </section><!-- End Hero -->
 
     <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
