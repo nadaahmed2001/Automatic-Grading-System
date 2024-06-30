@@ -315,6 +315,13 @@
                 <div class="card text-black">
                         <h1 style="text-align: center;color:#a562b1;">Student Answers for: {{ exam.name }}</h1>
                     <div class="card-body">
+                        {% if messages %}
+                        <div class="alert alert-info" role="alert">
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                         <div class="table-responsive">
                             <div id="answerModal" class="modal">
                                 <div class="modal-content">
@@ -357,7 +364,7 @@
                                         <td class="Border">
                                             <form action="{% url 'modify_grade' submission.id %}" method="post">
                                                 {% csrf_token %}
-                                                <input type="number" name="new_grade" value="{{ submission.score }}"
+                                                <input type="number" step="0.001" name="new_grade" value="{{ submission.score }}"
                                                     min="0" max="10"
                                                     style="border-radius: 20px; text-align: center;padding: 5px 5px;"
                                                     required>
@@ -372,14 +379,30 @@
                                 </tbody>
                             </table>
                         </div>
+
                         <div class="d-flex justify-content-between" style="text-align: right; margin-top: 2%;">
                             <form style="text-align: right;" action="{% url 'approve_grades' exam.id %}" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success">Send Grades to Students</button>
                             </form>
+                            <!--  Increase Grades Form -->
+                            <form action="{% url 'increase_grades' exam.id %}" method="post" style="text-align: right; margin-top: 2%;">
+                                {% csrf_token %}
+                                <input type="number" name="increase_by" placeholder="Increase by" required>
+                                <button type="submit" class="btn btn-primary">Increase All Grades</button>
+                            </form>
+
+                            <!--  Round Grades Form -->
+                            <form action="{% url 'round_grades' exam.id %}" method="post" style="text-align: right; margin-top: 2%;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Round Up All Grades</button>
+                            </form>
                             <a href="{% url 'view_exam_teacher' exam.id %}" class="btn btn-success">← Back to Exam
                                 Details</a>
-                        </div>   
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>

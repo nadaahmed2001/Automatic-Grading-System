@@ -315,6 +315,13 @@
                 <div class="card text-black">
                     <h1 style="text-align: center;margin-top: 2%;color:#a562b1;">OCR Submissions for Exam: {{ exam.name }}</h1>
                     <div class="card-body">
+                        {% if messages %}
+                        <div class="alert alert-info" role="alert">
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                         <div class="table-responsive">
                             <div id="answerModal" class="modal">
                                 <div class="modal-content">
@@ -336,12 +343,14 @@
                                     <tr>
                                         <td class="Border">{{ submission.student_id }}</td>
                                         <td class="Border" style="text-align: left;">{{ submission.extracted_text }}</td>
-                                        <td class="Border" style="width: 20%;"><form action="{% url 'modify_grade_ocr' submission.id %}" method="post">
+                                        <td class="Border" style="width: 20%;">
+                                        <form action="{% url 'modify_grade_ocr' submission.id %}" method="post">
                                             {% csrf_token %}
-                                            <input type="number" name="new_grade" value="{{ submission.score }}" min="0"
+                                            <input type="number" step="0.001" name="new_grade" value="{{ submission.score }}" min="0"
                                                 max="10" style="border-radius: 20px; text-align: center;padding: 5px 5px;" required>
                                             <button type="submit" class="btn btn-info">Modify Grade</button>
-                                        </form></td>
+                                        </form>
+                                        </td>
                                         <td class="Border">
                                             <!-- Image with modal trigger -->
                                              <img src="{{ submission.image.url }}" alt="Student Answer"
@@ -358,8 +367,21 @@
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success">Export Grades</button>
                             </form>
-                            <a href="{% url 'view_exam_teacher' exam.id %}" class="btn btn-success">← Back to Exam
-                                Details</a>
+
+                            <!--  Increase Grades Form -->
+                            <form action="{% url 'increase_grades_ocr' exam.id %}" method="post" style="text-align: right; margin-top: 2%;">
+                                {% csrf_token %}
+                                <input type="number" name="increase_by" placeholder="Increase by" required >
+                                <button type="submit" class="btn btn-success">Increase All Grades</button>
+                            </form>
+
+                            <!--  Round Grades Form -->
+                            <form action="{% url 'round_grades_ocr' exam.id %}" method="post" style="text-align: right; margin-top: 2%;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Round Up All Grades</button>
+                            </form>
+
+                            <a href="{% url 'view_exam_teacher' exam.id %}" class="btn btn-success">← Back to Exam Details</a>
                         </div>    
                         <div id="imageModal" class="modal"
                         style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); align-items:center; justify-content:center;">

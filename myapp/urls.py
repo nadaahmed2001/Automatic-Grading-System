@@ -50,4 +50,12 @@ urlpatterns = [
     path('view_profile/teacher/', views.view_profile_teacher, name='view_profile_teacher'),
     path('edit_profile/teacher/', views.edit_profile_teacher, name='edit_profile_teacher'),
 
+
+
+    path('exam/<int:exam_id>/increase_grades/', views.increase_grades, name='increase_grades'),
+    path('exam/<int:exam_id>/round_grades/', views.round_grades, name='round_grades'),
+    path('exam/<int:exam_id>/increase_grades_ocr/', views.increase_grades_ocr, name='increase_grades_ocr'),
+    path('exam/<int:exam_id>/round_grades_ocr/', views.round_grades_ocr, name='round_grades_ocr'),
+
+
 ]
