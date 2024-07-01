@@ -4,14 +4,14 @@ import requests
 import cv2
 import numpy as np
 import os
+import torch
 import json
+
 
 def load_model():
     processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten')
     model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-base-handwritten')
     return processor, model
-
-processor, model = load_model()
 
 def Segment_exam_Paper(file):
     # Constants
@@ -81,8 +81,8 @@ def Segment_exam_Paper(file):
 
 
 def extract_student_answer(segments, processor, model):
-    # Exclude the first two images from the list (ID, Name)
-    answer = segments[2:]
+    # Exclude the first three images from the list (ID, Name, blank line)
+    answer = segments[2: ]
 
     student_answer = ""
 
@@ -95,12 +95,14 @@ def extract_student_answer(segments, processor, model):
         extracted_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
         extracted_text = extracted_text.strip()
-        extracted_text = extracted_text[1:]
+        if all(char.isdigit() or char.isspace() for char in extracted_text):
+            continue
 
         student_answer += "\n" + extracted_text  # Concatenate extracted text
         student_answer = student_answer.strip()
 
     return student_answer
+
 
 def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng'):
 
@@ -125,16 +127,20 @@ def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng
 
         return r.content.decode()
 
-
-def extract_ID_Name_Answer(file,processor,model):
+def OCR_Microsoft_Model(file):
     images = Segment_exam_Paper(file)
 
     extracted_ID   = json.loads(ocr_space_file(file = Image.fromarray(images[0]).convert("RGB"), language='eng'))
     extracted_Name = json.loads(ocr_space_file(file = Image.fromarray(images[1]).convert("RGB"), language='eng'))
 
-    student_ID    = extracted_ID["ParsedResults"][0]["ParsedText"]
-    student_Name  = extracted_Name["ParsedResults"][0]["ParsedText"]
+    student_ID   = extracted_ID["ParsedResults"][0]["ParsedText"]
+    student_ID   = student_ID.replace('ID:', '').replace('1D:','').replace(' ', '').replace('\n', '')
 
-    student_answer= extract_student_answer(images,processor, model)
+    student_Name = extracted_Name["ParsedResults"][0]["ParsedText"]
+    student_Name   = student_Name.replace('Name:', '')
+
+    processor, model = load_model()
+
+    student_answer = extract_student_answer(images, processor, model)
 
     return student_ID, student_Name , student_answer
