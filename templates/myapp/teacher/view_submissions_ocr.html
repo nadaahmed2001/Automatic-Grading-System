@@ -313,6 +313,13 @@
                 <div class="card text-black">
                     <h1 style="text-align: center;margin-top: 2%;color:#a562b1;">OCR Submissions for Exam: {{ exam.name }}</h1>
                     <div class="card-body">
+                        {% if messages %}
+                        <div class="alert alert-info" role="alert">
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                         <div class="table-responsive">
                             <div id="answerModal" class="modal">
                                 <div class="modal-content">
