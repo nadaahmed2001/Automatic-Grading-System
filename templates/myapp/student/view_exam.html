@@ -20,6 +20,7 @@
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
         #header {
@@ -51,24 +52,53 @@
         .grade.high {
             color: green;
         }
+
+        .Ac {
+            border: 2px solid #d4b3db !important;
+            color: #d4b3db;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: none;
+            border-radius: 22px;
+        }
+
+        .btn-success {
+            color: #77517f;
+            background-color: #f1a091 !important;
+            border-color: #f1a091;
+            font-size: 130%;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
     </style>
 </head>
 
-<body>
+<body style="background: #47294c;">
 
-    <header id="header" class="fixed-top">
+    <header id="header">
         <div class="container d-flex align-items-center">
             <h1 class="me-auto"><a href="{% url 'student_dashboard' %}">Scanscore</a></h1>
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="{% url 'student_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{% url 'take_exam' %}">Take New Exam</a></li>
+                    <li><a class="nav-link scrollto active Ac" href="{% url 'student_dashboard' %}" id="home">Home</a>
+                    </li>
+                    <li><a class="nav-link scrollto" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
-                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
-                                loading="lazy" />
+                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
+                                alt="Black and White Portrait of a Man" loading="lazy" />
                             <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
@@ -83,58 +113,55 @@
         </div>
     </header>
 
-    <section id="hero" class="d-flex align-items-center pt-4"
-        style="height: 100vh;font-family: Arial, Helvetica, sans-serif;">
+
+    <section class="align-items-center"
+        style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;margin-top: 3%;">
         <div class="container">
-            <div class="d-flex flex-column justify-content-center order-2 order-lg-1" data-aos="fade-up"
-                data-aos-delay="200">
-                <div class="card text-black" style="border-radius: 25px;">
-                    <div class="container" style="padding-top: 3%;padding-bottom: 3%;font-size: 130%;">
-                        <div class="d-flex justify-content-between">
-                            <div style="text-align: center; flex-grow: 1;">
-                                <h1 style="color: rgb(68, 68, 247); ">{{ exam.name }}</h1>
-                            </div>
-                            <div style="text-align: right;color: rgb(68, 68, 247); "> <strong>Teacher:</strong> {{ exam.teacher.get_full_name }}
-                            </div>
-                        </div>
-                        <div class="form-group exam-question" style="font-size: 130%;">
-                            <strong for="id_question">Question:</strong>
-                            <textarea id="id_question" name="question" rows="1" class="form-control question"
-                                 disabled>{{ exam.question }}</textarea>
-                        </div>    
-                        {% if submission %}
-                        <strong style="font-size: 130%;">Your Answer :</strong><textarea id="id_student_answer" name="student_answer" rows="1"
-                            class="form-control student_answer"  disabled>{{ submission.student_answer }}</textarea>
-                        {% if submission.is_graded %}
-                        <div class="form-group exam-model-answer" style="font-size: 130%;">
-                            <strong for="id_model_answer">Model Answer:</strong>
-                            <textarea id="id_model_answer" name="model_answer" rows="3"
-                                class="form-control model_answer"
-                                placeholder="Enter Model Answer...." style="color: green;" disabled>{{ exam.model_answer }}</textarea>
+            <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="card text-black" style="padding: 20px 20px;">
+                    <div class="section-title d-flex justify-content-between" style="padding-bottom: 1%;">
+                        <p></p>
+                        <h1 style="color:  #8c5396;">{{ exam.name }}</h1>
+                        <p style="font:bold;color:  #8c5396;">Teacher: {{ exam.teacher.first_name }} {{ exam.teacher.last_name }}</p>
+                    </div>
+                    <div class="form-group exam-question" style="font-size: 130%;">
+                        <strong for="id_question">Question:</strong>
+                        <textarea id="id_question" name="question" rows="1" class="form-control question"
+                            disabled>{{ exam.question }}</textarea>
+                    </div>
+                    {% if submission %}
+                    <strong style="font-size: 130%;">Your Answer :</strong><textarea id="id_student_answer"
+                        name="student_answer" rows="1" class="form-control student_answer"
+                        disabled>{{ submission.student_answer }}</textarea>
+                    {% if submission.is_graded %}
+                    <div class="form-group exam-model-answer" style="font-size: 130%;">
+                        <strong for="id_model_answer">Model Answer:</strong>
+                        <textarea id="id_model_answer" name="model_answer" rows="3" class="form-control model_answer"
+                            placeholder="Enter Model Answer...." style="color: green;"
+                            disabled>{{ exam.model_answer }}</textarea>
 
-                        </div>
-                        <p><strong>Your Grade :</strong>
-                            <span class="grade" data-grade='{{ submission.score }}'>{{submission.score }}</span>
-                        </p>
-                        {% else %}
-                        <p><strong>Not graded yet.</strong></p>
-                        {% endif %}
-                        <p><strong>Date Taken: </strong> {{ submission.time_submitted|date:"D,d M Y" }}</p>
-                        {% else %}
-                        <p>You have not submitted this exam.</p>
-                        {% endif %}
-
-
-                        <div style="text-align: right;font-size: 100%;">
-                            <a href="{% url 'student_dashboard' %}"
-                                style="text-decoration: none; color: blue; border: 1px solid blue; padding: 10px; border-radius: 20px;">←
-                                Back to Dashboard</a>
-                        </div>
-
+                    </div>
+                    <p><strong>Your Grade :</strong>
+                        <span class="grade" data-grade='{{ submission.score }}'>{{submission.score }}</span>
+                    </p>
+                    {% else %}
+                    <p><strong>Not graded yet.</strong></p>
+                    {% endif %}
+                    <p><strong>Date Taken: </strong> {{ submission.time_submitted|date:"D,d M Y" }}</p>
+                    {% else %}
+                    <p>You have not submitted this exam.</p>
+                    {% endif %}
+                    <div style="text-align: right;font-size: 100%;">
+                        <a href="{% url 'student_dashboard' %}" class="btn btn-success">←
+                            Back to Dashboard
+                        </a>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
+
+
 
 
     <div id="preloader"></div>

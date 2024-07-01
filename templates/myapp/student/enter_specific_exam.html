@@ -26,6 +26,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
         #header {
@@ -57,23 +58,48 @@
         .grade.high {
             color: green;
         }
+
+        .Ac {
+            border: 2px solid #d4b3db !important;
+            color: #d4b3db;
+        }
+          /* Button Styling */
+          .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: none;
+            border-radius: 22px;
+        }
+        .btn-info {
+            background-color: #f1a091 !important;
+            color:white !important;
+        }
     </style>
 </head>
 
-<body>
+<body style="background: #47294c;">
 
-    <header id="header" class="fixed-top">
+    <header id="header">
         <div class="container d-flex align-items-center">
-            <h1 class="me-auto"><a href="{% url 'login' %}">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}">Scanscore</a></h1>
+
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="{% url 'student_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{% url 'take_exam' %}">Take New Exam</a></li>
+                    <li><a class="nav-link scrollto active Ac" href="{% url 'student_dashboard' %}" id="home">Home</a>
+                    </li>
+                    <li><a class="nav-link scrollto" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
-                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
-                                loading="lazy" />
+                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
+                                alt="Black and White Portrait of a Man" loading="lazy" />
                             <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
@@ -84,44 +110,44 @@
                     </li>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </ul>
-            </nav><!-- .navbar -->
+            </nav>
         </div>
-    </header><!-- End Header -->
-
-    <!-- ======= Hero Section ======= -->
-    <section id="hero" class="d-flex align-items-center faq section-bg contact" style="height:100vh;">
-        <div class="container" data-aos="fade-up">
-            {% block content %}
-            {% if messages %}
+    </header>
+    <section class="align-items-center"
+        style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;margin-top: 3%;">
+        <div class="container">
+            <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                {% block content %}
+                {% if messages %}
                 {% for message in messages %}
-                    <div class="alert {{ message.tags }}">
-                        {{ message }}
-                    </div>
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
                 {% endfor %}
-            {% endif %}
-            <div class="section-title" style="color: #47b2e4;font-size: 30px;font-weight: bold;">
-                <p style="color: white;">{{ exam.name }}</p>
-                <p>Teacher: {{ exam.teacher.first_name }} {{ exam.teacher.last_name }}</p>
-            </div>
-            <div class="row" style="width:250vh; ">
-                <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-                    <form method="POST" action="{% url 'submit_exam' exam.id %}" role="form" class="card"
-                        style="border-radius: 10px; margin-left: 25%;  height: 110%;padding: 30px;width: 200%;text-align: center;">
+                {% endif %}
+                <div class="card text-black" style="padding: 20px 20px;">
+                    <div class="section-title d-flex justify-content-between" style="padding-bottom: 1%;">
+                        <p></p>
+                        <h1 style="color:  #8c5396;">{{ exam.name }}</h1>
+                        <p style="font:bold;color:  #8c5396;">Teacher: {{ exam.teacher.first_name }} {{ exam.teacher.last_name }}</p>
+                    </div>
+                    <form method="POST" action="{% url 'submit_exam' exam.id %}" role="form">
                         {% csrf_token %}
                         <label>
-                            <p style="color: #47b2e4;font-size: 30px;font-weight: bold;">{{ exam.question }}</p>
+                            <p style="color: #8c5396;font-size: 30px;font-weight: bold;">Q : {{ exam.question }}</p>
                         </label>
                         <textarea class="form-control" name="student_answer" rows="6" required
-                            style="border-radius: 10px;"></textarea>
-                        <div class="text-center mt-5"><button style="padding: 10px 30px;border-radius: 20px;"
+                            style="border-radius: 10px;" placeholder="Enter Your answer...."></textarea>
+                        <div class="text-center mt-5"><button style="padding: 10px 30px;border-radius: 20px;font-size: 150%;"
                                 type="submit" class="btn btn-info btn-rounded" data-mdb-ripple-init>Submit</button>
                         </div>
-
                     </form>
                     {% endblock %}
                 </div>
             </div>
+        </div>
     </section>
+
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
