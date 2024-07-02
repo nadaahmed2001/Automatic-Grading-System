@@ -5,7 +5,7 @@ GOOGLE_API_KEY = 'AIzaSyA85f_Hc2v-B48TZ3TL4HXKabVBUMYbTkg'
 # GOOGLE_API_KEY ='' #To test error handling
 genai.configure(api_key=GOOGLE_API_KEY)
 
-def OCR_Gemini_Model(file, edit='false'):
+def OCR_Gemini_Model(file, edit):
 
     file = PIL.Image.open(file)
 

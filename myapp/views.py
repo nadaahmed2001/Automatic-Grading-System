@@ -10,8 +10,11 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from AIGradingModel.grading import StartGrading, StartGradingOCR
+
 from AIGradingModel.OCR_Model.OCR_Gemini_Model import OCR_Gemini_Model #Gemeni
 from AIGradingModel.OCR_Model.OCR_Space_Model import OCR_Space_Model #OCR Space
+# from AIGradingModel.OCR_Model.OCR_Microsoft_Model import processor, model, OCR_Microsoft_Model #Microsoft
+
 from .models import ExamSubmissionOCR
 from django.core.files.storage import FileSystemStorage
 from AIGradingModel import generativeAI
@@ -126,7 +129,7 @@ def view_exam_teacher(request, exam_id): #this will redirect to the specific exa
     if not (request.user == exam.teacher or hasattr(request.user, 'teacher')):
         return HttpResponseForbidden("You are not authorized to view this exam.")
     return render(request, 'myapp/teacher/view_exam.html', {'exam': exam, 'exam_submissions': exam_submissions})
-# sent exam submissions to determine if this exam is graded or not
+    # sent exam submissions to determine if this exam is graded or not
 
 
 @login_required
@@ -475,7 +478,9 @@ def generate_answer(request):
 def upload_images(request, exam_id):
     if request.method == 'POST':
         model_choice = request.POST.get('model')
+        # Choose moodel correct spelling mistakes or not
         edit = 'true' if model_choice == 'model1' else 'false'
+        print("Edit:", edit)
 
         uploaded_files = request.FILES.getlist('images')
         for uploaded_file in uploaded_files:
@@ -487,8 +492,8 @@ def upload_images(request, exam_id):
                 
                 # Use OCR to extract text and split into ID and answer
                 #Gemeni model
-                student_id, student_name, extracted_answer = OCR_Gemini_Model(file_path, edit='false')
-                print("Hello from view upload_images")
+                print("Now trying Gemeni with edit= ",edit)
+                student_id, student_name, extracted_answer = OCR_Gemini_Model(file_path, edit)
                 print("Student ID:", student_id)
                 print("Student Name:", student_name)
                 print("Extracted Answer:", extracted_answer)
@@ -517,6 +522,7 @@ def upload_images(request, exam_id):
                             
                             # Use OCR to extract text and split into ID and answer
                             #OCR Space model
+                            print("Now trying OCR Space model and edit= ",edit)
                             student_id, student_name, extracted_answer = OCR_Space_Model(file_path)
                             print("Hello from view upload_images from OCR Space model")
                             print("Student ID:", student_id)
@@ -538,6 +544,12 @@ def upload_images(request, exam_id):
                             messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
                             print(f"Error processing file {uploaded_file.name}: {e}")  # Log the error for debugging
                             return redirect('upload_images', exam_id=exam_id)
+                
+                else:
+                    messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
+                    print(f"Error processing file {uploaded_file.name}: {e}")
+                    return redirect('upload_images', exam_id=exam_id)
+
 
         messages.success(request, "Images uploaded and processed successfully.")
         return redirect('view_submissions_ocr', exam_id=exam_id)

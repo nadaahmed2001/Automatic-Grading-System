@@ -1,5 +1,6 @@
 {% load static %}
 
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,15 +10,9 @@
     <title>ScanScore</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    
-    <!-- Favicons -->
 
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
@@ -25,10 +20,7 @@
     <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
         #header {
@@ -45,185 +37,66 @@
         #header .logo {
             text-align: center;
         }
-        .Ac{
-  border: 2px solid #d4b3db !important;
-}
-/*--------------------------------------------------------------
-# Upload Images
---------------------------------------------------------------*/
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+        .upload-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
 
-.frame {
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  width: 700px;
-  height: 550px;
-  /* margin-top: -350px; */
-  top:15%;
-  margin-left: -350px;
-  /* left:-20px; */
-  border-radius: 10px;
-  box-shadow: 1px 2px 10px 0px rgba(0,0,0,0.3);
-  background: white;
-  /* background: -webkit-linear-gradient(bottom left, #3A92AF 0%, #5CA05A 100%);
-  background: -moz-linear-gradient(bottom left, #3A92AF 0%, #5CA05A 100%);
-  background: -o-linear-gradient(bottom left, #3A92AF 0%, #5CA05A 100%);
-  background: linear-gradient(to top right, #3A92AF 0%, #5CA05A 100%); */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3A92AF', endColorstr='#5CA05A', GradientType=1);
-  color: #fff;
-  font-family: 'Open Sans', Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
 
-.center {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 450px;
-  height: 350px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(175, 175, 175, 0.19);
-  box-shadow: 8px 10px 15px 0 rgba(0,0,0,0.2);
-  border-radius: 6px;
-  padding: 20px;
-  box-sizing: border-box;
-  margin-top: 20px;
-}
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
 
-.title {
-  font-size: 27px;
-  color: #685959;
-  line-height: 50px;
-  height: 50px;
-  border-bottom: 1px solid #D8D8D8;
-  text-align: center;
-  width: 100%;
-  margin-top: -10px;
-}
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
 
-.dropzone {
- box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 300px;
-  height: 200px;
-  border: 1px dashed #A4A4A4;
-  border-radius: 3px;
-  text-align: center;
-  overflow: hidden;
-  margin-top: 10px;
-}
-  
-  &.is-dragover {
-    border-color: #666;
-    background: #eee;
-  }
-  
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .upload {
-    margin-bottom: 10px;
-    width: 130px;
-    height: 200px;
-  }
-  
-  .filename {
-    display: block;
-    color: #676767;
-    font-size: 14px;
-    line-height: 18px;
-  }
-  
-  .input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
+        .note {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 10px;
+        }
 
-.upload-btn {
-  width: 150px;
-  height: 40px;
-  background: #3d93bb;
-  border-radius: 10px;
-  text-align: center;
-  font-size: 18px;
-  transition: all .2s ease-in-out;
-  margin-top: 20px;
-  color: white;
-  margin-left: -25px;
-  
-  &:hover {
-    box-shadow: 0 2px 0 0 #37517e, 0 2px 10px 0 #4f72af;
-  }
-}
-
-.bar {
-  width: 100%;
-  height: 3px;
-  background: #6ECE3B;
-  transition: all 3s ease-out;
-  transform: scaleX(0);
-  transform-origin: 0 0;
-  
-  &.active {
-    transform: scaleX(1) translate3d(0,0,0);
-  }
-}
-
-.syncing, .done {
-  width: 50px;
-  height: 50px;
-  opacity: 0;
-  
-  &.active {
-    animation: syncing 3.2s ease-in-out;
-  }
-}
-
-@keyframes syncing {
-  0% {
-    transform: rotate(0deg);
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: rotate(360deg);
-    opacity: 0;
-  }
-}
-
-@keyframes done {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+        #hero h1 {
+            font-size: 30px;
+            margin-bottom: 20px; /* Space between heading and form */
+            color: #333; /* Heading color */
+        }
 
     </style>
 </head>
+
 <body>
 
     <header id="header" class="fixed-top">
@@ -232,11 +105,11 @@
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active Ac" href="{% url 'teacher_dashboard' %}">Home</a></li>
+                    <li><a class="nav-link scrollto active" href="{% url 'teacher_dashboard' %}">Home</a></li>
                     <li><a class="nav-link scrollto" href="{% url 'create_exam' %}">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="{% static 'img/unknown_user.jpg' %}"
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
                                 class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
                                 loading="lazy" />
                             <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
@@ -255,51 +128,45 @@
 
     <!-- Hero Section -->
     <section id="hero" class="d-flex" style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
-        {% block content %}
-        {%if messages%}
-          {% for message in messages %}
-          <div class="alert {{ message.tags }}" style="color: red; font-size: 15px;margin-left: 10px;">
-              {{ message }}
-          </div>
-          {% endfor %}
-        {% endif %}
-       <div class="frame">
-            <h2 style="color: #47b2e4;text-align: center;font-size: 50px;margin-top: 30px;">Upload Images for Exam ID: {{ exam_id }}</h2>
-                   
-            <div class="center">
-                <form  method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="bar"></div>
-                    <div class="title">Drop image to upload</div>
-                    <div class="dropzone">
-                        <div class="content">
-                            <img src="https://100dayscss.com/codepen/upload.svg" class="upload">
-                            <span class="filename"></span>
-                            <!-- <input type="file" class="input" name="file"> -->
-                            <input type="file" class="input" multiple >
-                        </div>
+        <div class="container">
+            {% if messages %}
+            {% for message in messages %}
+            {% comment %} call the javascript function {% endcomment %}
+            <script>
+                alert('{{ message }}')
+            </script>
+            {% endfor %}
+            {% endif %}
+            <form method="post" enctype="multipart/form-data" class="upload-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <h1>Upload Images for Exam: {{exam.name}}</h1>
+                    
+                <div class="form-group">
+                    <input type="file" name="images" multiple required class="form-control">
+                </div>
+                <label for="model-choice">Choose Model:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="model" id="model1" value="model1" required>
+                        <label class="form-check-label" for="model1">
+                            Model 1 (Corrects spelling mistakes)
+                        </label>
                     </div>
-                    <img src="https://100dayscss.com/codepen/syncing.svg" class="syncing">
-                    <img src="https://100dayscss.com/codepen/checkmark.svg" class="done">
-                    <button type="submit" class="upload-btn">Submit Images</button>
-                </form>
-                {% if messages %}
-                {% for message in messages %}
-                    <div class="alert {{ message.tags }}" style="color: red; font-size: 15px;margin-left: 10px;">
-                        {{ message }}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="model" id="model2" value="model2" required>
+                        <label class="form-check-label" for="model2">
+                            Model 2 (Keeps characters as written)
+                        </label>
                     </div>
-                {% endfor %}
-                {% endif %}
-            </div>
+                    {% comment %} <p class="note">Model 1 corrects any spelling mistakes from student answers while Model 2 takes the characters as they are written.</p> {% endcomment %}
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </form>
         </div>
-        </div>
-        {% endblock %}
-    </section>
-    <!-- End Hero -->
+    </section><!-- End Hero -->
 
     <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
@@ -309,26 +176,7 @@
     <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
     <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
     <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
- <!-- Debugging jQuery loading -->
- <script>
-    console.log("Before jQuery inclusion");
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    if (window.jQuery) {
-        console.log("jQuery is loaded");
-    } else {
-        console.log("jQuery is not loaded");
-    }
-</script>
-<script>
-    $(document).ready(function() {
-        console.log("jQuery is ready!");
-    });
-</script>
-<script>
-    console.log("After jQuery inclusion");
-</script>
+
     <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/upload_image.js' %}"></script>
@@ -336,5 +184,4 @@
 </body>
 
 </html>
-
-
+{% endblock %}
