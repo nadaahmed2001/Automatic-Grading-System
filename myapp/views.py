@@ -500,7 +500,8 @@ def upload_images(request, exam_id):
                     student_id=student_id,
                     student_name=student_name,
                     image=uploaded_file,
-                    extracted_text=extracted_answer
+                    extracted_text=extracted_answer,
+                    score=0, #Not graded yet
                 )
 
             except Exception as e:
@@ -529,7 +530,8 @@ def upload_images(request, exam_id):
                                 student_id=student_id,
                                 student_name=student_name,
                                 image=uploaded_file,
-                                extracted_text=extracted_answer
+                                extracted_text=extracted_answer,
+                                score=0, #Not graded yet
                             )
 
                         except Exception as e:
