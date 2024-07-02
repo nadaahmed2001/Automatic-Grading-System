@@ -107,7 +107,7 @@
         #exam-list {
             border-radius: 30px;
             background-color: #f1a091;
-            color: #906899;
+            color: #fff;
             padding: 12px;
             margin-bottom: 15px;
             font-size: 23px;
@@ -173,9 +173,9 @@
                     <div class="col-md-4 col-12">{{ exam.time_created }}</div>
                     <div class="col-md-3 col-10">
                         {% if exam.is_active %}
-                        <span class="active" style="color:#fff">Active</span>
+                        <span class="active" style="color:#0f8a2e">Active</span>
                         {% else %}
-                        <span class="inactive" style="color: #97819b">Inactive</span>
+                        <span class="inactive" style="color: #db3a3a">Inactive</span>
                         {% endif %}
                     </div>
                     <a href="{% url 'view_exam_teacher' exam.id %}" class="col-md-1 col-2" id="arrow-dir">→</a>
