@@ -24,7 +24,7 @@
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
     <style>
-        #header {
+        /* #header {
             background-color: transparent;
         }
 
@@ -49,7 +49,7 @@
             font-weight: 700;
             font-size: 34px;
             margin-bottom: 20px;
-        }
+        } */
 
         .search-form {
             display: flex;
@@ -130,24 +130,43 @@
         .search-button:hover i {
             color: #007bff;
         }
+  /*------------------------------------------------------------------------------------------*/
+        .Ac {
+            border: 2px solid #d4b3db !important;
+        }
+        #exam-list {
+            border-radius: 30px;
+            background-color: #f1a091;
+            color: #906899;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 23px;
+        }
+        #ntr{
+            color:#ffff;
+        }
+        #ntr:hover{
+            color:#906899;
+        }
     </style>
 </head>
 
 <body>
     <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center">
-            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}">Scanscore</a></h1>
-
-            <nav id="navbar" class="navbar">
+        <div class="container d-flex align-items-center justify-content-between">
+            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
+            <!-- .navbar -->
+            <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto" href="{% url 'student_dashboard' %}">Home</a></li>
-                    <li><a class="nav-link scrollto active " href="{% url 'take_exam' %}">Take New Exam</a></li>
+                    <li><a class="nav-link scrollto active " href="{% url 'student_dashboard' %}" id="home">Home</a>
+                    </li>
+                    <li><a class="nav-link scrollto Ac" style="border-radius: 22px;"href="{% url 'take_exam' %}" id="makenew">Take New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
                                 class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
                                 loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
                         <ul>
@@ -155,11 +174,12 @@
                             <li><a href="{% url 'logout' %}">Log out</a></li>
                         </ul>
                     </li>
-                    <i class="bi bi-list mobile-nav-toggle"></i>
                 </ul>
-            </nav>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
         </div>
-    </header>
+    </header><!-- End Header -->
+
 
     <section id="hero" class="faq section-bg" style="height: 100vh; text-align: center;">
         {% block content %}
@@ -189,10 +209,10 @@
             <div class="exam-list">
                 {% for exam in exams %}
                 <div class="exam-item row"
-                    style="font-size: large; border-radius: 20px; background-color: white; color: rgb(99, 154, 206); padding: 12px; margin-bottom: 15px;">
+                  id="exam-list">
                     <div class="exam-title col-md-6" style="text-align: left;">{{exam.name }}</div>
-                    <div class="arrow col-md-6" style="cursor: pointer; text-align: right;"><a
-                            href="{% url 'enter_exam' exam.id %}">Enter this exam →</a></div>
+                    <div class="arrow col-md-6" style="cursor: pointer; text-align: right;">
+                        <a href="{% url 'enter_exam' exam.id %}" id="ntr"style="">Enter this exam →</a></div>
                 </div>
                 {% empty %}
                 <h2 style="padding-left: 15px;">No active exams available.</h2>

@@ -96,13 +96,15 @@
             margin-left: 10px;
             /* Adjust margin as needed */
         }
-        .Ac{
-  border: 2px solid #d4b3db !important;
-  color: #d4b3db;
 
-}
-    /* Button Styling */
-    .btn {
+        .Ac {
+            border: 2px solid #d4b3db !important;
+            color: #d4b3db;
+
+        }
+
+        /* Button Styling */
+        .btn {
             display: inline-block;
             padding: 6px 12px;
             margin-bottom: 0;
@@ -135,12 +137,12 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
-                    <li><a class="nav-link scrollto active Ac" style="border-radius: 22px;" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
+                    <li><a class="nav-link scrollto active Ac" style="border-radius: 22px;"
+                            href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="{% static 'img/unknown_user.jpg' %}"
-                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
-                                loading="lazy" />
+                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
+                                alt="Black and White Portrait of a Man" loading="lazy" />
                             <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
@@ -157,37 +159,41 @@
 
     <!-- Hero Section -->
     <section class="align-items-center"
-    style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;">
-    <div class="container">
-        <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="card text-black">
-                <h1 style="text-align: center;">Edit Exam</h1>
+        style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;">
+        <div class="container">
+            <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="card text-black" style="padding-top: 3%;">
+                    <h1 style="color: #654e6a;;text-align: center;margin: 0 0 10px 0;
+                font-size: 48px;
+                font-weight: 700;
+                line-height: 56px;">Edit Exam</h1>
                     <form method="post" action="{% url 'edit_exam' exam.id %}">
                         {% csrf_token %}
                         <div class="form-group d-flex">
-                            <strong for="id_exam_name">Exam Name :&nbsp;&nbsp;</strong>
-                            <input id="id_exam_name" type="text" name="name" class="form-control name" style="width: 25%;" value="{{ form.name.value}}">
+                            <strong for="id_exam_name" style="font-size: 150%;">Exam Name :&nbsp;&nbsp;</strong>
+                            <input id="id_exam_name" type="text" name="name" class="form-control name"
+                                style="width: 25%;" value="{{ form.name.value}}">
                         </div>
                         <div class="form-group">
-                            <strong for="id_question">Question:</strong>
+                            <strong for="id_question" style="font-size: 150%;">Question:</strong>
                             <textarea id="id_question" name="question" rows="1" class="form-control question"
                                 placeholder="Enter Question....">{{ form.question.value }}</textarea>
                         </div>
                         <div class="form-group">
-                            <strong for="id_model_answer">Model Answer:</strong>
+                            <strong for="id_model_answer" style="font-size: 150%;">Model Answer:</strong>
                             <textarea id="id_model_answer" name="model_answer" rows="3"
                                 class="form-control model_answer"
                                 placeholder="Enter Model Answer....">{{ form.model_answer.value }}</textarea>
                         </div>
 
                         <div class="form-group">
-                            <strong for="id_keywordsList">Keywords:</strong>
+                            <strong for="id_keywordsList" style="font-size: 150%;">Keywords:</strong>
                             <textarea id="id_keywordsList" name="keywordsList" rows="1"
                                 class="form-control keywordsList"
                                 placeholder="Enter keywords....">{{ form.keywordsList.value }}</textarea>
                         </div>
                         <div style="text-align: right;margin-top: 2%;margin-bottom: 2%;">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary" style="position: relative;right: 41%;width: 200px;">Update</button>
                         </div>
                     </form>
                     <div id="error-alert" class="alert alert-danger" style="display: none;"></div>

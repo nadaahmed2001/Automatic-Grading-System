@@ -20,9 +20,9 @@
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
-
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
     <style>
-        #header {
+        /* #header {
             background-color: transparent;
         }
 
@@ -35,7 +35,7 @@
 
         #header .logo {
             text-align: center;
-        }
+        } */
 
         /* Style for grades less than 5 */
         .grade.low {
@@ -51,12 +51,31 @@
         .grade.high {
             color: green;
         }
+  /*------------------------------------------------------------------------------------------*/
+        #exam-list {
+            border-radius: 30px;
+            background-color: #f1a091;
+            color: #906899;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 23px;
+        }
+
+        #arrow-dir {
+            color: #9e69a9;
+            text-decoration: none;
+            font-size: 28px;
+        }
+
+        .Ac {
+            border: 2px solid #d4b3db !important;
+        }
     </style>
 </head>
 
 <body>
 
-    <header id="header" class="fixed-top">
+    <!-- <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
             <h1 class="me-auto"><a href="{% url 'student_dashboard' %}">Scanscore</a></h1>
 
@@ -81,29 +100,56 @@
                 </ul>
             </nav>
         </div>
-    </header>
+    </header> -->
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center justify-content-between">
+            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
+            <!-- .navbar -->
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active Ac" href="{% url 'student_dashboard' %}" id="home">Home</a>
+                    </li>
+                    <li><a class="nav-link scrollto" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a></li>
+                    <li class="dropdown">
+                        <a href="#">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
+                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
+                                loading="lazy" />
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
+                                class="bi bi-chevron-down"></i>
+                        </a>
+                        <ul>
+                            <li><a href="{% url 'view_profile_student' %}">View Profile</a></li>
+                            <li><a href="{% url 'logout' %}">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+        </div>
+    </header><!-- End Header -->
 
-    <section id="hero" class="d-flex" style="height: 100vh; text-align: left;">
+    <section id="hero" class="d-flex"
+        style="height: 100vh; text-align: left;font-family: Arial, Helvetica, sans-serif;">
         <div class="container">
             {% block content %}
 
             {% if messages %}
-                {% for message in messages %}
-                    <div class="alert {{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+            {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
             {% endif %}
-        
+
             <h1
                 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
                 Hello, {{ user.first_name }}
             </h1>
             <div class="exam-list">
                 {% for submission in student_submissions %}
-                <div class="exam-item row"
-                    style="font-size: large; border-radius: 20px; background-color: white; color: rgb(99, 154, 206); padding: 12px; margin-bottom: 15px;">
-                    <div class="exam-title col-md-4">{{ submission.exam.name }}</div>
+                <div class="exam-item row" id="exam-list">
+                     <div class="exam-title col-md-4">{{ submission.exam.name }}</div>
                     <div class="exam-date col-md-3">{{ submission.time_submitted|date:"M d" }}</div>
                     {% if submission.is_approved %}
                     <div class="exam-grade col-md-4 grade" style="text-align: center;"
@@ -116,8 +162,8 @@
                     </div>
                     {% endif %}
                     <div class="arrow col-md-1" style="cursor: pointer; text-align: center;"
-                        onclick="location.href='{% url 'view_exam_student' submission.exam.id %}'">→</div>
-                </div>
+                        onclick="location.href='{% url 'view_exam_student' submission.exam.id %}'" id="arrow-dir">→</div>
+                     </div>
 
                 {% empty %}
                 <div style="text-align: center;">
