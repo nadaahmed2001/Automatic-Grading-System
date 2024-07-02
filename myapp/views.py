@@ -546,7 +546,7 @@ def upload_images(request, exam_id):
                             return redirect('upload_images', exam_id=exam_id)
                 
                 else:
-                    messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
+                    messages.error(request, 'Model1 is not available right now, please try again later or use Model2.')
                     print(f"Error processing file {uploaded_file.name}: {e}")
                     return redirect('upload_images', exam_id=exam_id)
 
