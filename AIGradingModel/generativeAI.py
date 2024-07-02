@@ -1,7 +1,7 @@
 from groq import Groq
 
 
-api_key = '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'
+api_key = 'API_KEY_HERE'
 
 client = Groq(api_key=api_key)
 def generate_model_answer(question, constraints):
