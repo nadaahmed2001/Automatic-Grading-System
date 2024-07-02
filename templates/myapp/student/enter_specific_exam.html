@@ -5,17 +5,13 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
     <title>ScanScore</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
@@ -23,50 +19,23 @@
     <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
     <style>
-        #header {
-            background-color: transparent;
-        }
-
-        #header .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-
-        #header .logo {
-            text-align: center;
-        }
-
-        /* Style for grades less than 5 */
         .grade.low {
             color: red;
         }
 
-        /* Style for grade equal to 5 */
         .grade.medium {
             color: yellow;
         }
 
-        /* Style for grades greater than 5 */
         .grade.high {
             color: green;
         }
-
-        .Ac {
-            border: 2px solid #d4b3db !important;
-            color: #d4b3db;
-        }
-          /* Button Styling */
           .btn {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 10px 20px;
             margin-bottom: 0;
             font-size: 14px;
             font-weight: 400;
@@ -85,22 +54,22 @@
     </style>
 </head>
 
-<body style="background: #47294c;">
+<body>
 
     <header id="header">
-        <div class="container d-flex align-items-center">
-            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}">Scanscore</a></h1>
-
-            <nav id="navbar" class="navbar">
+        <div class="container align-items-center justify-content-between">
+            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
+            <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active Ac" href="{% url 'student_dashboard' %}" id="home">Home</a>
+                    <li><a class="nav-link scrollto" href="{% url 'student_dashboard' %}" id="home">Home</a>
                     </li>
-                    <li><a class="nav-link scrollto" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a></li>
+                    <li><a class="nav-link scrollto Active" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
-                                alt="Black and White Portrait of a Man" loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1">{{ user.first_name }}</strong><i
+                            <img src="{% static 'img/unknown_user.jpg' %}"
+                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
+                                loading="lazy" />
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
                         <ul>
@@ -108,11 +77,11 @@
                             <li><a href="{% url 'logout' %}">Log out</a></li>
                         </ul>
                     </li>
-                    <i class="bi bi-list mobile-nav-toggle"></i>
                 </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
         </div>
-    </header>
+    </header> 
     <section class="align-items-center"
         style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;margin-top: 3%;">
         <div class="container">
@@ -149,10 +118,9 @@
     </section>
 
     <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"
+        style="background-color: #f1a091;"><i class="bi bi-arrow-up-short"></i></a>
+        
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
@@ -160,9 +128,8 @@
     <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
     <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
     <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-
-    <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
+
 </body>
 
 </html>

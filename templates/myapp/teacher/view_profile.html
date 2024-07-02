@@ -9,12 +9,9 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
@@ -22,10 +19,7 @@
     <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
     <style>
         #header {
@@ -55,11 +49,10 @@
             cursor: pointer;
         }
 
-        .Ac {
+        .Active {
             border: 2px solid #d4b3db !important;
         }
 
-        /* Button Styling */
         .btn {
             display: inline-block;
             padding: 6px 12px;
@@ -73,50 +66,31 @@
             cursor: pointer;
             border: none;
             border-radius: 22px;
-        }
-
-        .btn-primary {
+            color: white !important;
             background-color: #f1a091 !important;
-            color: #77517f !important;
-            font-size: 130%;
-            padding-top: 6px;
-            padding-bottom: 6px;
+            border-color: #f1a091;
+            font-size: 130% !important;
         }
 
         .btn:hover {
+            color: white !important;
             background-color: #f1a091 !important;
-            color: #77517f !important;
         }
-
-        .btn-info {
-            background-color: #f1a091 !important;
-            color: #77517f !important;
-            font-size: 130%;
-            padding-top: 6px;
-            padding-bottom: 6px;
-        }
-
-        .btn-success {
-            color: #77517f;
-            background-color: #f1a091 !important;
-            border-color: #f1a091;
-            font-size: 130%;
-            padding-top: 6px;
-            padding-bottom: 6px;
+        .color1{
+            color:#a562b1;
         }
     </style>
 </head>
 {% block content %}
 
-<body style="background: #47294c;">
+<body>
 
     <header id="header">
         <div class="container align-items-center justify-content-between">
             <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
-            <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active Ac" href="{% url 'teacher_dashboard' %}" id="home">Home</a>
+                    <li><a class="nav-link scrollto Active" href="{% url 'teacher_dashboard' %}" id="home">Home</a>
                     </li>
                     <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
@@ -133,9 +107,9 @@
                     </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
+            </nav>
         </div>
-    </header><!-- End Header -->
+    </header>
 
     <section class="align-items-center"
         style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;">
@@ -146,50 +120,49 @@
                         <div class="col-md-4 border-right">
                             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                                 <img class="rounded-circle mt-5" src="{% static 'img/unknown_user.jpg' %}" width="150">
-                                <span class="font-weight-bold" style="font-size: large;">{{ user.first_name }}
+                                <span class="font-weight-bold" style="font-size: large;color:#a562b1;">{{ user.first_name }}
                                     {{user.last_name }}</span>
                                 <span class="text-black-50">{{ user.email|default:"No email" }}</span>
                             </div>
                         </div>
                         <div class="col-md-8">
                             <div class="p-3 py-5">
-                                <h3>Profile Settings</h3>
+                                <h3 style="color:#a562b1;">Profile Settings</h3>
                                 {% if messages %}
                                 {% for message in messages %}
-                                <div class="alert {{ message.tags }}" lass="alert alert-info" role="alert">
-                                    {{ message }}
-                                </div>
+                                <div class="alert {{ message.tags }}" lass="alert alert-info" role="alert"> 
+                                    {{ message }} </div>
                                 {% endfor %}
                                 {% endif %}
                                 <form method="POST" action="{% url 'edit_profile_teacher' %}">
                                     {% csrf_token %}
                                     <div class="row mt-2">
                                         <div class="col-md-6">
-                                            <label for="first_name">First Name:</label>
+                                            <label for="first_name" class="color1">First Name:</label>
                                             <input type="text" id="first_name" name="first_name" class="form-control"
                                                 placeholder="first name" value="{{ user.first_name }}">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="last_name">Last Name:</label>
+                                            <label for="last_name"class="color1">Last Name:</label>
                                             <input type="text" class="form-control" placeholder="last name "
                                                 id="last_name" name="last_name" value="{{ user.last_name }}">
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6">
-                                            <label for="username">Username:</label>
+                                            <label for="username" class="color1">Username:</label>
                                             <input type="text" class="form-control" placeholder="username" id="username"
                                                 name="username" value="{{ user.username }}">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="email">Email:</label>
+                                            <label for="email" class="color1">Email:</label>
                                             <input type="email" class="form-control" id="email" name="email"
                                                 value="{{ user.email }}" placeholder="email">
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6 password-toggle">
-                                            <label for="password">New Password:</label>
+                                            <label for="password" class="color1">New Password:</label>
                                             <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="New password">
                                             <span class="toggle-icon">
@@ -199,7 +172,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6">
-                                            <label for="role">Role:</label>
+                                            <label for="role" class="color1">Role:</label>
                                             <input type="text" class="form-control" id="role" name="role"
                                                 value="{{ user.userType }}" readonly>
                                         </div>
@@ -215,13 +188,12 @@
                 </div>
             </div>
         </div>
-    </section><!-- End Hero -->
+    </section>
 
     <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"
+        style="background-color: #f1a091;"><i class="bi bi-arrow-up-short"></i></a>
+        
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}" rel="stylesheet"></script>
     <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}" rel="stylesheet"></script>

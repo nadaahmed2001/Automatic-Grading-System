@@ -14,8 +14,6 @@
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
@@ -23,10 +21,7 @@
     <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
     <style>
         #header {
@@ -79,7 +74,6 @@
         .form-control.model-answer {
             width: 100%;
             height: 150px;
-            /* Adjust height as needed */
             resize: vertical;
         }
 
@@ -94,16 +88,14 @@
 
         .input-with-button button {
             margin-left: 10px;
-            /* Adjust margin as needed */
         }
 
-        .Ac {
+        .Active {
             border: 2px solid #d4b3db !important;
             color: #d4b3db;
 
         }
 
-        /* Button Styling */
         .btn {
             display: inline-block;
             padding: 6px 12px;
@@ -121,23 +113,26 @@
 
         .btn-primary {
             background-color: #f1a091 !important;
-            color: #77517f !important;
+            color: white !important;
             font-size: 20px !important;
             padding: 10px 20px;
+        }
+
+        .color1 {
+            color: #9e69a9;
         }
     </style>
 </head>
 
-<body style="background: #47294c;">
+<body>
 
     <header id="header">
         <div class="container align-items-center justify-content-between">
             <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
-            <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
-                    <li><a class="nav-link scrollto active Ac" style="border-radius: 22px;"
+                    <li><a class="nav-link scrollto Active" style="border-radius: 22px;"
                             href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
@@ -153,47 +148,43 @@
                     </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
+            </nav>
         </div>
-    </header><!-- End Header -->
+    </header>
 
-    <!-- Hero Section -->
     <section class="align-items-center"
         style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;">
         <div class="container">
             <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="card text-black" style="padding-top: 3%;">
-                    <h1 style="color: #654e6a;;text-align: center;margin: 0 0 10px 0;
-                font-size: 48px;
-                font-weight: 700;
-                line-height: 56px;">Edit Exam</h1>
+                    <h1 style=" color: #9e69a9;text-align: center;margin: 0 0 10px 0;font-size: 48px;font-weight: 700;line-height: 56px;">Edit Exam</h1>
                     <form method="post" action="{% url 'edit_exam' exam.id %}">
                         {% csrf_token %}
                         <div class="form-group d-flex">
-                            <strong for="id_exam_name" style="font-size: 150%;">Exam Name :&nbsp;&nbsp;</strong>
+                            <strong for="id_exam_name" style="font-size: 150%;" class="color1">Exam Name :&nbsp;&nbsp;</strong>
                             <input id="id_exam_name" type="text" name="name" class="form-control name"
                                 style="width: 25%;" value="{{ form.name.value}}">
                         </div>
                         <div class="form-group">
-                            <strong for="id_question" style="font-size: 150%;">Question:</strong>
+                            <strong for="id_question" style="font-size: 150%;" class="color1">Question:</strong>
                             <textarea id="id_question" name="question" rows="1" class="form-control question"
                                 placeholder="Enter Question....">{{ form.question.value }}</textarea>
                         </div>
                         <div class="form-group">
-                            <strong for="id_model_answer" style="font-size: 150%;">Model Answer:</strong>
+                            <strong for="id_model_answer" style="font-size: 150%;" class="color1">Model Answer:</strong>
                             <textarea id="id_model_answer" name="model_answer" rows="3"
                                 class="form-control model_answer"
                                 placeholder="Enter Model Answer....">{{ form.model_answer.value }}</textarea>
                         </div>
-
                         <div class="form-group">
-                            <strong for="id_keywordsList" style="font-size: 150%;">Keywords:</strong>
+                            <strong for="id_keywordsList" style="font-size: 150%;" class="color1">Keywords:</strong>
                             <textarea id="id_keywordsList" name="keywordsList" rows="1"
                                 class="form-control keywordsList"
                                 placeholder="Enter keywords....">{{ form.keywordsList.value }}</textarea>
                         </div>
-                        <div style="text-align: right;margin-top: 2%;margin-bottom: 2%;">
-                            <button type="submit" class="btn btn-primary" style="position: relative;right: 41%;width: 200px;">Update</button>
+                        <div style="text-align: center;margin-top: 2%;margin-bottom: 2%;">
+                            <button type="submit" class="btn btn-primary"
+                                style="position: relative;width: 200px;">Update</button>
                         </div>
                     </form>
                     <div id="error-alert" class="alert alert-danger" style="display: none;"></div>
@@ -201,11 +192,11 @@
             </div>
         </div>
     </section>
-    <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"
+        style="background-color: #f1a091;"><i class="bi bi-arrow-up-short"></i></a>
+
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
@@ -213,8 +204,6 @@
     <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
     <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
     <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-
-    <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
     <script>
         function generateModelAnswer() {

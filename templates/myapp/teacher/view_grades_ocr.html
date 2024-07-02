@@ -10,13 +10,10 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <!-- Google Fonts -->
-
     <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
     <link
         href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i' %}"
         rel="stylesheet">
-
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
@@ -24,14 +21,11 @@
     <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/plugins.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/kaiadmin.min.css' %}" rel="stylesheet">
 
-    <!-- <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet"> -->
     <style>
         #header {
             background-color: transparent;
@@ -48,7 +42,6 @@
             text-align: center;
         }
 
-        /* Style for grades */
         .grade.low {
             color: red;
         }
@@ -151,7 +144,6 @@
         .form-control.model-answer {
             width: 100%;
             height: 150px;
-            /* Adjust height as needed */
             resize: vertical;
         }
 
@@ -166,14 +158,11 @@
 
         .input-with-button button {
             margin-left: 10px;
-            /* Adjust margin as needed */
         }
 
-
-        /* Button Styling */
         .btn {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 10px 20px;
             margin-bottom: 0;
             font-size: 14px;
             font-weight: 400;
@@ -184,52 +173,30 @@
             cursor: pointer;
             border: none;
             border-radius: 22px;
-        }
-
-        .btn-primary {
+            color: white !important;
             background-color: #f1a091 !important;
-            color: #77517f !important;
         }
 
         .btn:hover {
             background-color: #f1a091 !important;
-            color: #77517f !important;
-        }
-
-        .btn-info {
-            background-color: #f1a091 !important;
-            color: #77517f !important;
-            
+            color: white !important
         }
 
         .btn-success {
-            color: #77517f;
-            background-color: #f1a091 !important;
             border-color: #f1a091;
             font-size: 130%;
-            padding-top: 6px;
-            padding-bottom: 6px;
         }
 
-
-        /* Modal Styling */
         .modal {
             display: none;
-            /* Hidden by default */
             position: fixed;
-            /* Stay in place */
             z-index: 1000;
-            /* Sit on top */
             left: 0;
             top: 0;
             width: 100%;
-            /* Full width */
             height: 100%;
-            /* Full height */
             overflow: auto;
-            /* Enable scroll if needed */
             background-color: rgba(0, 0, 0, 0.5);
-            /* Black w/ opacity */
             align-items: center;
             justify-content: center;
         }
@@ -268,21 +235,31 @@
 
         div.dataTables_wrapper div.dataTables_filter input {
             background-color: #f2f2f2;
-            /* padding-top: 8px !important; */
-            /* padding-bottom: 8px !important; */
             font-size: 90% !important;
         }
 
         div.dataTables_wrapper div.dataTables_filter label {
             font-size: 130% !important;
         }
-        .Ac{
-  border: 2px solid #d4b3db !important;
-}
+
+        .Active {
+            border: 2px solid #d4b3db !important;
+        }
+
+        .style2 {
+            background-color: #f1a091 !important;
+            border-radius: 22px !important;
+        }
+
+        table.dataTable td.dataTables_empty,
+        table.dataTable th.dataTables_empty {
+            text-align: center;
+            border-radius: 22px !important;
+        }
     </style>
 </head>
 
-<body style="background: #47294c;">
+<body>
 
     <header id="header">
         <div class="container align-items-center justify-content-between">
@@ -290,13 +267,13 @@
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active Ac" href="{% url 'teacher_dashboard' %}" id="home">Home</a></li>
+                    <li><a class="nav-link scrollto Active" href="{% url 'teacher_dashboard' %}" id="home">Home</a>
+                    </li>
                     <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="{% static 'img/unknown_user.jpg' %}"
-                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
-                                loading="lazy" />
+                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
+                                alt="Black and White Portrait of a Man" loading="lazy" />
                             <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
@@ -307,83 +284,91 @@
                     </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
+            </nav>
         </div>
-    </header><!-- End Header -->
-        <div class="container">
-            <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="card text-black">
-                    <h1 style="text-align: center;margin-top: 2%;color:#a562b1;">OCR Submissions for Exam: {{ exam.name }}</h1>
-                    <div class="card-body">
-                        {% if messages %}
-                        <div class="alert alert-info" role="alert">
-                            {% for message in messages %}
-                            {{ message }}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                        <div class="table-responsive">
-                            <div id="answerModal" class="modal">
-                                <div class="modal-content">
-                                    <span class="close" onclick="closeModal()">&times;</span>
-                                    <div id="answerContent"></div>
-                                </div>
+    </header>
+
+    <div class="container">
+        <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="card text-black">
+                <h1 style="text-align: center;margin-top: 2%; color: #9e69a9;">OCR Submissions for Exam: {{ exam.name }}
+                </h1>
+                <div class="card-body">
+                    {% if messages %}
+                    <div class="alert alert-info" role="alert">
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="table-responsive">
+                        <div id="answerModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeModal()">&times;</span>
+                                <div id="answerContent"></div>
                             </div>
-                            <table id="basic-datatables" class="display table table-striped table-hover" style="border-radius: 22px !important; text-align: center;">
-                                <thead>
-                                    <tr>
-                                        <th style="background-color: #f1a091 !important;border-radius: 22px !important;">ID</th>
-                                        <th style="background-color: #f1a091 !important;border-radius: 22px !important;">Student Answer</th>
-                                        <th style="background-color: #f1a091 !important;border-radius: 22px !important;">Grade (10)</th>
-                                        <th style="background-color: #f1a091 !important;border-radius: 22px !important;">Image</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for submission in submissions %}
-                                    <tr>
-                                        <td class="Border">{{ submission.student_id }}</td>
-                                        <td class="Border" style="text-align: left;">{{ submission.extracted_text }}</td>
-                                        <td class="Border" style="width: 20%;">
+                        </div>
+                        <table id="basic-datatables" class="display table table-striped table-hover"
+                            style="border-radius: 22px !important; text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th class="style2"> ID</th>
+                                    <th class="style2"> Student Answer</th>
+                                    <th class="style2"> Grade (10)</th>
+                                    <th class="style2"> Image</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for submission in submissions %}
+                                <tr>
+                                    <td class="Border">{{ submission.student_id }}</td>
+                                    <td class="Border" style="text-align: left;">{{ submission.extracted_text }}</td>
+                                    <td class="Border" style="width: 20%;">
                                         <form action="{% url 'modify_grade_ocr' submission.id %}" method="post">
                                             {% csrf_token %}
-                                            <input type="number" step="0.001" name="new_grade" value="{{ submission.score }}" min="0"
-                                                max="10" style="border-radius: 20px; text-align: center;padding: 5px 5px;" required>
+                                            <input type="number" step="0.001" name="new_grade"
+                                                value="{{ submission.score }}" min="0" max="10"
+                                                style="border-radius: 20px; text-align: center;padding: 5px 5px;"
+                                                required>
                                             <button type="submit" class="btn btn-info">Modify Grade</button>
                                         </form>
-                                        </td>
-                                        <td class="Border">
-                                            <!-- Image with modal trigger -->
-                                             <img src="{{ submission.image.url }}" alt="Student Answer"
-                                                style="cursor: pointer; max-width: 200px; max-height: 50px;"
-                                                onclick="showModal('{{ submission.image.url }}')">
-                                        </td class="Border">
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="d-flex justify-content-between" style="text-align: right; margin-top: 2%;">
-                            <form action="{% url 'export_grades_ocr' exam.id %}" method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-success">Export Grades</button>
-                            </form>
+                                    </td>
+                                    <td class="Border">
+                                        <!-- Image with modal trigger -->
+                                        <img src="{{ submission.image.url }}" alt="Student Answer"
+                                            style="cursor: pointer; max-width: 200px; max-height: 50px;"
+                                            onclick="showModal('{{ submission.image.url }}')">
+                                    </td class="Border">
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between" style="text-align: right; margin-top: 2%;">
+                        <form action="{% url 'export_grades_ocr' exam.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Export Grades</button>
+                        </form>
 
-                            <!--  Increase Grades Form -->
-                            <form action="{% url 'increase_grades_ocr' exam.id %}" method="post" style="text-align: right; margin-top: 2%;">
-                                {% csrf_token %}
-                                <input type="number" name="increase_by" placeholder="Increase by" required >
-                                <button type="submit" class="btn btn-success">Increase All Grades</button>
-                            </form>
+                        <!--  Increase Grades Form -->
+                        <form action="{% url 'increase_grades_ocr' exam.id %}" method="post" style="text-align: right;">
+                            {% csrf_token %}
+                            <input type="number" name="increase_by" placeholder="Increase by..."
+                                style="font-size: 135%;border-radius: 22px;width: 35%;padding: 5px 5px;border: 1px solid #f1a091;"
+                                required>
+                            <button type="submit" class="btn btn-success">Increase All Grades</button>
+                        </form>
 
-                            <!--  Round Grades Form -->
-                            <form action="{% url 'round_grades_ocr' exam.id %}" method="post" style="text-align: right; margin-top: 2%;">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-success">Round Up All Grades</button>
-                            </form>
+                        <!--  Round Grades Form -->
+                        <form action="{% url 'round_grades_ocr' exam.id %}" method="post" style="text-align: right;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Round Up All Grades</button>
+                        </form>
 
-                            <a href="{% url 'view_exam_teacher' exam.id %}" class="btn btn-success">← Back to Exam Details</a>
-                        </div>    
-                        <div id="imageModal" class="modal"
+                        <a href="{% url 'view_exam_teacher' exam.id %}" class="btn btn-success">← Back to Exam
+                            Details</a>
+                    </div>
+                    <div id="imageModal" class="modal"
                         style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
                         <div class="modal-content"
                             style="background-color:white; border-radius: 10px;; overflow: hidden; max-width: 50%; max-height: 80%;">
@@ -393,10 +378,10 @@
                         </div>
                     </div>
 
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </section>
 
     <div id="preloader"></div>

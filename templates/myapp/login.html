@@ -4,121 +4,66 @@
 <html lang="en">
 
 <head>
+    
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>ScanScore</title>
+
     <link href="{% static 'img/favicon.png' %}" rel="icon">
     <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- Add all other vendor CSS files similarly -->
+    <link href="{% static 'css/bootstrap-5.0.0-beta1.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/LineIcons.2.0.css' %}" rel="stylesheet">
+    <link href="{% static 'css/tiny-slider.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'css/lindy-uikit.css' %}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/styles.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-5.0.0-beta1.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/LineIcons.2.0.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/tiny-slider.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/lindy-uikit.css' %}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Roboto:wght@300;400;500;700;900&display=swap" />
-    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
-    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
 
     <style>
-        
-a {
-  color: #d9c2de;
-  text-decoration: none;
-}
+        h2 {
+            color: #9e69a9;
+            margin-bottom: 50px;
+            font-size: 24px;
+        }
 
-a:hover {
-  color: #9e69a9;
-  text-decoration: none;
-}
-
-#hero h2 {
-  color:#9e69a9;;
-  margin-bottom: 50px;
-  font-size: 24px;
-}
         #hero {
-  width: 100%;
-  height: 80vh;
-  background: #574870;
-}
-        .hero-section-wrapper-5 {
-            /* margin-top: 10%; */
-            background-color: rgb(244, 244, 249, 0.2);
-            /* Soft light blue background for a calm feel */
-
-            width: 100%;
-            max-width: 600px;
+            background: #574870;
         }
 
         .card {
             padding: 30px;
             box-shadow: 5px 5px 6px 8px rgba(0, 0, 0, 0.15);
-            /* Softer shadow */
             background-color: rgb(255, 255, 255);
-            /* Bright, clean white background */
             border-radius: 15px;
-            /* Softer round corners */
         }
 
         .form-control {
             min-width: 450px;
             width: 100%;
             max-width: 550px;
-            /* Slightly increased for better form factor */
-        }
-
-        .btn {
-            background-color: #4a67d6;
-            /* More vibrant blue */
-            color: white;
-            border: none;
-            /* Remove border */
-        }
-
-        .btn:hover {
-            background-color: #3654d1;
-            /* Slightly darker on hover for better interaction */
         }
 
         .form-label {
             color: #495057;
-            /* Darker label for better readability */
         }
 
         #header {
             display: flex;
             justify-content: center;
-            /* Center the contents horizontally */
             align-items: center;
-            /* Center the contents vertically */
             height: 80px;
-            /* Adjust height as needed */
         }
 
         #header h1 {
             margin: 0;
         }
-        #reg1{
-            color:#ab37c4;
-        }
-        #reg1:hover{
-            color:#d9c2de;
-        }
-        #reg2{
-            color:#ab37c4;
-        }
-        #reg2:hover{
-            color:#d9c2de;
-        }
-        #log-btn{
+        #log-btn {
             background-color: #f1a091;
             color: #9e69a9;
             border: none;
@@ -126,32 +71,42 @@ a:hover {
             left: 1%;
             font-size: 20px;
         }
-        #img-log{
+
+        #img-log {
             border-radius: 50%;
         }
+        .color1{
+            color: #9e69a9;
+        }
+        #color2 {
+            color: #ab37c4;
+        }
+
+        #color2:hover {
+            color: #d9c2de;
+        }
     </style>
+
 </head>
 
 <body>
-    <section id="hero" class="d-flex align-items-center" style="height: 100vh;">
+    <section class="align-items-center">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
-                    data-aos="fade-up" data-aos-delay="200">
-                    <h1 style="margin-left: 60px;">Welcome to
-                        <a style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; "
+                <div class="col-lg-6 justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
+                    data-aos="fade-up" data-aos-delay="200" style="text-align: center;">
+                    <h1 style="color: white;">Welcome to
+                        <a style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color: #d4b3db;"
                             href="{% url 'login' %}">ScanScore</a>
                     </h1>
-                    <h2 style="margin-left: 130px;">Say Goodbye to Grading Papers!</h2>
+                    <h2 style="color: rgb(190, 189, 189);">Say Goodbye to Grading Papers!</h2>
                     <div class="card text-black">
-                        <h2 class="text-center  fw-bold mb-5  mx-md-4 " style="color: #9e69a9;font-size: 40px; ">Login
+                        <h2 class="text-center  fw-bold mb-5  mx-md-4 color1" style="font-size: 40px; ">Login
                         </h2>
                         <form method="post" action="{% url 'login' %}" class="mx-1 mx-md-4">
                             {% if messages %}
                             {% for message in messages %}
-                                <div>
-                                    {{ message }}
-                                </div>
+                            <div> {{ message }} </div>
                             {% endfor %}
                             {% endif %}
                             {% csrf_token %}
@@ -159,45 +114,43 @@ a:hover {
                             <p class="error">{{ error }}</p>
                             {% endif %}
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fas fa-user fa-lg me-3 fa-fw" style="color: #9e69a9;"></i>
+                                <i class="fas fa-user fa-lg me-3 fa-fw color1"></i>
                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
                                     <input type="text" id="id_username" class="form-control" name="username" required
                                         aria-label="Username" />
                                     <label class="form-label" for="id_username">Username</label>
                                 </div>
                             </div>
-
                             <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fas fa-lock fa-lg me-3 fa-fw" style="color: #9e69a9;"></i>
+                                <i class="fas fa-lock fa-lg me-3 fa-fw color1"></i>
                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                                    <input type="password" id="id_password" class="form-control" name="password"
-                                        required aria-label="Password" />
+                                    <input type="password" id="id_password" class="form-control" name="password" required aria-label="Password" />
                                     <label class="form-label" for="id_password">Password</label>
                                 </div>
                             </div>
-
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100" id="log-btn">Login</button>
+                                <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100" id="log-btn" style="border-radius: 22px;color: white;">Login</button>
                             </div>
                         </form>
                         <div class="d-flex justify-content-center justify-content">
-                            <a href='{% url 'register_teacher' %}' id="reg1">Register as Teacher?</a>
-                            <a href='{% url 'register_student' %}' style="margin-left: 20px;"id="reg2">Register as Student?</a>
+                            <a href="{% url 'register_teacher' %}" id="color2">Register as Teacher?</a>
+                            <a href="{% url 'register_student' %}" style="margin-left: 20px;" id="color2">Register as Student?</a>
                         </div>
                         </form>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="" id="img-log">
+                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" id="img-log" >
                 </div>
             </div>
         </div>
     </section>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"
+        style="background-color: #f1a091;"><i class="bi bi-arrow-up-short"></i></a>
 
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <!-- Load other JS vendor files similarly -->
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/bootstrap-5.0.0-beta1.min.js' %}"></script>
     <script src="{% static 'js/tiny-slider.js' %}"></script>
