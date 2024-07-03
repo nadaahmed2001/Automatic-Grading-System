@@ -81,7 +81,7 @@ def Segment_exam_Paper(file):
     return lines
 
 
-def extract_student_answer(segments, processor, model):
+def extract_student_answer(segments):
     # Exclude the first three images from the list (ID, Name, blank line)
     answer = segments[2: ]
 
