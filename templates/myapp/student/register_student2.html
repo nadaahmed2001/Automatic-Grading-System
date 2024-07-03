@@ -89,51 +89,31 @@
                                 {% endfor %}
                             </div>
                             {% endif %}
-                            {% comment %} {%for error in form.errors%}
-                            <div class="alert alert-danger" role="alert">
-                                {{ error }}
-                            </div>
-                            {% endfor %} {% endcomment %}
+                            {% csrf_token %}
+                            
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" required>
+                            {{ form.username.errors }}
 
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" id="email" required>
+                            {{ form.email.errors }}
 
-                            {% comment %} {% if form.non_field_errors %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ form.non_field_errors }}
-                            </div>
-                            {% endif %} {% endcomment %}
-                            {% for field in form %}
-                            <div class="d-flex flex-row align-items-center mb-4">
-                                {% if field.field.widget.input_type == 'password' %}
-                                <i class="fas fa-lock fa-lg me-3 fa-fw color1"></i>
-                                {% else %}
-                                <i class="fas fa-user fa-lg me-3 fa-fw color1"></i>
-                                {% endif %}
-                        
-                                <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}"
-                                        name="{{ field.name }}" class="form-control{% if field.errors %} is-invalid{% endif %}" aria-label="{{ field.label }}"
-                                        required {{ field.field.widget.attrs|safe }}>
-                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                                    {% if field.help_text %}
-                                    <!-- <small class="form-text text-muted">{{ field.help_text }}</small> -->
-                                    {% endif %}
-                                    <div class="error-messages d-flex flex-row">
-                                        {% for error in form.errors %}
-                                            <div class="invalid-feedback me-2">{{ error }}</div>
-                                        {% endfor %}
-                                    </div>
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" name="first_name" class="form-control" id="first_name" required>
+                            {{ form.first_name.errors }}
 
-                                    <div class="error-messages d-flex flex-row">
-                                        {% for error in field.errors %}
-                                            <div class="invalid-feedback me-2">{{ error }}</div>
-                                        {% endfor %}
-                                    </div>
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" name="last_name" class="form-control" id="last_name" required>
+                            {{ form.last_name.errors }}
 
-                                </div>
-                            </div>
-                        {% endfor %}
-                        
+                            <label for="password1" class="form-label">Password</label>
+                            <input type="password" name="password1" class="form-control" id="password1" required>
+                            {{ form.password1.errors }}
 
+                            <label for="password2" class="form-label">Confirm Password</label>
+                            <input type="password" name="password2" class="form-control" id="password2" required>
+                            {{ form.password2.errors }}
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-outline-secondary m-1 w-100" id="log-btn"

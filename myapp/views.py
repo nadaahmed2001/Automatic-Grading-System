@@ -13,7 +13,7 @@ from AIGradingModel.grading import StartGrading, StartGradingOCR
 
 from AIGradingModel.OCR_Model.OCR_Gemini_Model import OCR_Gemini_Model #Gemeni
 from AIGradingModel.OCR_Model.OCR_Space_Model import OCR_Space_Model #OCR Space
-# from AIGradingModel.OCR_Model.OCR_Microsoft_Model import processor, model, OCR_Microsoft_Model #Microsoft
+from AIGradingModel.OCR_Model.OCR_Microsoft_Model import OCR_Microsoft_Model #Microsoft
 
 from .models import ExamSubmissionOCR
 from django.core.files.storage import FileSystemStorage
@@ -42,7 +42,7 @@ def register_student(request):
             print("Form errors:", form.errors)  # Debug form errors
     else:
         form = StudentRegistrationForm()
-    return render(request, 'myapp/student/register_student.html', {'form': form})
+    return render(request, 'myapp/student/register_student2.html', {'form': form})
 
 def register_teacher(request):
     if request.method == 'POST':
@@ -57,7 +57,7 @@ def register_teacher(request):
             print("Form errors:", form.errors)  # Debug form errors
     else:
         form = TeacherRegistrationForm()
-    return render(request, 'myapp/teacher/register_teacher.html', {'form': form})
+    return render(request, 'myapp/teacher/register_teacher2.html', {'form': form})
 
 
 
@@ -490,7 +490,6 @@ def upload_images(request, exam_id):
                 file_path = fs.path(filename)
                 print("FiEL PATH", file_path)
                 
-                # Use OCR to extract text and split into ID and answer
                 #Gemeni model
                 print("Now trying Gemeni with edit= ",edit)
                 student_id, student_name, extracted_answer = OCR_Gemini_Model(file_path, edit)
@@ -520,7 +519,6 @@ def upload_images(request, exam_id):
                             file_path = fs.path(filename)
                             print("FiEL PATH", file_path)
                             
-                            # Use OCR to extract text and split into ID and answer
                             #OCR Space model
                             print("Now trying OCR Space model and edit= ",edit)
                             student_id, student_name, extracted_answer = OCR_Space_Model(file_path)
@@ -529,7 +527,7 @@ def upload_images(request, exam_id):
                             print("Student Name:", student_name)
                             print("Extracted Answer:", extracted_answer)
 
-                            # Save the results in the model
+                            # Save the results
                             ExamSubmissionOCR.objects.create(
                                 exam_id=exam_id,
                                 teacher=request.user,
@@ -541,9 +539,37 @@ def upload_images(request, exam_id):
                             )
 
                         except Exception as e:
-                            messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
-                            print(f"Error processing file {uploaded_file.name}: {e}")  # Log the error for debugging
-                            return redirect('upload_images', exam_id=exam_id)
+                            #If both models fail, use Microsoft model
+                                print('OCR Space model failed, trying Microsoft model...')
+                                for uploaded_file in uploaded_files:
+                                    try:
+                                        fs = FileSystemStorage()
+                                        filename = fs.save(uploaded_file.name, uploaded_file)
+                                        file_path = fs.path(filename)
+                                        print("FiEL PATH", file_path)
+                                        
+                                        #Microsoft model
+                                        print("Now trying Microsoft model and edit= ",edit)
+                                        student_id, student_name, extracted_answer = OCR_Microsoft_Model(file_path)
+                                        print("Hello from view upload_images from Microsoft model")
+                                        print("Student ID:", student_id)
+                                        print("Student Name:", student_name)
+                                        print("Extracted Answer:", extracted_answer)
+
+                                        # Save the results
+                                        ExamSubmissionOCR.objects.create(
+                                            exam_id=exam_id,
+                                            teacher=request.user,
+                                            student_id=student_id,
+                                            student_name=student_name,
+                                            image=uploaded_file,
+                                            extracted_text=extracted_answer,
+                                            score=0, #Not graded yet
+                                        )
+                                    except Exception as e:
+                                        messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
+                                        print(f"Error processing file {uploaded_file.name}: {e}")  # Log the error for debugging
+                                        return redirect('upload_images', exam_id=exam_id)
                 
                 else:
                     messages.error(request, 'Model1 is not available right now, please try again later or use Model2.')

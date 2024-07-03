@@ -81,31 +81,33 @@
 
                         <form method="post" action="{% url 'register_teacher' %}" class="mx-1 mx-md-4">
                             {% csrf_token %}
+                            
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" required>
+                            {{ form.username.errors }}
 
-                            {% for field in form %}
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" id="email" required>
+                            {{ form.email.errors }}
 
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    {% if field.field.widget.input_type == 'password' %}
-                                    <i class="fas fa-lock fa-lg me-3 fa-fw color1"></i>
-                                    {% else %}
-                                    <i class="fas fa-user fa-lg me-3 fa-fw color1"></i>
-                                    {% endif %}
-                                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                                        <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}"
-                                            name="{{ field.name }}" class="form-control" aria-label="{{ field.label }}"
-                                            required {{ field.field.widget.attrs|safe }}>
-                                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                                    </div>
-                                </div>
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" name="first_name" class="form-control" id="first_name" required>
+                            {{ form.first_name.errors }}
 
-                                
-                            {% endfor %}
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" name="last_name" class="form-control" id="last_name" required>
+                            {{ form.last_name.errors }}
 
-                            {% if form.errors %}
-                                <div class="alert alert-danger">
-                                    {{ form.errors }}
-                                </div>
-                        {% endif %}
+                            <label for="password1" class="form-label
+                            ">Password</label>
+                            <input type="password" name="password1" class="form-control" id="password1" required>
+                            {{ form.password1.errors }}
+
+                            <label for="password2" class="form-label
+                            ">Confirm Password</label>
+                            <input type="password" name="password2" class="form-control" id="password2" required>
+                            {{ form.password2.errors }}
+
                             <div class="text-center">
                                 <button type="submit" class="btn btn-outline-secondary m-1 w-100 " id="log-btn"
                                     style="border-radius: 22px;color: white;">Register</button>

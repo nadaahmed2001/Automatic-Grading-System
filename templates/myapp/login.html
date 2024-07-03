@@ -85,6 +85,11 @@
         #color2:hover {
             color: #d9c2de;
         }
+        .error {
+            color: red;
+            text-align: left;
+            margin-left: 20px;
+        }
     </style>
 
 </head>
@@ -104,11 +109,7 @@
                         <h2 class="text-center  fw-bold mb-5  mx-md-4 color1" style="font-size: 40px; ">Login
                         </h2>
                         <form method="post" action="{% url 'login' %}" class="mx-1 mx-md-4">
-                            {% if messages %}
-                            {% for message in messages %}
-                            <div> {{ message }} </div>
-                            {% endfor %}
-                            {% endif %}
+                           
                             {% csrf_token %}
                             {% if error %}
                             <p class="error">{{ error }}</p>
@@ -128,10 +129,18 @@
                                     <label class="form-label" for="id_password">Password</label>
                                 </div>
                             </div>
+                            {% if messages %}
+                            <div class="error">
+                                {% for message in messages %}
+                                <div>{{ message }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100" id="log-btn" style="border-radius: 22px;color: white;">Login</button>
                             </div>
                         </form>
+
                         <div class="d-flex justify-content-center justify-content">
                             <a href="{% url 'register_teacher' %}" id="color2">Register as Teacher?</a>
                             <a href="{% url 'register_student' %}" style="margin-left: 20px;" id="color2">Register as Student?</a>

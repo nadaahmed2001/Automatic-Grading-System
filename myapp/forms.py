@@ -12,7 +12,7 @@ class StudentRegistrationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = Student
-        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name','student_id')
+        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name','student_id','email')
 
     def save(self, commit=True):
         user = super().save(commit=False)

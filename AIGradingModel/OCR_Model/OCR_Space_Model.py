@@ -71,6 +71,7 @@ def Segment_Paper(file):
     cv2.destroyAllWindows()
     return lines
 
+# def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng'):
 def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng'):
 
         payload = {'isOverlayRequired': overlay,

@@ -81,7 +81,7 @@ def Segment_exam_Paper(file):
     return lines
 
 
-def extract_student_answer(segments):
+def extract_student_answer(segments,processor, model):
     # Exclude the first three images from the list (ID, Name, blank line)
     answer = segments[2: ]
 
@@ -96,6 +96,7 @@ def extract_student_answer(segments):
         extracted_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
         extracted_text = extracted_text.strip()
+        extracted_text = extracted_text.replace('Answer','')
         if all(char.isdigit() or char.isspace() for char in extracted_text):
             continue
 
@@ -135,10 +136,10 @@ def OCR_Microsoft_Model(file):
     extracted_Name = json.loads(ocr_space_file(file = Image.fromarray(images[1]).convert("RGB"), language='eng'))
 
     student_ID   = extracted_ID["ParsedResults"][0]["ParsedText"]
-    student_ID   = student_ID.replace('ID:', '').replace('1D:','').replace(' ', '').replace('\n', '')
+    student_ID   = student_ID.replace('ID', '').replace('1D:','').replace(' ', '').replace('\n', '')
 
     student_Name = extracted_Name["ParsedResults"][0]["ParsedText"]
-    student_Name   = student_Name.replace('Name:', '')
+    student_Name   = student_Name.replace('Name', '')
 
     processor, model = load_model()
 
