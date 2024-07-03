@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import ExamForm, StudentRegistrationForm, TeacherRegistrationForm, StudentProfileForm, TeacherProfileForm
+from .forms import StudentRegistrationForm, TeacherRegistrationForm, StudentProfileForm, TeacherProfileForm
+from .forms import ExamForm
 from .models import Exam, ExamSubmission
 from django.contrib import messages
 from django.http import HttpResponseForbidden
@@ -100,16 +101,12 @@ def teacher_dashboard(request):
     exams = Exam.objects.filter(teacher=request.user)
     return render(request, 'myapp/teacher/teacher_dashboard.html', {'exams': exams})
 
-
+@login_required
 def create_exam(request):
-    if not hasattr(request.user, 'teacher'):
-        return HttpResponseForbidden("You are not authorized to view this page.")
     if request.method == 'POST':
         form = ExamForm(request.POST)
-
-        print("Now I will check if the form is valid")
         if form.is_valid():
-            print("Form is valid")
+            print("Exam Form is valid")
             exam = form.save(commit=False)
             exam.teacher = request.user
             exam.save()
@@ -403,53 +400,8 @@ def generate_answer(request):
 
 
 
-########################## OCR using Microsoft model ##########################
-# @login_required
-# def upload_images(request, exam_id):
-#     if request.method == 'POST':
-#         model_choice = request.POST.get('model')
-#         edit = 'true' if model_choice == 'model1' else 'false'
 
-#         uploaded_files = request.FILES.getlist('images')
-#         # processor, model = load_model()
-#         for uploaded_file in uploaded_files:
-#             # try:
-#                 fs = FileSystemStorage()
-#                 filename = fs.save(uploaded_file.name, uploaded_file)
-#                 file_path = fs.path(filename)
-#                 print("FiEL PATH", file_path)
-                
-#                 # Use OCR to extract text and split into ID and answer
-#                 #Microsoft model
-#                 student_id, student_name, extracted_answer = extract_ID_Name_Answer(file_path, processor, model)
-#                 print("Hello from view upload_images")
-#                 print("Student ID:", student_id)
-#                 print("Student Name:", student_name)
-#                 print("Extracted Answer:", extracted_answer)
-
-#                 # Save the results in the model
-#                 ExamSubmissionOCR.objects.create(
-#                     exam_id=exam_id,
-#                     teacher=request.user,
-#                     student_id=student_id,
-#                     student_name=student_name,
-#                     image=uploaded_file,
-#                     extracted_text=extracted_answer
-#                 )
-
-#             # except Exception as e:
-#             #     messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
-#             #     print(f"Error processing file {uploaded_file.name}: {e}")  # Log the error for debugging
-#             #     return redirect('upload_images', exam_id=exam_id)
-
-#         messages.success(request, "Images uploaded and processed successfully.")
-#         return redirect('view_submissions_ocr', exam_id=exam_id)
-    
-#     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
-#     return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id, 'exam': exam})
-
-
-########################## OCR using Gemeni, and OCR_Space if Gemeni fails ##########################
+############ OCR using Gemeni, and OCR_Space if Gemeni fails, and Microsoft model if OCR_Space fails ############
 @login_required
 def upload_images(request, exam_id):
     if request.method == 'POST':

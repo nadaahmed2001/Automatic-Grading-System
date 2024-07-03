@@ -184,30 +184,37 @@
             <div class="justify-content-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="card text-black">
                     <h1 style="color: #9e69a9;text-align: center;">Create an Exam</h1>
+
+                    
                     <form method="post" action="{% url 'create_exam' %}">
                         {% csrf_token %}
                         <div class="form-group d-flex">
                             <strong for="id_exam_name" class="color1">Exam Name :&nbsp;&nbsp;</strong>
                             &nbsp;<input id="id_exam_name" type="text" name="name" class="form-control name"
                                 style="width: 25%;" placeholder="Enter Exam Name...">
+                                {{ form.name.errors }}
                         </div>
                         <div class="form-group">
                             <strong for="id_question" class="color1">Question:</strong>
                             <textarea id="id_question" name="question" rows="1" class="form-control question"
                                 placeholder="Enter Question...."></textarea>
+                                {{ form.question.errors }}
                         </div>
                         <div class="form-group">
                             <strong for="id_constraints" class="color1">Constraints:</strong>
                             <textarea id="constraint_text" rows="1" class="form-control"
                                 placeholder="Enter any constraints for the model answer, e.g., 'short answer, undergraduate level'"></textarea>
+                            {{ form.constraints.errors }}
                         </div>
                         <div class="form-group">
                             <strong for="id_model_answer" class="color1">Model Answer:</strong>
                             <div class="input-with-button">
                                 <textarea id="id_model_answer" name="model_answer" rows="1"
                                     class="form-control model_answer" placeholder="Enter Model Answer...."></textarea>
+                                    {{ form.model_answer.errors }}
                                 <button type="button" class="btn btn-secondary" onclick="generateModelAnswer()">Generate
                                     Answer</button>
+                                
                             </div>
                         </div>
 

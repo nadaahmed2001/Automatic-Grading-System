@@ -164,17 +164,20 @@
                             <strong for="id_exam_name" style="font-size: 150%;" class="color1">Exam Name :&nbsp;&nbsp;</strong>
                             <input id="id_exam_name" type="text" name="name" class="form-control name"
                                 style="width: 25%;" value="{{ form.name.value}}">
+                                {{ form.name.errors }}
                         </div>
                         <div class="form-group">
                             <strong for="id_question" style="font-size: 150%;" class="color1">Question:</strong>
                             <textarea id="id_question" name="question" rows="1" class="form-control question"
                                 placeholder="Enter Question....">{{ form.question.value }}</textarea>
+                                {{ form.question.errors }}
                         </div>
                         <div class="form-group">
                             <strong for="id_model_answer" style="font-size: 150%;" class="color1">Model Answer:</strong>
                             <textarea id="id_model_answer" name="model_answer" rows="3"
                                 class="form-control model_answer"
                                 placeholder="Enter Model Answer....">{{ form.model_answer.value }}</textarea>
+                                {{ form.model_answer.errors }}
                         </div>
                         <div class="form-group">
                             <strong for="id_keywordsList" style="font-size: 150%;" class="color1">Keywords:</strong>

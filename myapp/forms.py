@@ -50,14 +50,20 @@ class ExamForm(forms.ModelForm):
             exam.save()
         return exam
     
-    def clean(self):
-        cleaned_data = super().clean()
-        question = cleaned_data.get('question')
-        model_answer = cleaned_data.get('model_answer')
-        keywordsList = cleaned_data.get('keywordsList')
-        if not question or not model_answer:
-            raise ValidationError({'question': 'This field is required.'})
-        return cleaned_data
+    
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     exam_name = cleaned_data.get('name')
+    #     question = cleaned_data.get('question')
+    #     model_answer = cleaned_data.get('model_answer')
+    #     keywordsList = cleaned_data.get('keywordsList')
+    #     # if not question:
+    #     #     raise ValidationError({'question': 'Exam question is required.'})
+    #     # if not exam_name:
+    #         # raise ValidationError({'name': 'Exam name is required.'})
+    #     # if not model_answer:
+    #     #     raise ValidationError({'model_answer': 'Model answer is required.'})
+    #     return cleaned_data
 
 
 
@@ -65,6 +71,7 @@ class ExamForm(forms.ModelForm):
 
 
 class StudentProfileForm(forms.ModelForm):
+    # New password and confirm password and student_id fields are added
     new_password = forms.CharField(
         required=False,
         widget=forms.PasswordInput(),
@@ -83,12 +90,14 @@ class StudentProfileForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
+        # IF email is already in use by another user
         if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
             raise ValidationError('This email address is already in use.')
         return email
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
+        # IF username is already in use by another user
         if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
             raise ValidationError('This username is already in use.')
         return username
@@ -104,6 +113,7 @@ class StudentProfileForm(forms.ModelForm):
 
 
 class TeacherProfileForm(forms.ModelForm):
+    # New password and confirm password fields are added
     new_password = forms.CharField(
         required=False,
         widget=forms.PasswordInput(),
