@@ -128,7 +128,7 @@ def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng
 
         return r.content.decode()
 
-def OCR_Microsoft_Model(file, processor, model):
+def OCR_Microsoft_Model(file):
     images = Segment_exam_Paper(file)
 
     extracted_ID   = json.loads(ocr_space_file(file = Image.fromarray(images[0]).convert("RGB"), language='eng'))
@@ -140,7 +140,7 @@ def OCR_Microsoft_Model(file, processor, model):
     student_Name = extracted_Name["ParsedResults"][0]["ParsedText"]
     student_Name   = student_Name.replace('Name:', '')
 
-    #processor, model = load_model()
+    processor, model = load_model()
 
     student_answer = extract_student_answer(images, processor, model)
 
