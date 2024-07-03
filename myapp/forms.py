@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Student, Teacher
 from .models import Exam
 from django.core.exceptions import ValidationError
+from myapp.models import User
 
 
 class StudentRegistrationForm(UserCreationForm):
@@ -16,7 +17,7 @@ class StudentRegistrationForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.userType = 'student'  # or 'teacher' for the TeacherRegistrationForm
+        user.userType = 'student'
         if commit:
             user.save()
         return user
@@ -58,3 +59,82 @@ class ExamForm(forms.ModelForm):
             raise ValidationError({'question': 'This field is required.'})
         return cleaned_data
 
+
+
+
+
+
+class StudentProfileForm(forms.ModelForm):
+    new_password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(),
+        min_length=8,
+    )
+    confirm_password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(),
+    )
+    student_id = forms.CharField(max_length=20, required=True)
+
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise ValidationError('This email address is already in use.')
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
+            raise ValidationError('This username is already in use.')
+        return username
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if new_password and new_password != confirm_password:
+            self.add_error('confirm_password', 'Password mismatch.')
+        return cleaned_data
+
+
+class TeacherProfileForm(forms.ModelForm):
+    new_password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(),
+        min_length=8,
+    )
+    confirm_password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(),
+    )
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise ValidationError('This email address is already in use.')
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
+            raise ValidationError('This username is already in use.')
+        return username
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if new_password and new_password != confirm_password:
+            self.add_error('confirm_password', 'Password mismatch.')
+        return cleaned_data

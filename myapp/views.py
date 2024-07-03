@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import StudentRegistrationForm, TeacherRegistrationForm
+from .forms import ExamForm, StudentRegistrationForm, TeacherRegistrationForm, StudentProfileForm, TeacherProfileForm
 from .models import Exam, ExamSubmission
-from .forms import ExamForm
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
@@ -192,91 +191,68 @@ def submit_exam(request, exam_id):
 
 @login_required
 def view_profile_student(request):
-    return render(request, 'myapp/student/view_profile.html', {'user': request.user})
-
-
-@login_required
-def  edit_profile_student(request):
-    if request.method == 'POST':
-        # Retrieve form data
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        student_id = request.POST.get('student_id')
-        print("=======================================")
-        print("user password from database: ", request.user.password)
-        
-        # Update user's profile data
-        user = request.user
-        user.first_name = first_name
-        user.last_name = last_name
-        user.email = email
-        user.username = username
-        user.student.student_id = student_id
-        
-        if password:
-            user.set_password(password)
-            
-        user.student.save()
-        user.save()
-        
-        
-        if password:
-            updated_user = authenticate(username=username, password=password)
-            if updated_user:
-                login(request, updated_user)
-                messages.success(request, 'Profile updated successfully, including password change.')
-                return redirect('view_profile_student')
-        
-        messages.success(request, 'Profile updated successfully without changing password.')
-        return redirect('view_profile_student')
-
-    messages.error(request, "There was an error updating your profile. Please try again.")
-    return redirect('edit_profile_student')
-
+    return render(request, 'myapp/student/view_profile2.html', {'user': request.user})
 
 @login_required
 def view_profile_teacher(request):
-    return render(request, 'myapp/teacher/view_profile.html', {'user': request.user})
+    return render(request, 'myapp/teacher/view_profile2.html', {'user': request.user})
+
 
 @login_required
 def edit_profile_teacher(request):
     if request.method == 'POST':
-        # Retrieve form data
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print("=======================================")
-        print("user password from database: ", request.user.password)
-        
-        # Update user's profile data
-        user = request.user
-        user.first_name = first_name
-        user.last_name = last_name
-        user.email = email
-        user.username = username
-        
-        if password:
-            user.set_password(password)
-        
-        user.save()
-        
-        if password:
-            updated_user = authenticate(username=username, password=password)
-            if updated_user:
-                login(request, updated_user)
-                messages.success(request, 'Profile updated successfully, including password change.')
-                return redirect('view_profile_teacher')
-        
-        messages.success(request, 'Profile updated successfully without changing password.')
-        return redirect('view_profile_teacher')
+        form = TeacherProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            new_password = form.cleaned_data.get('new_password')
+            if new_password:
+                user.set_password(new_password)
+                updated_user = authenticate(username=user.username, password=new_password)
+                if updated_user:
+                    login(request, updated_user)
+                    messages.success(request, 'Profile updated successfully, including password change.')
+                else:
+                    messages.error(request, 'There was an error updating your profile. Please try again.')
+            else:
+                user.save()
+                messages.success(request, 'Profile updated successfully.')
+            return redirect('view_profile_teacher')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = TeacherProfileForm(instance=request.user)
 
-    messages.error(request, "There was an error updating your profile. Please try again.")
-    return redirect('edit_profile_teacher')
+    return render(request, 'myapp/teacher/view_profile2.html', {'form': form, 'user': request.user})
+
+
+
+@login_required
+def edit_profile_student(request):
+    if request.method == 'POST':
+        form = StudentProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            new_password = form.cleaned_data.get('new_password')
+            if new_password:
+                user.set_password(new_password)
+                updated_user = authenticate(username=user.username, password=new_password)
+                if updated_user:
+                    login(request, updated_user)
+                    messages.success(request, 'Profile updated successfully, including password change.')
+                else:
+                    messages.error(request, 'There was an error updating your profile. Please try again.')
+            else:
+                user.save()
+                messages.success(request, 'Profile updated successfully.')
+            return redirect('view_profile_student')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = TeacherProfileForm(instance=request.user)
+
+    return render(request, 'myapp/student/view_profile2.html', {'form': form, 'user': request.user})
+
+
 
 @login_required
 def edit_exam(request, exam_id):
