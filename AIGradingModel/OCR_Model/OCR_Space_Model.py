@@ -21,14 +21,17 @@ def ocr_space_file(file, overlay=False, api_key='1b70baf52f88957', language='eng
 def OCR_Space_Model(file):
     extracted_text_json = ocr_space_file(file)
     response_data = json.loads(extracted_text_json)
+    
     text = response_data["ParsedResults"][0]["ParsedText"] if "ParsedResults" in response_data else ""
 
     lines = text.strip().split('\n')
     if lines:
-        student_id = lines[0].replace('ID', '').replace('1D','').replace(' ', '').replace('\n', '')
+        student_id = lines[0].replace('ID', '').replace('1D','').replace('D','').replace(' ', '').replace('\n', '')
         student_name = lines[1].replace('Name', '')
-        student_answer = '\n'.join(lines[2:])
+        
+        answer_text = '\n'.join(lines[2:])
+        answer_text = answer_text.replace('Answer','').replace('Answor', '')
     else:
-        student_id, student_name, student_answer = '', ''
+        student_id, student_name, answer_text = '', ''
 
-    return student_id, student_name ,student_answer
+    return student_id, student_name ,answer_text
