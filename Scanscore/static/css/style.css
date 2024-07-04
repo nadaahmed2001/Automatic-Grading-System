@@ -508,6 +508,8 @@ a{
 section {
   padding: 60px 0;
   overflow: hidden;
+  position: relative;
+  top: 70px;
 }
 
 .section-bg {
