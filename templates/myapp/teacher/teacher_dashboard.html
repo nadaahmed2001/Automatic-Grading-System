@@ -20,25 +20,264 @@
     <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #ffffff;
+            --background-color-rgb: 255, 255, 255;
+            --default-color: #444444;
+            --default-color-rgb: 68, 68, 68;
+            --heading-color: #9e69a9;
+            --heading-color-rgb: 55, 81, 126;
+            --accent-color: #9e69a9;
+            --accent-color-rgb: 71, 178, 228;
+            --contrast-color: #ffffff;
+            --contrast-color-rgb: 255, 255, 255;
+        }
 
+        #hero {
+            width: 100%;
+            height: 80vh;
+            background: #47294c;
+        }
+
+        #home:hover {
+            color: #9e69a9;
+            width: 120px;
+            border-radius: 50px;
+            background-color: #f1a091;
+            font-size: 19px;
+        }
+
+        #home {
+            color: #d9c2de;
+            width: 120px;
+            border-radius: 50px;
+            font-size: 19px;
+        }
+
+        #makenew {
+            font-size: 17px;
+            width: 190px;
+            margin-left: 10px;
+        }
+
+        #makenew:hover {
+            font-size: 17px;
+            width: 190px;
+            color: #9e69a9;
+            border-radius: 50px;
+            background-color: #f1a091;
+            margin-left: 10px;
+        }
+
+        #header {
+            background-color: transparent;
+        }
+
+        #header .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        #header .logo {
+            text-align: center;
+        }
+
+        #username {
+            font-size: 18px;
+        }
+
+        #username:hover {
+            font-size: 18px;
+            color: #9e69a9;
+        }
+
+        /*------------------------------------------------------------------------------------------*/
+        #exam-list {
+            border-radius: 30px;
+            background-color: #f1a091;
+            color: #fff;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 23px;
+            position: relative;
+            top: 50px;
+        }
+
+        #arrow-dir {
+            color: #9e69a9;
+            text-decoration: none;
+            font-size: 28px;
+        }
+
+        .Ac {
+            border: 2px solid #d4b3db !important;
+        }
+
+        @media (max-width: 1366px) {
+            .navbar-mobile ul {
+                display: block;
+                position: absolute;
+                top: 210px;
+                right: 15px;
+                bottom: 0px;
+                left: 15px;
+                padding: 70px 0;
+                border-radius: 10px;
+                background-color: #fff;
+                overflow-y: auto;
+                transition: 0.3s;
+                height: 400px;
+            }
+
+            #home {
+                color: #d9c2de;
+                width: 120px;
+                border-radius: 50px;
+                font-size: 19px;
+                left: 39%;
+                position: relative;
+                text-align: center;
+                display: inline-block;
+                border: 0px;
+            }
+
+            #home:hover {
+                color: #9e69a9;
+                width: 120px;
+                border-radius: 50px;
+                background-color: #f1a091;
+                font-size: 19px;
+            }
+
+            #makenew {
+                font-size: 17px;
+                width: 190px;
+                margin-left: 10px;
+                left: 31%;
+                position: relative;
+                text-align: center;
+                display: inline-block;
+                padding: 20px;
+            }
+
+            #username {
+                font-size: 22px;
+                position: relative;
+                right: 4%;
+            }
+
+            #img_pro {
+                height: 35px;
+                position: relative;
+                left: 33%;
+
+            }
+
+            .navbar-mobile a,
+            .navbar-mobile a:focus {
+                padding: 10px 20px;
+                font-size: 15px;
+                color: #47294c;
+                position: relative;
+                left: 3%;
+            }
+
+            .navbar-mobile .dropdown>.dropdown-active {
+                display: block;
+                visibility: visible !important;
+                height: 100px;
+                width: 200px;
+                position: relative;
+                left: 30%;
+            }
+
+            #arrow_pro {
+                position: relative;
+                right: 40%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar li {
+                position: relative;
+                right: 5%;
+            }
+
+            /* .navbar-mobile ul {
+                display: block;
+                position: absolute;
+                top: 210px;
+                right: 15px;
+                bottom: 0px;
+                left: 15px;
+                padding: 70px 0;
+                border-radius: 10px;
+                background-color: #fff;
+                overflow-y: auto;
+                transition: 0.3s;
+                height: 400px;
+            } */
+            .navbar-mobile a,
+            .navbar-mobile a:focus {
+                padding: 10px 20px;
+                font-size: 15px;
+                color: #47294c;
+                position: relative;
+                left: 5%;
+            }
+            .dropdown {
+                width: 600px;
+                height: 300px;
+                position: relative;
+                right: 17%;
+            }
+
+            #username {
+                font-size: 20px;
+                position: relative;
+                right: 14%;
+                display: block !important;
+            }
+
+            #img_pro {
+                height: 35px;
+                position: relative;
+                left: 23%;
+            }
+
+            #arrow_pro {
+                position: relative;
+                right: 51%;
+            }
+
+        }
+    </style>
 </head>
 
 <body>
-    <header id="header">
-        <div class="container align-items-center justify-content-between">
+
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center justify-content-between">
             <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
+            <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto Active" href="{% url 'teacher_dashboard' %}" id="home">Home</a>
+                    <li><a class="nav-link scrollto active Active" href="{% url 'teacher_dashboard' %}"
+                            id="home">Home</a>
                     </li>
                     <li><a class="nav-link scrollto" href="{% url 'create_exam' %}" id="makenew">Make New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
                             <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
-                                alt="Black and White Portrait of a Man" loading="lazy" />
-                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
-                                class="bi bi-chevron-down"></i>
+                                alt="Black and White Portrait of a Man" loading="lazy" id="img_pro" />
+                            <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong>
+                            <i class="bi bi-chevron-down" id="arrow_pro"></i>
                         </a>
                         <ul>
                             <li><a href="{% url 'view_profile_teacher' %}">View Profile</a></li>
@@ -47,9 +286,10 @@
                     </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
+            </nav><!-- .navbar -->
         </div>
-    </header>
+    </header><!-- End Header -->
+
 
     <section style="text-align: left;font-family: Arial, Helvetica, sans-serif; background: transparent;">
         <div class="container">
@@ -62,10 +302,11 @@
             </div>
             {% endif %}
             <h1
-            style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white; margin-bottom: 30px;">
-            Hello, {{ user.first_name }}
+                style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white;margin-top: 15px;">
+                Hello, {{ user.first_name }}
             </h1>
-            <h3 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white;">
+            <h3 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white;position: relative;
+  top: 20px;">
                 Your Exams:</h3>
             <div class="exam-list">
                 {% for exam in exams %}
@@ -94,7 +335,7 @@
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"
         style="background-color: #f1a091;"><i class="bi bi-arrow-up-short"></i></a>
-        
+
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
