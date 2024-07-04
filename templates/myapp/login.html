@@ -4,14 +4,16 @@
 <html lang="en">
 
 <head>
-    
+
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>ScanScore</title>
 
     <link href="{% static 'img/favicon.png' %}" rel="icon">
     <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap-5.0.0-beta1.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/LineIcons.2.0.css' %}" rel="stylesheet">
@@ -26,6 +28,19 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
     <style>
+        @media (max-width: 600px) {
+            .form-outline {
+                position: relative;
+                width: 5%;
+            }
+            #login_id {
+                font-size: 40px;
+                position: relative;
+                right: 2%;
+            }
+
+        }
+
         h2 {
             color: #9e69a9;
             margin-bottom: 50px;
@@ -44,7 +59,7 @@
         }
 
         .form-control {
-            min-width: 450px;
+            /* min-width: 450px; */
             width: 100%;
             max-width: 550px;
         }
@@ -63,6 +78,7 @@
         #header h1 {
             margin: 0;
         }
+
         #log-btn {
             background-color: #f1a091;
             color: #9e69a9;
@@ -75,9 +91,11 @@
         #img-log {
             border-radius: 50%;
         }
-        .color1{
+
+        .color1 {
             color: #9e69a9;
         }
+
         #color2 {
             color: #ab37c4;
         }
@@ -85,6 +103,7 @@
         #color2:hover {
             color: #d9c2de;
         }
+
         .error {
             color: red;
             text-align: left;
@@ -98,18 +117,19 @@
     <section class="align-items-center">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
-                    data-aos="fade-up" data-aos-delay="200" style="text-align: center;">
+                <div class="col-lg-6 justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up"
+                    data-aos-delay="200" style="text-align: center;">
                     <h1 style="color: white;">Welcome to
                         <a style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color: #d4b3db;"
                             href="{% url 'login' %}">ScanScore</a>
                     </h1>
                     <h2 style="color: rgb(190, 189, 189);">Say Goodbye to Grading Papers!</h2>
                     <div class="card text-black">
-                        <h2 class="text-center  fw-bold mb-5  mx-md-4 color1" style="font-size: 40px; ">Login
+                        <h2 class="text-center  fw-bold mb-5  mx-md-4 color1" style="font-size: 40px; " id="login_id">
+                            Login
                         </h2>
                         <form method="post" action="{% url 'login' %}" class="mx-1 mx-md-4">
-                           
+
                             {% csrf_token %}
                             {% if error %}
                             <p class="error">{{ error }}</p>
@@ -125,7 +145,8 @@
                             <div class="d-flex flex-row align-items-center mb-4">
                                 <i class="fas fa-lock fa-lg me-3 fa-fw color1"></i>
                                 <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                                    <input type="password" id="id_password" class="form-control" name="password" required aria-label="Password" />
+                                    <input type="password" id="id_password" class="form-control" name="password"
+                                        required aria-label="Password" />
                                     <label class="form-label" for="id_password">Password</label>
                                 </div>
                             </div>
@@ -137,19 +158,21 @@
                             </div>
                             {% endif %}
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100" id="log-btn" style="border-radius: 22px;color: white;">Login</button>
+                                <button type="submit" class="btn btn-outline-secondary m-1 mb-3 w-100" id="log-btn"
+                                    style="border-radius: 22px;color: white;">Login</button>
                             </div>
                         </form>
 
                         <div class="d-flex justify-content-center justify-content">
                             <a href="{% url 'register_teacher' %}" id="color2">Register as Teacher?</a>
-                            <a href="{% url 'register_student' %}" style="margin-left: 20px;" id="color2">Register as Student?</a>
+                            <a href="{% url 'register_student' %}" style="margin-left: 20px;" id="color2">Register as
+                                Student?</a>
                         </div>
                         </form>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" id="img-log" >
+                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" id="img-log">
                 </div>
             </div>
         </div>
