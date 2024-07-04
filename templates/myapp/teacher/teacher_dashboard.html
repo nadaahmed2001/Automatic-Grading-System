@@ -61,6 +61,12 @@
                 {% endfor %}
             </div>
             {% endif %}
+            <h1
+            style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white; margin-bottom: 30px;">
+            Hello, {{ user.first_name }}
+            </h1>
+            <h3 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white;">
+                Your Exams:</h3>
             <div class="exam-list">
                 {% for exam in exams %}
                 <div class="row exam-item" id="exam-list">
