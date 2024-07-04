@@ -21,10 +21,11 @@
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'css/style1.css' %}" rel="stylesheet"> -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'css/nav.css' %}" rel="stylesheet"> -->
     <style>
-        :root {
+        /* :root {
             --background-color: #ffffff;
             --background-color-rgb: 255, 255, 255;
             --default-color: #444444;
@@ -98,7 +99,7 @@
         }
 
         /*------------------------------------------------------------------------------------------*/
-        #exam-list {
+        /* #exam-list {
             border-radius: 30px;
             background-color: #f1a091;
             color: #fff;
@@ -117,9 +118,9 @@
 
         .Ac {
             border: 2px solid #d4b3db !important;
-        }
+        }  */
 
-        @media (max-width: 1366px) {
+        /* @media (max-width: 1366px) {
             .navbar-mobile ul {
                 display: block;
                 position: absolute;
@@ -201,15 +202,138 @@
                 position: relative;
                 right: 40%;
             }
-        }
+        } */
 
         @media (max-width: 600px) {
+            .navbar-mobile .dropdown>.dropdown-active {
+                display: block;
+                visibility: visible !important;
+                width: 250px;
+                color: #b47ec0;
+                position: relative;
+                top: 1%;
+                left: 26%;
+            }
+
+            #home {
+                color: #b47ec0;
+                width: 120px;
+                border-radius: 50px;
+                font-size: 19px;
+                left: 44%;
+                position: relative;
+                text-align: center;
+                display: inline-block;
+                border: 0px;
+            }
+
+            #home:hover {
+                color: #9e69a9;
+                width: 120px;
+                border-radius: 50px;
+                background-color: #f1a091;
+                font-size: 19px;
+            }
+
+            #makenew {
+                font-size: 17px;
+                width: 190px;
+                margin-left: 10px;
+                left: 36%;
+                position: relative;
+                text-align: center;
+                display: inline-block;
+                padding: 20px;
+                color: #b47ec0;
+            }
+
+            #username {
+                font-size: 22px;
+                position: relative;
+                right: 4%;
+            }
+
+            #img_pro {
+                height: 35px;
+                position: relative;
+                left: 33%;
+
+            }
+
+            #nav_pro {
+                background: blue;
+                position: relative;
+                left: -160px;
+                width: 500px;
+            }
+
             .navbar li {
                 position: relative;
                 right: 5%;
             }
 
-            /* .navbar-mobile ul {
+            #exam-list {
+                border-radius: 30px;
+                background-color: #f1a091;
+                color: #fff;
+                padding: 12px;
+                margin-bottom: 15px;
+                font-size: 20px;
+                position: relative;
+                top: 50px;
+                height: 100px;
+                width: 500px;
+                left: 4%;
+            }
+
+            #hello {
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                color: white;
+                margin-top: 15px;
+                position: relative;
+                left: 33%;
+            }
+
+            #your_exam {
+                left: 35%;
+            }
+
+            #scan {
+                color: #d4b3db;
+                position: relative;
+                left: 10px;
+                font-size: 37px;
+            }
+
+            #act {
+                color: #0f8a2e;
+                position: relative;
+                left: 10px;
+            }
+
+            inact {
+                color: #db3a3a;
+                position: relative;
+                left: 10px;
+            }
+
+            #arrow-dir {
+                color: #9e69a9;
+                text-decoration: none;
+                font-size: 28px;
+                position: relative;
+                bottom: 50px;
+            }
+
+            .col-12 {
+                flex: 0 0 auto;
+                width: 100%;
+                position: relative;
+                left: 10px;
+                bottom: 7%;
+            }
+
+            .navbar-mobile ul {
                 display: block;
                 position: absolute;
                 top: 210px;
@@ -221,8 +345,10 @@
                 background-color: #fff;
                 overflow-y: auto;
                 transition: 0.3s;
-                height: 400px;
-            } */
+                max-height: 400px;
+                max-width: 530px;
+            }
+
             .navbar-mobile a,
             .navbar-mobile a:focus {
                 padding: 10px 20px;
@@ -231,29 +357,30 @@
                 position: relative;
                 left: 5%;
             }
+
             .dropdown {
                 width: 600px;
                 height: 300px;
-                position: relative;
-                right: 17%;
+                /* position: relative;
+                right: 17%; */
             }
 
             #username {
                 font-size: 20px;
                 position: relative;
-                right: 14%;
+                right: 37px;
                 display: block !important;
             }
 
             #img_pro {
                 height: 35px;
                 position: relative;
-                left: 23%;
+                left: 173px;
             }
 
             #arrow_pro {
                 position: relative;
-                right: 51%;
+                right: 45%;
             }
 
         }
@@ -264,7 +391,8 @@
 
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'teacher_dashboard' %}" style="color: #d4b3db;" id="scan">Scanscore</a>
+            </h1>
             <!-- .navbar -->
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
@@ -301,12 +429,12 @@
                 {% endfor %}
             </div>
             {% endif %}
-            <h1
+            <h1 id="hello"
                 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white;margin-top: 15px;">
                 Hello, {{ user.first_name }}
             </h1>
             <h3 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white;position: relative;
-  top: 20px;">
+  top: 20px;" id="your_exam">
                 Your Exams:</h3>
             <div class="exam-list">
                 {% for exam in exams %}
@@ -315,9 +443,9 @@
                     <div class="col-md-4 col-12">{{ exam.time_created }}</div>
                     <div class="col-md-3 col-10">
                         {% if exam.is_active %}
-                        <span class="active" style="color:#0f8a2e">Active</span>
+                        <span class="active" id="act" style="color:#0f8a2e">Active</span>
                         {% else %}
-                        <span class="inactive" style="color: #db3a3a">Inactive</span>
+                        <span class="inactive" id="inact" style="color:#db3a3a">Inactive</span>
                         {% endif %}
                     </div>
                     <a href="{% url 'view_exam_teacher' exam.id %}" class="col-md-1 col-2" id="arrow-dir">→</a>
