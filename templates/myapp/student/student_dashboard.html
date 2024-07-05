@@ -25,12 +25,61 @@
     .ntr:hover {
         color: #906899;
     }
+
+    @media (max-width: 600px) {
+        #arrow-dir {
+            font-size: 40px;
+            position: relative;
+            bottom: 90px;
+            left: 170px;
+        }
+
+        #arrow-dir:hover {
+            color: #492b4f;
+            /* text-decoration: none;
+            font-size: 40px;
+            position: relative;
+            bottom: 90px;
+            left: 170px; */
+        }
+
+        .pos_list {
+            position: relative;
+            bottom: 10px;
+            /* left: 33%; */
+        }
+
+        #exam-list {
+            border-radius: 30px;
+            background-color: #f1a091;
+            color: #fff;
+            padding: 12px;
+            bottom: 5px;
+            font-size: 25px;
+            position: relative;
+            /* top: 60%; */
+            height: 110px;
+            width: 500px;
+            left: 4%;
+        }
+    }
+
+    #not_graded {
+        color: #db3a3a;
+        font-size: 17px;
+    }
+
+
+    #graded {
+        color: #0f8a2e;
+    }
 </style>
 
 <body>
     <header id="header">
         <div class="container align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}" style="color: #d4b3db;" id="scan">Scanscore</a>
+            </h1>
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto Active" href="{% url 'student_dashboard' %}" id="home">Home</a>
@@ -39,9 +88,9 @@
                     <li class="dropdown">
                         <a href="#">
                             <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
-                                alt="Black and White Portrait of a Man" loading="lazy" />
+                                alt="Black and White Portrait of a Man" loading="lazy" id="img_pro" />
                             <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
-                                class="bi bi-chevron-down"></i>
+                                class="bi bi-chevron-down" id="arrow_pro"></i>
                         </a>
                         <ul>
                             <li><a href="{% url 'view_profile_student' %}">View Profile</a></li>
@@ -65,22 +114,22 @@
             {% endfor %}
             {% endif %}
 
-            <h1
+            <h1 id="hello"
                 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: white;">
                 Hello, {{ user.first_name }}
             </h1>
             <div class="exam-list">
                 {% for submission in student_submissions %}
                 <div class="exam-item row" id="exam-list">
-                    <div class="exam-title col-md-4">{{ submission.exam.name }}</div>
-                    <div class="exam-date col-md-3">{{ submission.time_submitted|date:"M d" }}</div>
+                    <div class="exam-title col-md-4 pos_list">{{ submission.exam.name }}</div>
+                    <div class="exam-date col-md-3 pos_list">{{ submission.time_submitted|date:"M d" }}</div>
                     {% if submission.is_approved %}
-                    <div class="exam-grade col-md-4 grade" style="text-align: center;"
+                    <div class="exam-grade col-md-4 grade pos_list" style="text-align: center;" id="graded"
                         data-grade='{{ submission.score }}'>
                         {{ submission.score }}/10
                     </div>
                     {% else %}
-                    <div class="exam-grade col-md-4" style="text-align: center;">
+                    <div class="exam-grade col-md-4 pos_list pos_list" id="not_graded">
                         Not graded yet
                     </div>
                     {% endif %}
