@@ -22,7 +22,7 @@
     <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
 
     <style>
-       .card {
+        .card {
             padding: 20px;
             box-shadow: 5px 5px 6px 8px rgba(0, 0, 0, 0.15);
             background-color: rgb(255, 255, 255);
@@ -54,22 +54,39 @@
 
         #img-log {
             border-radius: 50%;
+            position: relative;
+            top: 40px;
         }
+
         .error-messages {
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
         }
-        
+
         .error-messages .invalid-feedback {
-            margin-right: 10px; /* Adjust the spacing between error messages as needed */
+            margin-right: 10px;
+            /* Adjust the spacing between error messages as needed */
         }
-        
+        .animated {
+            -webkit-animation-duration: 1s;
+            animation-duration: 4s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            animation: up-down 2s ease-in-out infinite alternate-reverse both;
+        }  
+        #log_color {
+            color: #ab37c4;
+        }
+        #log_color:hover {
+            color: #a06eaa;
+        }
     </style>
 </head>
 
 <body>
-    <section class="align-items-center" style="padding-top: 3%;padding-bottom: 0px;">
+    <section class="align-items-center" style="padding-top: 3%;padding-bottom: 0px;position: relative;
+  top: 18px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 d-flex flex-column justify-content-center order-2 order-lg-1" data-aos="fade-up"
@@ -78,10 +95,10 @@
                         <h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 color1">Register as
                             Student</h2>
                         {% block content %}
-                        
+
                         <form method="post" action="{% url 'register_student' %}" class="mx-1 mx-md-4">
                             {% csrf_token %}
-                            
+
                             {% if messages %}
                             <div class="error">
                                 {% for message in messages %}
@@ -90,7 +107,7 @@
                             </div>
                             {% endif %}
                             {% csrf_token %}
-                            
+
                             <label for="username" class="form-label">Username</label>
                             <input type="text" name="username" class="form-control" id="username" required>
                             {{ form.username.errors }}
@@ -120,7 +137,7 @@
                                     style="border-radius: 22px;color: white;">Register</button>
                             </div>
                             <p class="text-center mt-3">
-                                Already have an account? <a href="{% url 'login' %}">Login here</a>
+                                Already have an account? <a href="{% url 'login' %}"id="log_color">Login here</a>
                             </p>
                         </form>
                         {% endblock %}
