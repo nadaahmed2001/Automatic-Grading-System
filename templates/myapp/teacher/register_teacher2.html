@@ -55,6 +55,21 @@
         }
         #img-log {
             border-radius: 50%;
+            position: relative;
+            top: 40px;
+        }
+        .animated {
+            -webkit-animation-duration: 1s;
+            animation-duration: 4s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            animation: up-down 2s ease-in-out infinite alternate-reverse both;
+        }
+        #log_color {
+            color: #ab37c4;
+        }
+        #log_color:hover {
+            color: #a06eaa;
         }
     </style>
 </head>
@@ -62,7 +77,8 @@
 </head>
 
 <body>
-    <section class=" align-items-center" style="padding-top: 3%;padding-bottom: 0px;">
+    <section class=" align-items-center" style="padding-top: 3%;padding-bottom: 0px;position: relative;
+  top: 18px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 justify-content-center order-2 order-lg-1" data-aos="fade-up"
@@ -113,7 +129,7 @@
                                     style="border-radius: 22px;color: white;">Register</button>
                             </div>
                             <p class="text-center mt-3">
-                                Already have an account? <a href="{% url 'login' %}">Login here</a>
+                                Already have an account? <a href="{% url 'login' %}"id="log_color">Login here</a>
                             </p>
                         </form>
                         {% endblock %}
