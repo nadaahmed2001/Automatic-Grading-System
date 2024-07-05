@@ -421,7 +421,6 @@ def upload_images(request, exam_id):
                         
                     #Verify model
                     student_id, student_name, extracted_answer = OCR_Verify_Model(file_path)
-                    print("Hello from view upload_images from Verify model")
                     print("Student ID:", student_id)
                     print("Student Name:", student_name)
                     print("Extracted Answer:", extracted_answer)
@@ -447,7 +446,6 @@ def upload_images(request, exam_id):
                         #OCR Space model
                         print("Now trying OCR Space model and edit= ",edit)
                         student_id, student_name, extracted_answer = OCR_Space_Model(file_path)
-                        print("Hello from view upload_images from OCR Space model")
                         print("Student ID:", student_id)
                         print("Student Name:", student_name)
                         print("Extracted Answer:", extracted_answer)
@@ -465,10 +463,10 @@ def upload_images(request, exam_id):
 
                     except Exception as e:
                         messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
-                        print(f"Error processing file {uploaded_file.name}: {e}")  # Log the error for debugging
+                        print(f"Error processing file {uploaded_file.name}: {e}")  # Debugging
                         return redirect('upload_images', exam_id=exam_id)
         
-            else:
+            else: #edit='true'
                 #### Use Gemini model ####
                 print("Now trying Gemini model and edit= ",edit)
                 try:
