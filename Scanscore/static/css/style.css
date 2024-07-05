@@ -1230,3 +1230,16 @@ section {
     padding-top: 4px;
   }
 }
+@media (max-width: 600px) {
+  .form-outline {
+      position: relative;
+      width: 5%;
+  }
+
+  #login_id {
+      font-size: 40px;
+      position: relative;
+      right: 2%;
+  }
+
+}
