@@ -96,7 +96,8 @@
         .search-button:hover i {
             color: #906899;
         }
-  /*------------------------------------------------------------------------------------------*/
+
+        /*------------------------------------------------------------------------------------------*/
         #exam-list {
             border-radius: 30px;
             background-color: #f1a091;
@@ -105,12 +106,24 @@
             margin-bottom: 15px;
             font-size: 23px;
         }
-        #ntr{
-            color:#ffff;
+
+        #ntr {
+            color: #ffff;
         }
-        #ntr:hover{
-            color:#906899;
+
+        #ntr:hover {
+            color: #906899;
         }
+
+        /* @media (max-width: 600px) {
+            .navbar-mobile .dropdown>.dropdown-active {
+                display: block;
+                visibility: visible !important;
+                width: 250px;
+                color: #b47ec0;
+                margin-left: 180px;
+            }
+        } */
     </style>
 </head>
 
@@ -146,11 +159,11 @@
     <section style="text-align: left;font-family: Arial, Helvetica, sans-serif; background: transparent;">
         {% block content %}
         {% if messages %}
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
         {% endif %}
         <div class="container" data-aos="fade-up">
             <div class="row" style=" border-radius: 20px; margin-bottom: 15px;">
@@ -170,11 +183,11 @@
             </div>
             <div class="exam-list">
                 {% for exam in exams %}
-                <div class="exam-item row"
-                  id="exam-list">
+                <div class="exam-item row" id="exam-list">
                     <div class="exam-title col-md-6" style="text-align: left;color: white;">{{exam.name }}</div>
                     <div class="arrow col-md-6" style="cursor: pointer; text-align: right;">
-                        <a href="{% url 'enter_exam' exam.id %}" id="ntr" style="">Enter this exam →</a></div>
+                        <a href="{% url 'enter_exam' exam.id %}" id="ntr" style="">Enter this exam →</a>
+                    </div>
                 </div>
                 {% empty %}
                 <h2 style="padding-left: 15px; text-align: center; color: white;">No active exams available.</h2>
