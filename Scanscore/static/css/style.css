@@ -350,7 +350,7 @@ a{
   left: 100%;
   visibility: visible;
 }
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .navbar-mobile .dropdown>.dropdown-active {
       display: block;
       visibility: visible !important;
@@ -507,6 +507,186 @@ a{
   .dropdown {
       width: 600px;
       height: 300px;
+  }
+
+  #username {
+      font-size: 20px;
+      position: relative;
+      right: 37px;
+      display: block !important;
+  }
+
+  #img_pro {
+      height: 35px;
+      position: relative;
+      left: 173px;
+  }
+
+  #arrow_pro {
+      position: relative;
+      right: 45%;
+  }
+
+} */
+@media (max-width: 600px) {
+  .navbar-mobile .dropdown>.dropdown-active {
+      display: block;
+      visibility: visible !important;
+      width: 250px;
+      color: #b47ec0;
+      position: relative;
+      top: 1%;
+      left: 26%;
+  }
+
+  #home {
+      color: #b47ec0;
+      width: 120px;
+      border-radius: 50px;
+      font-size: 19px;
+      left: 44%;
+      position: relative;
+      text-align: center;
+      display: inline-block;
+      top: 40px;
+  }
+
+  #home:hover {
+      color: #9e69a9;
+      width: 120px;
+      border-radius: 50px;
+      background-color: #f1a091;
+      font-size: 19px;
+  }
+
+  #makenew {
+      font-size: 17px;
+      width: 190px;
+      margin-left: 10px;
+      left: 36%;
+      position: relative;
+      text-align: center;
+      display: inline-block;
+      padding: 20px;
+      color: #b47ec0;
+      top: 40px;
+  }
+
+  #username {
+      font-size: 22px;
+      position: relative;
+      right: 4%;
+  }
+
+  #img_pro {
+      height: 35px;
+      position: relative;
+      left: 33%;
+
+  }
+
+  #nav_pro {
+      background: blue;
+      position: relative;
+      left: -160px;
+      width: 500px;
+  }
+
+  .navbar li {
+      position: relative;
+      right: 5%;
+  }
+
+  #exam-list {
+      border-radius: 30px;
+      background-color: #f1a091;
+      color: #fff;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 20px;
+      position: relative;
+      top: 50px;
+      height: 100px;
+      width: 500px;
+      left: 4%;
+  }
+
+  #hello {
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      color: white;
+      margin-top: 15px;
+      position: relative;
+      left: 33%;
+  }
+
+  #your_exam {
+      left: 35%;
+  }
+
+  #scan {
+      color: #d4b3db;
+      position: relative;
+      left: 10px;
+      font-size: 37px;
+  }
+
+  #act {
+      color: #0f8a2e;
+      position: relative;
+      left: 10px;
+  }
+
+  inact {
+      color: #db3a3a;
+      position: relative;
+      left: 10px;
+  }
+
+  #arrow-dir {
+      color: #9e69a9;
+      text-decoration: none;
+      font-size: 28px;
+      position: relative;
+      bottom: 50px;
+  }
+
+  .col-12 {
+      flex: 0 0 auto;
+      width: 100%;
+      position: relative;
+      left: 10px;
+      bottom: 7%;
+  }
+
+  .navbar-mobile ul {
+    display: block;
+    position: absolute;
+    /* top: 210px; */
+    right: 15px;
+    bottom: 0px;
+    left: 15px;
+    padding: 70px 0;
+    border-radius: 10px;
+    background-color: #fff;
+    overflow-y: auto;
+    transition: 0.3s;
+    max-height: 400px;
+    max-width: 530px;
+  }
+
+  .navbar-mobile a,
+  .navbar-mobile a:focus {
+      padding: 10px 20px;
+      font-size: 15px;
+      color: #47294c;
+      position: relative;
+      left: 5%;
+  }
+
+  .dropdown {
+      width: 600px;
+      height: 300px;
+      top: 40px;
       /* position: relative;
       right: 17%; */
   }
@@ -587,7 +767,7 @@ a{
   .navbar-mobile ul {
     display: block;
     position: absolute;
-    top: 55px;
+    top: 30%;
     right: 15px;
     bottom: 15px;
     left: 15px;
