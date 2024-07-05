@@ -350,9 +350,6 @@ a{
   left: 100%;
   visibility: visible;
 }
-#arrow-dir:hover {
-  color: #492b4f;
-}
 /* @media (max-width: 600px) {
   .navbar-mobile .dropdown>.dropdown-active {
       display: block;
@@ -532,15 +529,15 @@ a{
 
 } */
 @media (max-width: 600px) {
-  
   .navbar-mobile .dropdown>.dropdown-active {
       display: block;
       visibility: visible !important;
       width: 250px;
       color: #b47ec0;
-      position: relative;
+      margin-left: 180px;
+      /* position: relative;
       top: 1%;
-      left: 26%;
+      left: 26%; */
   }
 
   #home {
