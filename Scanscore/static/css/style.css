@@ -350,6 +350,9 @@ a{
   left: 100%;
   visibility: visible;
 }
+#arrow-dir:hover {
+  color: #492b4f;
+}
 /* @media (max-width: 600px) {
   .navbar-mobile .dropdown>.dropdown-active {
       display: block;
@@ -529,6 +532,7 @@ a{
 
 } */
 @media (max-width: 600px) {
+  
   .navbar-mobile .dropdown>.dropdown-active {
       display: block;
       visibility: visible !important;
