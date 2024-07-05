@@ -33,7 +33,8 @@
         .grade.high {
             color: green;
         }
-          .btn {
+
+        .btn {
             display: inline-block;
             padding: 10px 20px;
             margin-bottom: 0;
@@ -47,9 +48,42 @@
             border: none;
             border-radius: 22px;
         }
+
         .btn-info {
             background-color: #f1a091 !important;
-            color:white !important;
+            color: white !important;
+        }
+
+        @media (max-width: 600px) {
+            #exam_name {
+                font-size: 40px;
+                position: relative;
+                right: 15px;
+                bottom: 10px;
+            }
+
+            #exam_question {
+                position: relative;
+                left: 3%;
+            }
+        }
+
+        #exam_name {
+
+            color: #f1a091;
+        }
+
+        #teah_name {
+            color: #8c5396;
+            font-size: 20px;
+            position: relative;
+            right: 10px;
+        }
+
+        #exam_question {
+            color: #8c5396;
+            font-size: 28px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -63,12 +97,12 @@
                 <ul>
                     <li><a class="nav-link scrollto" href="{% url 'student_dashboard' %}" id="home">Home</a>
                     </li>
-                    <li><a class="nav-link scrollto Active" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a></li>
+                    <li><a class="nav-link scrollto Active" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a>
+                    </li>
                     <li class="dropdown">
                         <a href="#">
-                            <img src="{% static 'img/unknown_user.jpg' %}"
-                                class="rounded-circle" height="35" alt="Black and White Portrait of a Man"
-                                loading="lazy" />
+                            <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
+                                alt="Black and White Portrait of a Man" loading="lazy" />
                             <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
                                 class="bi bi-chevron-down"></i>
                         </a>
@@ -81,7 +115,7 @@
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
         </div>
-    </header> 
+    </header>
     <section class="align-items-center"
         style="font-family: Arial, Helvetica, sans-serif;background-color: transparent; padding: 0 0;margin-top: 3%;">
         <div class="container">
@@ -97,18 +131,19 @@
                 <div class="card text-black" style="padding: 20px 20px;">
                     <div class="section-title d-flex justify-content-between" style="padding-bottom: 1%;">
                         <p></p>
-                        <h1 style="color:  #8c5396;">{{ exam.name }}</h1>
-                        <p style="font:bold;color:  #8c5396;">Teacher: {{ exam.teacher.first_name }} {{ exam.teacher.last_name }}</p>
+                        <h1 id="exam_name">{{ exam.name }}</h1>
+                        <p id="teah_name">Teacher: {{ exam.teacher.first_name }} {{ exam.teacher.last_name }}</p>
                     </div>
                     <form method="POST" action="{% url 'submit_exam' exam.id %}" role="form">
                         {% csrf_token %}
                         <label>
-                            <p style="color: #8c5396;font-size: 30px;font-weight: bold;">Q : {{ exam.question }}</p>
+                            <p id="exam_question">Q : {{ exam.question }}</p>
                         </label>
                         <textarea class="form-control" name="student_answer" rows="6" required
                             style="border-radius: 10px;" placeholder="Enter Your answer...."></textarea>
-                        <div class="text-center mt-5"><button style="padding: 10px 30px;border-radius: 20px;font-size: 150%;"
-                                type="submit" class="btn btn-info btn-rounded" data-mdb-ripple-init>Submit</button>
+                        <div class="text-center mt-5"><button
+                                style="padding: 10px 30px;border-radius: 20px;font-size: 150%;" type="submit"
+                                class="btn btn-info btn-rounded" data-mdb-ripple-init>Submit</button>
                         </div>
                     </form>
                     {% endblock %}
@@ -120,7 +155,7 @@
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"
         style="background-color: #f1a091;"><i class="bi bi-arrow-up-short"></i></a>
-        
+
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
