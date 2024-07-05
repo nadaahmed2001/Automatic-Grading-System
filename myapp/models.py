@@ -14,8 +14,6 @@ class Teacher(User):
     classmethod
     pass
     
-
-
 class Exam(models.Model):
     name = models.CharField(max_length=100)
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -36,7 +34,6 @@ class ExamSubmission(models.Model):
     is_graded = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False) #If the teacher approves the grade , this will be set to true and then the student can see the grade
 
-
 class ExamSubmissionOCR(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='ocr_submissions')
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ocr_submissions')
@@ -47,6 +44,3 @@ class ExamSubmissionOCR(models.Model):
     score = models.DecimalField(max_digits=5, decimal_places=3, validators=[MaxValueValidator(10.000)])
     is_graded = models.BooleanField(default=False)
     time_created = models.DateTimeField(auto_now_add=True)
-
-    # def __str__(self):
-    #     return f'{self.exam.name} submission by {self.teacher.username}'

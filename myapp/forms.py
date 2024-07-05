@@ -39,7 +39,7 @@ class TeacherRegistrationForm(UserCreationForm):
         return user
 
 
-class ExamForm(forms.ModelForm):
+class ExamForm(forms.ModelForm): #Form for creating new exam
     class Meta:
         model = Exam
         fields = ['name', 'question', 'model_answer', 'keywordsList']
@@ -49,29 +49,8 @@ class ExamForm(forms.ModelForm):
         if commit:
             exam.save()
         return exam
-    
-    
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     exam_name = cleaned_data.get('name')
-    #     question = cleaned_data.get('question')
-    #     model_answer = cleaned_data.get('model_answer')
-    #     keywordsList = cleaned_data.get('keywordsList')
-    #     # if not question:
-    #     #     raise ValidationError({'question': 'Exam question is required.'})
-    #     # if not exam_name:
-    #         # raise ValidationError({'name': 'Exam name is required.'})
-    #     # if not model_answer:
-    #     #     raise ValidationError({'model_answer': 'Model answer is required.'})
-    #     return cleaned_data
 
-
-
-
-
-
-class StudentProfileForm(forms.ModelForm):
-    # New password and confirm password and student_id fields are added
+class StudentProfileForm(forms.ModelForm): #Form for student edit profile
     new_password = forms.CharField(
         required=False,
         widget=forms.PasswordInput(),
@@ -82,11 +61,9 @@ class StudentProfileForm(forms.ModelForm):
         widget=forms.PasswordInput(),
     )
     student_id = forms.CharField(max_length=20, required=True)
-
-
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'student_id']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

@@ -17,7 +17,7 @@ def calculate_keyword_score(student_answer, keywords):
     keyword_list = [keyword.strip() for keyword in keywords.split(',')]
     total_keywords = len(keyword_list)
     keyword_score = sum(keyword in student_answer for keyword in keyword_list)
-    return (keyword_score / total_keywords) 
+    return (keyword_score / total_keywords)
 
 
 def GradeWithKeywords(student_answer, model_answer, keywords):
