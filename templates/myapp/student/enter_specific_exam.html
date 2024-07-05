@@ -66,6 +66,26 @@
                 position: relative;
                 left: 3%;
             }
+
+            .form-control {
+                display: block;
+                width: 95%;
+                padding: .375rem .75rem;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: var(--bs-body-color);
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-color: var(--bs-body-bg);
+                background-clip: padding-box;
+                border: var(--bs-border-width) solid var(--bs-border-color);
+                border-radius: var(--bs-border-radius);
+                transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+                position: relative;
+                left: 3%;
+            }
         }
 
         #exam_name {
@@ -92,19 +112,19 @@
 
     <header id="header">
         <div class="container align-items-center justify-content-between">
-            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}" style="color: #d4b3db;">Scanscore</a></h1>
+            <h1 class="me-auto"><a href="{% url 'student_dashboard' %}" style="color: #d4b3db;" id="scan">Scanscore</a>
+            </h1>
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto" href="{% url 'student_dashboard' %}" id="home">Home</a>
+                    <li><a class="nav-link scrollto Active" href="{% url 'student_dashboard' %}" id="home">Home</a>
                     </li>
-                    <li><a class="nav-link scrollto Active" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a>
-                    </li>
+                    <li><a class="nav-link scrollto" href="{% url 'take_exam' %}" id="makenew">Take New Exam</a></li>
                     <li class="dropdown">
                         <a href="#">
                             <img src="{% static 'img/unknown_user.jpg' %}" class="rounded-circle" height="35"
-                                alt="Black and White Portrait of a Man" loading="lazy" />
+                                alt="Black and White Portrait of a Man" loading="lazy" id="img_pro" />
                             <strong class="d-none d-sm-block ms-1" id="username">{{ user.first_name }}</strong><i
-                                class="bi bi-chevron-down"></i>
+                                class="bi bi-chevron-down" id="arrow_pro"></i>
                         </a>
                         <ul>
                             <li><a href="{% url 'view_profile_student' %}">View Profile</a></li>
