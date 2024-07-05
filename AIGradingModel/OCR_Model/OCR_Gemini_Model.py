@@ -1,7 +1,7 @@
 import google.generativeai as genai
 import PIL.Image
 
-GOOGLE_API_KEY = 'AIzaSyA85f_Hc2v-B48TZ3TL4HXKabVBUMYbTkg'
+GOOGLE_API_KEY = ''
 # GOOGLE_API_KEY ='' #To test error handling
 genai.configure(api_key=GOOGLE_API_KEY)
 
