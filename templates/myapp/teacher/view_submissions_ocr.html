@@ -333,7 +333,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <div style="margin-top: 3%; text-align: right;">
+                    <div class="d-flex justify-content-between" style="text-align: right; margin-top: 2%;">
+                        <a href="{% url 'upload_images' exam.id %}" class="btn btn-success">← Upload More Images</a>
                         {% if submissions %}
                         <form action="{% url 'view_grades_ocr' exam.id %}" method="post">
                             {% csrf_token %}

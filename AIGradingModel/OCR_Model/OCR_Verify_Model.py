@@ -3,10 +3,10 @@ from veryfi import Client
 
 def OCR_Verify_Model(file):
     client_id = 'vrfBSSdeL2mSPlLYXot3dVM6YI8DLABMuFMS7Hb'
-    client_secret = ''
+    client_secret = 'vLsRNsB7Ree5FL6VdGSVrazhWAR0yRAPusDml45DBXV6zxORBZsZxB2YV6wFrmPI7FRwwhiSu8wlcuv89J6ZAHcH49V1UcROvkkUTbhM5dDRJMtXV2vP6IKOjEReuAkW'
     username = '11410120201210'
+    # api_key = 'b69a448650bef91a3981fa92379c7e01'
     api_key = ''
-    # api_key = ''
 
     categories = ['Grocery', 'Utilities', 'Travel']
     file_path = file

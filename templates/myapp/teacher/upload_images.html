@@ -218,7 +218,12 @@
                             </div>
                             <div style="text-align: center; margin-top: 4%;">
                                 <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                                {% if submissions %}
+                                <a href="{% url 'view_submissions_ocr' exam.id %}" class="btn btn-primary"
+                                    style="background: #77517f; border: 1px solid #77517f; border-radius:22px; padding:10px 20px; font-size:120%; margin-left:5%">View your uploads</a>
+                                {% endif %}
                             </div>
+
                         </form>
                     </div>
                 </div>

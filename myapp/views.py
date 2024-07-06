@@ -26,6 +26,7 @@ from django.db.models import F
 import decimal
 from django.conf import settings
 
+
 def index(request):
     return render(request, 'myapp/index.html')
 
@@ -397,35 +398,32 @@ def generate_answer(request):
 @login_required
 def upload_images(request, exam_id):
     if request.method == 'POST':
-        # processor, model = load_model()
         model_choice = request.POST.get('model')
-        # Choose moodel correct spelling mistakes or not
         edit = 'true' if model_choice == 'model1' else 'false'
         print("Edit:", edit)
-        
+
+
         uploaded_files = request.FILES.getlist('images')
-        max_files = getattr(settings, 'DATA_UPLOAD_MAX_NUMBER_FILES', 100)
-        if len(uploaded_files) > max_files:
-            messages.error(request, f'You can upload a maximum of {max_files} files at a time.')
+        print("Number of uploaded files:", len(uploaded_files))
+
+        if len(uploaded_files) > 25:
+            messages.error(request, f'You can upload a maximum of 25 files at a time.')
             return redirect('upload_images', exam_id=exam_id)
-        
+
+        # Processing logic for OCR models goes here
         for uploaded_file in uploaded_files:
-            if edit=='false':
-                #### First, use verify model ####
-                print("Now trying Verify model and edit= ",edit)
+            if edit == 'false':
                 try:
                     fs = FileSystemStorage()
                     filename = fs.save(uploaded_file.name, uploaded_file)
                     file_path = fs.path(filename)
                     print("FILE PATH", file_path)
-                        
-                    #Verify model
+
                     student_id, student_name, extracted_answer = OCR_Verify_Model(file_path)
                     print("Student ID:", student_id)
                     print("Student Name:", student_name)
                     print("Extracted Answer:", extracted_answer)
 
-                    # Save the results
                     ExamSubmissionOCR.objects.create(
                         exam_id=exam_id,
                         teacher=request.user,
@@ -433,24 +431,21 @@ def upload_images(request, exam_id):
                         student_name=student_name,
                         image=uploaded_file,
                         extracted_text=extracted_answer,
-                        score=0, #Not graded yet
+                        score=0,
                     )
                 except Exception as e:
-                ##### Use OCR-Space model as a backup model if edit='false
                     print('Verify model failed, trying OCR Space model...')
                     try:
                         fs = FileSystemStorage()
                         filename = fs.save(uploaded_file.name, uploaded_file)
                         file_path = fs.path(filename)
                         print("FILE PATH", file_path)
-                        #OCR Space model
-                        print("Now trying OCR Space model and edit= ",edit)
+
                         student_id, student_name, extracted_answer = OCR_Space_Model(file_path)
                         print("Student ID:", student_id)
                         print("Student Name:", student_name)
                         print("Extracted Answer:", extracted_answer)
 
-                        # Save the results
                         ExamSubmissionOCR.objects.create(
                             exam_id=exam_id,
                             teacher=request.user,
@@ -458,30 +453,26 @@ def upload_images(request, exam_id):
                             student_name=student_name,
                             image=uploaded_file,
                             extracted_text=extracted_answer,
-                            score=0, #Not graded yet
+                            score=0,
                         )
 
                     except Exception as e:
                         messages.error(request, 'This service is not available right now, maybe a problem with your internet connection, please try again in a few minutes.')
-                        print(f"Error processing file {uploaded_file.name}: {e}")  # Debugging
+                        print(f"Error processing file {uploaded_file.name}: {e}")
                         return redirect('upload_images', exam_id=exam_id)
-        
-            else: #edit='true'
-                #### Use Gemini model ####
-                print("Now trying Gemini model and edit= ",edit)
+            else:
                 try:
                     fs = FileSystemStorage()
                     filename = fs.save(uploaded_file.name, uploaded_file)
                     file_path = fs.path(filename)
                     print("FILE PATH", file_path)
-                    #Gemini model
-                    student_id, student_name, extracted_answer = OCR_Gemini_Model(file_path,edit)
+
+                    student_id, student_name, extracted_answer = OCR_Gemini_Model(file_path, edit)
                     print("Hello from view upload_images from Gemini model")
                     print("Student ID:", student_id)
                     print("Student Name:", student_name)
                     print("Extracted Answer:", extracted_answer)
 
-                    # Save the results
                     ExamSubmissionOCR.objects.create(
                         exam_id=exam_id,
                         teacher=request.user,
@@ -489,19 +480,26 @@ def upload_images(request, exam_id):
                         student_name=student_name,
                         image=uploaded_file,
                         extracted_text=extracted_answer,
-                        score=0, #Not graded yet
+                        score=0,
                     )
                 except Exception as e:
                     messages.error(request, 'Model1 is not available right now, please try again later or use Model2.')
                     print(f"Error processing file {uploaded_file.name}: {e}")
                     return redirect('upload_images', exam_id=exam_id)
 
+            messages.success(request, "Images uploaded and processed successfully.")
+            return redirect('view_submissions_ocr', exam_id=exam_id)
 
-        messages.success(request, "Images uploaded and processed successfully.")
-        return redirect('view_submissions_ocr', exam_id=exam_id)
-    
+
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
+    if ExamSubmissionOCR.objects.filter(exam=exam).exists():
+        submissions = ExamSubmissionOCR.objects.filter(exam=exam)
+        return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id, 'exam': exam, 'submissions': submissions})
+
     return render(request, 'myapp/teacher/upload_images.html', {'exam_id': exam_id, 'exam': exam})
+
+
+
 
 
 @login_required
