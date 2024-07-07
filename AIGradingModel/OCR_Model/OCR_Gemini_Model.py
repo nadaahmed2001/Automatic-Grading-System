@@ -8,7 +8,7 @@ import io
 import re
 
 
-GOOGLE_API_KEY = 'AIzaSyA85f_Hc2v-B48TZ3TL4HXKabVBUMYbTkg'
+GOOGLE_API_KEY = ''
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # !pip install pypdf

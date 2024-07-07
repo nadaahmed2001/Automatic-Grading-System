@@ -17,9 +17,9 @@ def check_file_extension(file_path):
 
 def OCR_Verify_Model(file):
     client_id = 'vrf6ndisxpgBtTaPCAVHwnecpJUn4ci9oAyOse7'
-    client_secret = 'zPIFugSt5cOlCCXURPbyS101uxIiiINDDMNx83Ygwf61gyUie5sfGr7OLXYagZiixwnGrWojl1TnLi0dAlA7d2kIkrlvdKyci2Ye3HEgb8kYk6DiY7f63Ybr7pRHooyR'
+    client_secret = ''
     username = 'hadeer.fcai'
-    api_key = '49bb60a0248602c1517f4925a6786a08'
+    api_key = ''
 
     categories = ['Grocery', 'Utilities', 'Travel']
 
