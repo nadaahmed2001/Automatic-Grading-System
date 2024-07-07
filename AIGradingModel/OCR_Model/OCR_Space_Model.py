@@ -63,8 +63,3 @@ def OCR_Space_Model(file):
         student_id, student_name, answer_text = '', ''
 
     return student_id, student_name ,answer_text
-
-student_id, student_name ,answer_text = OCR_Space_Model(file= "/content/answer as pdf.pdf")
-print(student_id)
-print(student_name)
-print(answer_text)
