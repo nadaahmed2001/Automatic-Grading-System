@@ -41,7 +41,7 @@ def OCR_Space_Model(file):
 
         image = PIL.Image.open(io.BytesIO(image_bytes))
 
-        temp_image_path = "/tmp/temp_image.jpg" 
+        temp_image_path = "temp_image.jpg" 
         image.save(temp_image_path)
         file_path = temp_image_path 
     else:
