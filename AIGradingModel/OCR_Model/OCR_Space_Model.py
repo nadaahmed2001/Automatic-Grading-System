@@ -3,7 +3,7 @@ import json
 import os
 
 
-def ocr_space_file(file, overlay=False, api_key='', language='eng'):
+def ocr_space_file(file, overlay=False, api_key='K88613798688957', language='eng'):
 # def ocr_space_file(file, overlay=False, api_key='', language='eng'):
 
     payload = {'isOverlayRequired': overlay,

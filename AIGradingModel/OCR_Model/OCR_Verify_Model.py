@@ -2,11 +2,11 @@ import veryfi
 from veryfi import Client
 
 def OCR_Verify_Model(file):
-    client_id = 'vrfBSSdeL2mSPlLYXot3dVM6YI8DLABMuFMS7Hb'
-    client_secret = 'vLsRNsB7Ree5FL6VdGSVrazhWAR0yRAPusDml45DBXV6zxORBZsZxB2YV6wFrmPI7FRwwhiSu8wlcuv89J6ZAHcH49V1UcROvkkUTbhM5dDRJMtXV2vP6IKOjEReuAkW'
-    username = '11410120201210'
-    # api_key = 'b69a448650bef91a3981fa92379c7e01'
-    api_key = ''
+    client_id = 'vrf6ndisxpgBtTaPCAVHwnecpJUn4ci9oAyOse7'
+    client_secret = 'zPIFugSt5cOlCCXURPbyS101uxIiiINDDMNx83Ygwf61gyUie5sfGr7OLXYagZiixwnGrWojl1TnLi0dAlA7d2kIkrlvdKyci2Ye3HEgb8kYk6DiY7f63Ybr7pRHooyR'
+    username = 'hadeer.fcai'
+    api_key = '49bb60a0248602c1517f4925a6786a08'
+    # api_key = ''
 
     categories = ['Grocery', 'Utilities', 'Travel']
     file_path = file

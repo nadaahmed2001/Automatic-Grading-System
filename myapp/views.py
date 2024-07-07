@@ -334,20 +334,7 @@ def view_grades(request, exam_id):
 
 
 
-@login_required
-def modify_grade(request, submission_id):
-    if request.method == 'POST':
-        submission = get_object_or_404(ExamSubmission, id=submission_id, exam__teacher=request.user)
-        exam = submission.exam
-        submissions = ExamSubmission.objects.filter(exam=exam)
-        new_grade = request.POST.get('new_grade')
-        submission.score = decimal.Decimal(new_grade)
-        print(f"Before saving: {submission.score}")
-        submission.save()
-        print(f"After saving: {submission.score}")
-        messages.success(request, "Grade updated successfully.")
-        return render(request, 'myapp/teacher/view_grades.html', {'submissions': submissions, 'exam': exam})
-    return HttpResponseForbidden("Invalid request")
+
 
 
 @login_required
@@ -487,8 +474,8 @@ def upload_images(request, exam_id):
                     print(f"Error processing file {uploaded_file.name}: {e}")
                     return redirect('upload_images', exam_id=exam_id)
 
-            messages.success(request, "Images uploaded and processed successfully.")
-            return redirect('view_submissions_ocr', exam_id=exam_id)
+        messages.success(request, "Images uploaded and processed successfully.")
+        return redirect('view_submissions_ocr', exam_id=exam_id)
 
 
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
@@ -512,38 +499,52 @@ def view_submissions_ocr(request, exam_id):
     })
 
 
-
-
 @login_required
 def view_grades_ocr(request, exam_id):
     exam = get_object_or_404(Exam, pk=exam_id, teacher=request.user)
-    exam.ocr_graded = True
-    exam.save()
-    print("now set ocr_graded to", exam.ocr_graded)
-    if not exam.ocr_graded:
-        graded_submissions = StartGradingOCR(exam_id)  # This will update and return graded submissions
+    submissions = ExamSubmissionOCR.objects.filter(exam=exam)
+    is_ocr_graded = all(submission.is_graded for submission in submissions)
+    if not is_ocr_graded:
+        graded_submissions = StartGradingOCR(exam_id)
+        for submission in graded_submissions:
+            if submission.score < 0:
+                submission.score = 0.000
+        return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': graded_submissions, 'exam': exam})
     else:
-        graded_submissions = ExamSubmissionOCR.objects.filter(exam=exam)
-    for submission in graded_submissions:
-        if submission.score < 0:
-            submission.score = 0.000
-        print(f"Submission ID: {submission.id} - Student ID: {submission.student_id} - Score: {submission.score}")
-    return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': graded_submissions, 'exam': exam})
+        return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': submissions, 'exam': exam})
 
+
+
+@login_required
+def modify_grade(request, submission_id):
+    if request.method == 'POST':
+        submission = get_object_or_404(ExamSubmission, id=submission_id, exam__teacher=request.user)
+        exam = submission.exam
+        submissions = ExamSubmission.objects.filter(exam=exam) #To send all the submissions to the template after the grade is modified
+        new_grade = request.POST.get('new_grade')
+        submission.score = decimal.Decimal(new_grade)
+        print(f"Before saving: {submission.score}")
+        submission.save()
+        print(f"After saving: {submission.score}")
+        messages.success(request, "Grade updated successfully.")
+        return render(request, 'myapp/teacher/view_grades.html', {'submissions': submissions, 'exam': exam})
+    return HttpResponseForbidden("Invalid request")
 
 @login_required
 def modify_grade_ocr(request, submission_id):
     if request.method == 'POST':
-        new_grade = request.POST.get('new_grade')
-        submissions=ExamSubmissionOCR.objects.filter(exam__teacher=request.user)
-        submission = submissions.get(id=submission_id) #submission that will update grade
-        print("Before saving: ", submission.score)
-        submission.score = decimal.Decimal(new_grade)
+        submission= get_object_or_404(ExamSubmissionOCR, id=submission_id, exam__teacher=request.user)
+        exam= submission.exam
+        submissions= ExamSubmissionOCR.objects.filter(exam=exam) #To send all the submissions to the template after the grade is modified
+        new_grade= request.POST.get('new_grade')
+        submission.score= decimal.Decimal(new_grade)
+        print(f"Before saving: {submission.score}")
         submission.save()
-        print("After saving: ", submission.score)
+        print(f"After saving: {submission.score}")
         messages.success(request, "Grade updated successfully.")
-        return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': submissions})
+        return render(request, 'myapp/teacher/view_grades_ocr.html', {'submissions': submissions, 'exam': exam})
     return HttpResponseForbidden("Invalid request")
+
 
 @login_required
 def export_grades_ocr(request, exam_id):
@@ -551,11 +552,6 @@ def export_grades_ocr(request, exam_id):
     print("Exporting grades for exam:", exam.name ,"With ID:", exam_id)
     submissions = ExamSubmissionOCR.objects.filter(exam_id=exam_id).values('student_id', 'score')
     return export_ocr_grades_to_excel(exam_id)
-
-
-
-
-
 
 @login_required
 def increase_grades(request, exam_id):
@@ -588,7 +584,6 @@ def round_grades(request, exam_id):
 def increase_grades_ocr(request, exam_id):
     exam = get_object_or_404(Exam, pk=exam_id)
     increase_by = decimal.Decimal(request.POST.get('increase_by', 0))
-    print("I'm now increasing all ocr grades by ", increase_by)
     submissions = ExamSubmissionOCR.objects.filter(exam=exam)
     for submission in submissions:
         new_score = submission.score + increase_by
