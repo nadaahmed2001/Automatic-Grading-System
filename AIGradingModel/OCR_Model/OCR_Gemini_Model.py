@@ -7,11 +7,8 @@ import PIL.Image
 import io
 import re
 
-
 GOOGLE_API_KEY = 'AIzaSyA85f_Hc2v-B48TZ3TL4HXKabVBUMYbTkg'
 genai.configure(api_key=GOOGLE_API_KEY)
-
-# !pip install pypdf
 
 def check_file_extension(file_path):
     file_extension = Path(file_path).suffix.lower()
@@ -46,7 +43,5 @@ def extract_text_and_ID(file,edit='false'):
 
   student_id   = model_2.generate_content(["write only numbers was written in the area of word ""ID"" without description", file]) # Pass the image object to the model, not the file path
   student_name = model_2.generate_content(["write only text was written in the area of word ""Name"" without description", file]) # Pass the image object to the model, not the file path
-
-
 
   return student_id.text, student_name.text, answer_text.text.replace('Answer','')
