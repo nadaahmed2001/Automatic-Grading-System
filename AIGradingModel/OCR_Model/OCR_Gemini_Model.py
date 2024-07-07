@@ -7,8 +7,11 @@ import PIL.Image
 import io
 import re
 
+
 GOOGLE_API_KEY = 'AIzaSyA85f_Hc2v-B48TZ3TL4HXKabVBUMYbTkg'
 genai.configure(api_key=GOOGLE_API_KEY)
+
+# !pip install pypdf
 
 def check_file_extension(file_path):
     file_extension = Path(file_path).suffix.lower()
@@ -33,15 +36,16 @@ def extract_text_and_ID(file,edit='false'):
 
         file = image 
   else:
-      file = PIL.Image.open(file) 
+      file = PIL.Image.open(file)  # Pass the file path, not the image object
 
   if(edit=='true'):
     # Pass the image object to the model, not the file path
-    answer_text = model_1.generate_content(["write text was written in the area of word ""Answer"", edit words written incorectly ",file])
+    answer_text = model_1.generate_content(["write only text was written in the area of word ""Answer"",and edit words written incorectly ",file])
   else:
-    answer_text = model_2.generate_content(["write text was written in the area of word ""Answer"", and do not edit any word", file]) # Pass the image object to the model, not the file path
+    answer_text = model_2.generate_content(["write only text was written in the area of word ""Answer"", and do not edit any word", file]) 
 
-  student_id   = model_2.generate_content(["write only numbers was written in the area of word ""ID"" without description", file]) # Pass the image object to the model, not the file path
-  student_name = model_2.generate_content(["write only text was written in the area of word ""Name"" without description", file]) # Pass the image object to the model, not the file path
+  student_id   = model_2.generate_content(["write only numbers was written in the area of word ""ID"" without description", file]) 
+  student_name = model_2.generate_content(["write only text was written in the area of word ""Name"" without description", file]) 
 
-  return student_id.text, student_name.text, answer_text.text.replace('Answer','')
+
+  return student_id.text, student_name.text, answer_text.text
