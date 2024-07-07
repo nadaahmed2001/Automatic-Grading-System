@@ -33,7 +33,7 @@ def extract_text_and_ID(file,edit='false'):
 
         file = image 
   else:
-      file = PIL.Image.open(file)  # Pass the file path, not the image object
+      file = PIL.Image.open(file) 
 
   if(edit=='true'):
     # Pass the image object to the model, not the file path
