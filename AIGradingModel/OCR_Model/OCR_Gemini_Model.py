@@ -19,7 +19,7 @@ def check_file_extension(file_path):
     else:
         return "Unknown file type."
 
-def extract_text_and_ID(file,edit='false'):
+def OCR_Gemini_Model(file,edit='false'):
   
   model_1 = genai.GenerativeModel(model_name="gemini-pro-vision")
   model_2 = genai.GenerativeModel(model_name="gemini-1.5-flash")
